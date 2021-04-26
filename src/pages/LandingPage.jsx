@@ -7,6 +7,7 @@ function LandingPage() {
     return (
         <BrowserRouter>
             <div>
+                <title>Find your inspiration. | Flickr</title>
                 <LandingNavigationBar />
                 {/* 1) Needs to add Landing Page Content
                 2) Needs to add a Footer */}
