@@ -22,10 +22,12 @@ function UserlessNavigationBar() {
                 document.getElementById("div-side-nav").style.width = "40%";
             }
             document.getElementById("white-overlay").style.opacity = "1";
+            document.getElementById("white-overlay").classList.add("w-100");
         } else {
             setIcon(true);
             document.getElementById("div-side-nav").style.width = "0";
             document.getElementById("white-overlay").style.opacity = "0";
+            document.getElementById("white-overlay").classList.remove("w-100");
         }
     }
 
@@ -117,7 +119,7 @@ function UserlessNavigationBar() {
                     </div>
                 </div>
             </div>
-            <div id="white-overlay" className="position-fixed w-100 h-100"></div>
+            <div id="white-overlay" className="position-fixed h-100"></div>
         </div>
     );
 }

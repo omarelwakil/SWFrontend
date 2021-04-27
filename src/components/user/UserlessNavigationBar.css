@@ -49,6 +49,7 @@ body {
 #white-overlay {
     background-color: hsla(0, 0%, 100%, .8);
     opacity: 0;
+    width: 0;
     transition: opacity .5s;
     z-index: 1;
 }
