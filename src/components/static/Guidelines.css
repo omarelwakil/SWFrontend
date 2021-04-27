@@ -1,0 +1,38 @@
+
+#content {
+  text-align: left;
+  background-color: #f3f5f6 !important;
+  font-family: Proxima Nova, helvetica neue, helvetica, arial, sans-serif;
+}
+
+.header {
+  background-color: white;
+  margin: 40px 0px 28px;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  padding-bottom: 2%;
+  margin-left: 7%;
+  margin-right: 7%;
+}
+
+#guidelines-section {
+  margin-left: 7%;
+  margin-right: 7%;
+  padding-bottom: 7%;
+}
+
+.inner-title {
+  font-size: 2rem;
+  margin-bottom: 2% !important;
+}
+
+.section-title {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.section-message {
+  font-size: 0.8rem !important;
+}
