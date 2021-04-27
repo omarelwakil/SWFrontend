@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fs-7 {
+    font-size: 0.875rem;
+}
+
+.fs-8 {
+    font-size: 0.825rem;
+}
+
+.sign-out {
+    color: #fff;
+    background-color: #128fdc;
+    padding: .2rem 1.2rem;
+    font-weight: 500;
+    opacity: 1;
+    transition: opacity .4s ease-in-out;
+}
+
+.sign-out:hover {
+    color: #fff;
+    opacity: .8;
+    background-color: #1781c2;
+}
+
+
+.rounded-15 {
+    border-radius: .15rem !important;
+}
+
+.text-black {
+    color: black !important;
+}
+
+.nav-link {
+    font-weight: 400;
+}
+
+.side-bar-items {
+    padding-left: 1.2rem;
+}
+
+#white-overlay {
+    background-color: hsla(0, 0%, 100%, .8);
+    opacity: 0;
+    transition: opacity .5s;
+    z-index: 1;
+}
+
+#div-side-nav {
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: #202023;
+    overflow-x: hidden;
+    transition: .5s;
+    width: 0px;
+    margin-top: 50px;
+}
+
+#sec-nav-userless {
+    background-color: #202023;
+}
+
+#sec-nav-userless .container-fluid {
+    padding: 0;
+    width: 80%;
+    height: 50px;
+}
+
+#icon-flickr_logo_dots {
+    width: 6.2rem;
+}
+
+#div-nav-items {
+    display: flex;
+    align-items: center;
+    margin: 0 auto 0 0;
+}
+
+#div-user-less-search #search-box {
+    opacity: .8;
+    color: #000;
+}
+
+#div-user-less-search #search-box::placeholder {
+    color: #a7a7a7;
+}
+
+#div-user-less-search #search-box:focus-visible {
+    opacity: 1;
+}
+
+#div-user-less-search #close-search-icon {
+    background: #fff0 url('../../images/icon-close-light.png') no-repeat center center;
+    background-size: 24px 24px;
+    opacity: 1;
+}
+
+#div-user-less-search #search-icon-sm {
+    background-size: 24px 24px;
+}
+
+#div-user-less-search {
+    width: 20%;
+    transition: width 1s ease-in-out;
+}
+
+#upload-icon {
+    background: rgba(255, 255, 255, 0) url('../../images/upload-data-to-cloud.png') no-repeat center center;
+    background-size: 36px 36px;
+    width: 3rem;
+    margin: auto 0;
+}
+
+#div-side-nav-btn {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    #div-user-less-search #search-icon-sm {
+        margin-left: 85%;
+    }
+
+    #div-user-less-search #search-box {
+        color: #fff;
+        background-color: #000;
+    }
+
+    #div-user-less-search #search-icon {
+        background: #fff0 url('../../images/icon-light.png') no-repeat center center;
+        background-size: 22px 22px;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 991.98px) {
+
+    .sign-out {
+        padding: .4rem 1.2rem;
+    }
+
+    .sign-out,
+    #log-in {
+        font-size: 0.825rem;
+    }
+
+    #sec-nav-userless .container-fluid {
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    #div-side-nav-btn {
+        display: block;
+    }
+
+    #div-nav-items {
+        display: none;
+    }
+
+    #div-user-less-search {
+        display: flex !important;
+        margin-left: auto !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+
+    #log-in,
+    #div-upload {
+        display: none !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #div-user-less-search #search-icon-sm {
+        margin-left: 70%;
+        width: 3rem;
+    }
+
+
+}
