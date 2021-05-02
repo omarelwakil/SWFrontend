@@ -1,0 +1,7 @@
+
+.bg {
+   background-image: url('../../images/SignUp-LoginBG.jpg');
+   height: 100vh;
+   background-position: bottom;
+   background-size: cover;
+}
