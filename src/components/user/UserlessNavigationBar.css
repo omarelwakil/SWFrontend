@@ -46,6 +46,10 @@ body {
     padding-left: 1.2rem;
 }
 
+.fixed-height {
+    height: 50px;
+}
+
 #white-overlay {
     background-color: hsla(0, 0%, 100%, .8);
     opacity: 0;
@@ -67,6 +71,7 @@ body {
 
 #sec-nav-userless {
     background-color: #202023;
+    z-index: 999999999999;
 }
 
 #sec-nav-userless .container-fluid {
