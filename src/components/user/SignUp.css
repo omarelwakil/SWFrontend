@@ -5,3 +5,13 @@
    background-position: bottom;
    background-size: cover;
 }
+
+form {
+   
+   background-color: white;
+   position: absolute;
+   top: 20%;
+   left: 20%;
+   padding: 30px;
+  
+}
