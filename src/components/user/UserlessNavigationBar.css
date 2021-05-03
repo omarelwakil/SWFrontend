@@ -178,7 +178,6 @@ body {
 
 @media (max-width: 767.98px) {
 
-    #log-in,
     #div-upload {
         display: none !important;
     }
