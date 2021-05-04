@@ -1,9 +1,6 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 
-import { Link } from 'react-router-dom';
-
-
 import './LandingNavigationBar.css';
 
 function LandingNavigationBar() {
@@ -12,7 +9,7 @@ function LandingNavigationBar() {
             <div className="container-fluid">
                 <div className="row position-relative">
                     <div id="div-logo" className="col-lg-1 col-md-2 col-3">
-                        <Link to="/">
+                        <a href="/">
                             <svg viewBox="0 0 204 45" id="icon-flickr_logo_dots">
                                 <g fill="none" fillRule="evenodd">
                                     <path fill="#FF0084"
@@ -26,7 +23,7 @@ function LandingNavigationBar() {
                                     </path>
                                 </g>
                             </svg>
-                        </Link>
+                        </a>
                     </div>
                     <div id="div-search" className="col-lg-9 col-md-6 col-7 pe-md-0 pe-2">
                         <div className="position-relative inner-div-search">
@@ -41,18 +38,18 @@ function LandingNavigationBar() {
                         </div>
                     </div>
                     <div id="div-login" className="col-lg-1 col-md-2 col-2 p-0 ps-lg-4">
-                        <Link to="/login"
+                        <a href="/login"
                             className="w-100 d-flex justify-content-center align-items-center text-decoration-none text-white"
                             id="log-in">
                             Log In
-                        </Link>
+                        </a>
                     </div>
                     <div id="div-signup" className="col-lg-1 col-md-2 ps-0 d-none d-md-block">
-                        <Link to="/sign-up"
+                        <a href="/sign-up"
                             className="bg-white rounded hyperlink-setup w-100 text-decoration-none text-black d-inline-block text-center d-flex align-items-center justify-content-center"
                             id="sign-up">
                             Sign Up
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
