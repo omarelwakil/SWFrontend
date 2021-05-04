@@ -1,0 +1,140 @@
+#main{
+                    width: 975px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: left;
+                    padding-top: 0%;
+                    padding-left: 0;
+                    padding-right: 0;
+                    margin-bottom: -500px;
+                    z-index: 1;
+                    position: relative;
+
+}
+p {
+                    margin: 0%;
+                    padding: 0%;
+                    display: block;
+                    font-size: 12px;
+                }           
+#main-sidebar {
+                   float: left;
+                   width: 200px;
+                   min-height: 600px;
+                   margin-top: 20px;
+                   padding-right: 5px;
+                   border-right: 1px solid #dbdbdb;
+               }
+#main-sidebar ul {
+                   margin: 4px 0 25px;
+                   padding: 0%;
+                   list-style-type: none;
+               }           
+#main-sidebar ul li {
+                   font-size: 15.18px;
+                   line-height: 30.35px;
+                   padding: 3px 0;
+                   border-bottom: 1px solid #dbdbdb;
+                   list-style-type: none;
+               }                        
+#main-sidebar h3 {
+                   font-size: 16px;
+                   font-weight: bold;
+                   margin:0 0 10px;
+                   padding: 0;
+               }  
+#main-sidebar p{
+                    margin-bottom: 26px;
+                    font-size: 14px;
+                    line-height: 22px;               
+}                                  
+#main-body {
+                   float: left;
+                   width: 600px;
+                   margin-left: 60px;
+                   display: block;
+               } 
+#main-body h1 {
+                   margin: 0 0 16px;
+                   line-height: 29px;
+                   color:#ff0084;
+                   font-size: 24px;
+                   font-weight: bold;
+                   padding: 25px 0 0;
+               }
+#main-body h2 {
+                   margin: 16px 0 10px;
+                   font-size: 20px;
+                   line-height: 25px;
+                   padding: 0;
+               }   
+#main-body blockquote {
+                   margin: 16px 40px;
+                   padding: 0%;
+               }   
+#main-body h3 {
+                   line-height: 32px;
+                   display: block;
+                   font-size: 16px;
+                   margin-bottom: 10px;
+                   color: #000
+               }   
+#main-body p {
+                   margin: 12px 0;
+                   font: normal 14px/16px;
+                   display: block;
+               }
+#signup-block {
+                    margin: 28px 0 26px;
+                    text-align: center;
+                    line-height: 30.35px;
+                    padding: 3px 0;
+                    display: block;
+               }  
+#signup-block #mouse-over {
+                     list-style-type: none;
+               }   
+#team-table{        
+                    margin-left: -15px;     
+     
+     }
+#team-table p{
+          font-size: 9px;
+          color: #999;
+          font-size:smaller;
+          white-space: nowrap;               
+     }
+#team-table img{
+          vertical-align: middle;               
+     }
+#team-table img:hover{
+                       border-bottom-style: solid;
+                       border-bottom-color: #0063dc;
+                       border-image-outset: 0 0 5px;  
+     }                                             
+.pink {
+                    color: #ff0084;
+                }                                                                             
+blockquote h3 b.number {
+                    color: #ff0084;
+                }       
+a:link {
+    text-decoration: none;
+    color: #0063dc;
+}                     
+
+#signup-block img {
+    border: 0;
+    width: 193px;
+    height: 39px;
+    position:relative; left:-10px; top: 1px;
+} 
+#ul
+{
+    list-style-type: none;
+}   
+#mouse-over a:hover{
+background-color: #0063dc;
+color: white;
+
+}
