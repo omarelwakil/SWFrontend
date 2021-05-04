@@ -3,13 +3,19 @@ import { Link } from 'react-router-dom';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import '../static/LandingNavigationBar.css';
 import './UserlessNavigationBar.css';
 
+import UserImage from '../../images/usericon.png';
+
 function UserlessNavigationBar() {
 
     const [isHamburger, setIcon] = useState(true);
+    const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    console.log(isLoggedIn);
+
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
         if (widthSize === "0px" || widthSize === "") {
@@ -32,7 +38,7 @@ function UserlessNavigationBar() {
     }
 
     return (
-        <div>
+        <div id="global-nav">
             <div id="sec-nav-userless" className="position-fixed w-100">
                 <div className="container-fluid d-flex align-items-center">
                     <div id="div-side-nav-btn" className="me-4">
@@ -60,8 +66,22 @@ function UserlessNavigationBar() {
                     </div>
                     <div id="div-nav-items">
                         <nav className="nav ps-3">
-                            <Link className="nav-link text-white mx-1 fw-500" to="/explore">Explore</Link>
-                            <Link className="nav-link text-white mx-1 fw-500" to="/photos/tags">Trending</Link>
+                            {!isLoggedIn === null ? null :
+                                <div className="dropdown">
+                                    <Link className="nav-link text-white mx-1 fw-500 on-hover-opacity" to="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</Link>
+                                    <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><Link className="dropdown-item text-black fs-7" to="/people/id">About</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/photos/id">Photostream</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/people/id/albums">Albums</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/people/id/favorites">Faves</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/people/id/galleries">Galleries</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/groups">Groups</Link></li>
+                                        <li><Link className="dropdown-item text-black fs-7" to="/cameraroll">Camera Roll</Link></li>
+                                    </ul>
+                                </div>
+                            }
+                            <Link className="nav-link text-white mx-1 fw-500 on-hover-opacity" to="/explore">Explore</Link>
+                            <Link className="nav-link text-white mx-1 fw-500 on-hover-opacity" to="/photos/tags">Trending</Link>
                         </nav>
                     </div>
                     <div id="div-user-less-search" className="position-relative">
@@ -75,24 +95,66 @@ function UserlessNavigationBar() {
                             id="search-icon-sm" value="" />
                     </div>
                     <div id="div-upload" className="d-flex justify-content-center">
-                        <input type="button" id="upload-icon" className="bg-transparent border-0 ms-4" value="" />
+                        <input type="button" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity" value="" />
                     </div>
-                    <Link to="/login"
-                        className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
-                        id="log-in">
-                        Log In
-                </Link>
-                    <Link to="/sign-up"
-                        className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
-                        id="sign-up-btn">
-                        Sign Up
-                </Link>
+                    {!isLoggedIn === null ?
+                        <Link to="/login"
+                            className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
+                            id="log-in">
+                            Log In
+                        </Link> :
+                        <div className="dropdown">
+                            <button id="notification-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" className="d-flex justify-content-center align-items-center text-decoration-none bg-transparent border-0 on-hover-opacity ms-md-0 ms-2">
+                                <NotificationsIcon className="text-white" style={{ fontSize: 30 }} />
+                            </button>
+                            <div id="user-notify-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="notification-btn">
+                                <span className="notification-text fw-500">Notifications</span>
+                                <div className="dropdown-divider"></div>
+                                <div id="no-recent-notify" className="d-flex justify-content-center align-items-center">
+                                    <h4 className="text-muted text-center px-5">When you have new notifications, they’ll appear here.</h4>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    {!isLoggedIn === null ?
+                        <Link to="/sign-up"
+                            className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
+                            id="sign-up-btn">
+                            Sign Up
+                        </Link> :
+                        <div id="user-settings" className="dropdown ms-2">
+                            <img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
+                            <div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
+                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {"{username}"}!</span>
+                                <span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English</span>
+                                <div className="dropdown-divider"></div>
+                                <Link className="dropdown-item text-black fs-7" to="/account">Settings</Link>
+                                <Link className="dropdown-item text-black fs-7" to="/help">Help</Link>
+                                <button className="dropdown-item text-black fs-7">Log out</button>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div id="div-side-nav" className="h-100 position-fixed pt-2">
-                    <Link className="d-block text-decoration-none text-white side-bar-items" to="/log-in">Log In</Link>
+                    {!isLoggedIn === null ?
+                        <Link className="d-block text-decoration-none text-white side-bar-items" to="/log-in">Log In</Link> :
+                        <div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos/userid">Photostream</Link>
+                            <div className="my-2"></div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos/userid/albums">Albums</Link>
+                            <div className="my-2"></div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos/userid/favorites">Favorites</Link>
+                            <div className="my-2"></div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos/userid/galleries">Galleries</Link>
+                            <div className="my-2"></div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/groups">Groups</Link>
+                            <div className="my-2"></div>
+                            <Link className="d-block text-decoration-none text-white side-bar-items" to="/people/id">About</Link>
+                        </div>
+                    }
                     <hr className="text-white" />
                     <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos">Explore</Link>
-                    <br className="m-hr" />
+                    <div className="my-2"></div>
                     <Link className="d-block text-decoration-none text-white side-bar-items" to="/photos/tags">Trending</Link>
                     <hr className="text-white" />
                     <div className="row mb-2">
