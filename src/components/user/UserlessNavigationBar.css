@@ -2,6 +2,20 @@ body {
     margin: 0;
 }
 
+.on-hover-opacity {
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+}
+
+.on-hover-opacity:hover {
+    opacity: .7;
+}
+
+.dropdown-item:active,
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
 .fw-500 {
     font-weight: 500 !important;
 }
@@ -48,6 +62,38 @@ body {
 
 .fixed-height {
     height: 50px;
+}
+
+.notification-text {
+    display: block;
+    width: 100%;
+    padding: .25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #000;
+    text-align: inherit;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+}
+
+#username {
+    white-space: nowrap;
+}
+
+#user-notify-popup {
+    width: 400px;
+    top: 6px !important;
+    height: 400px;
+}
+
+#user-settings-popup {
+    top: 6px !important;
+    width: 300px;
+}
+
+#no-recent-notify {
+    margin: 33% auto;
 }
 
 #white-overlay {
@@ -178,14 +224,21 @@ body {
 
 @media (max-width: 767.98px) {
 
+    #sec-nav-userless #log-in,
     #div-upload {
         display: none !important;
+    }
+
+    #user-notify-popup {
+        width: 98vw;
+        right: 1vw !important;
+        left: 1vw !important;
     }
 }
 
 @media (max-width: 575.98px) {
     #div-user-less-search #search-icon-sm {
-        margin-left: 70%;
+        margin-left: 67%;
         width: 3rem;
     }
 
