@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import axios from 'axios';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -10,7 +12,6 @@ import './UserlessNavigationBar.css';
 import UserImage from '../../images/usericon.png';
 
 function UserlessNavigationBar() {
-
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     console.log(isLoggedIn);
@@ -34,6 +35,25 @@ function UserlessNavigationBar() {
             document.getElementById("white-overlay").style.opacity = "0";
             document.getElementById("white-overlay").classList.remove("w-100");
         }
+    }
+
+    const UserLogOut = () => {
+        const accessToken = localStorage.getItem("accessToken");
+        axios.defaults.baseURL = "https://c22cc931-091d-4d2e-9b91-df72a4912d31.mock.pstmn.io";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        axios.post('/register/logOut')
+            .then((response) => {
+                console.log(response.data.message);
+                localStorage.clear();
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    console.log(error.response.data.message);
+                    localStorage.clear();
+                    window.location.href = "/login";
+                }
+            });
     }
 
     return (
@@ -65,7 +85,7 @@ function UserlessNavigationBar() {
                     </div>
                     <div id="div-nav-items">
                         <nav className="nav ps-3">
-                            {!isLoggedIn === null ? null :
+                            {isLoggedIn === null ? null :
                                 <div className="dropdown">
                                     <a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</a>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -96,7 +116,7 @@ function UserlessNavigationBar() {
                     <div id="div-upload" className="d-flex justify-content-center">
                         <input type="button" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity" value="" />
                     </div>
-                    {!isLoggedIn === null ?
+                    {isLoggedIn === null ?
                         <a href="/login"
                             className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
                             id="log-in">
@@ -115,7 +135,7 @@ function UserlessNavigationBar() {
                             </div>
                         </div>
                     }
-                    {!isLoggedIn === null ?
+                    {isLoggedIn === null ?
                         <a href="/sign-up"
                             className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
                             id="sign-up-btn">
@@ -129,13 +149,13 @@ function UserlessNavigationBar() {
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-black fs-7" href="/account">Settings</a>
                                 <a className="dropdown-item text-black fs-7" href="/help">Help</a>
-                                <button className="dropdown-item text-black fs-7">Log out</button>
+                                <button className="dropdown-item text-black fs-7" onClick={UserLogOut}>Log out</button>
                             </div>
                         </div>
                     }
                 </div>
                 <div id="div-side-nav" className="h-100 position-fixed pt-2">
-                    {!isLoggedIn === null ?
+                    {isLoggedIn === null ?
                         <a className="d-block text-decoration-none text-white side-bar-items" href="/log-in">Log In</a> :
                         <div>
                             <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid">Photostream</a>
