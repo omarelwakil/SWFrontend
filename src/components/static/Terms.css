@@ -1,0 +1,106 @@
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+#terms {
+    text-align: left;
+  }
+
+  #terms .heading p{
+      background-color: white;
+      padding: 2rem;
+      font-size: 1.5rem;
+      font-weight: 1;
+  }
+
+  #terms .heading-title p{
+    padding: 2rem;
+    padding-bottom: 1rem;
+    font-size: 1.75rem;
+    font-weight: 350;
+}
+
+#terms .heading-title-i p{
+    padding: 1rem 2rem;
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 380;
+}
+
+#terms .bg-colored {
+    background-color: #f3f5f6;
+   
+}
+
+#terms .content-terms p{
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+}
+
+#terms .content-terms ol li{
+    padding: 0.5rem 0;
+    margin-left: 2rem;
+    font-size: 1.5rem;
+}
+
+#terms .content-terms ul{
+    padding: 0.5rem 2rem;
+    padding-left: 5rem;
+    font-size: 0.9rem;
+}
+#terms .content-terms li{
+    padding: 0.5rem 0;
+}
+
+#terms .content-terms ol .inside-list li{
+    font-size: 1.1rem;
+}
+
+#terms .content-terms ol .inside-list ul li {
+    font-size: 0.9rem;
+    margin-left: 0;
+}
+
+
+
+#terms .content-terms ol .inside-list-i li{
+    font-size: 0.9rem;
+    margin-left: 0;
+}
+
+
+
+#terms .content-terms ol .inside-list ul p {
+    font-size: 0.9rem;
+    padding-left: 0;
+}
+
+#terms .content-terms ol .small-heading {
+    font-size: 1.1rem;
+}
+
+
+
+#terms .content-privacy .terms-list{
+    padding: 0.5rem 0;
+    padding-left: 3rem;
+}
+#terms .content-terms .other-data{
+    padding: 0rem 0;
+    padding-left: 2rem;
+}
+
+#terms .flicker-contact-us{
+    padding: 0.5rem 0;
+    padding-left: 2rem;
+    font-size: 2rem;
+    padding-bottom: 5rem;
+}
+
+#terms .flicker-contact-us p{
+    font-size: 0.9rem;
+}
+
+#terms a {
+    color:#006dac;
+}

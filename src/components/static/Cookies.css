@@ -1,0 +1,65 @@
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 4rem;
+}
+#cookies {
+    text-align: left;
+  }
+
+  #cookies .heading p{
+      background-color: white;
+      padding: 2rem;
+      font-size: 1.5rem;
+      font-weight: 1;
+  }
+
+  #cookies .heading-title p{
+    padding: 2rem;
+    padding-bottom: 1rem;
+    font-size: 1.75rem;
+    font-weight: 350;
+}
+
+#cookies .heading-title-i p{
+    padding: 1rem 2rem;
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 380;
+}
+
+#cookies .bg-colored {
+    background-color: #f3f5f6;
+   
+}
+
+#cookies .content-cookies p{
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+}
+
+#cookies .content-cookies ul{
+    padding: 0.5rem 2rem;
+    padding-left: 5rem;
+    font-size: 0.9rem;
+}
+#cookies .content-cookies li{
+    padding: 0.5rem 0;
+}
+#cookies .content-cookies .inside-list{
+    padding: 0.5rem 0;
+    padding-left: 3rem;
+}
+
+#cookies .content-cookies .bigger-list{
+    font-size:1.1rem;
+}
+
+#cookies .content-cookies .bigger-list p{
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+} 
+#cookies a {
+    color:#006dac;
+}

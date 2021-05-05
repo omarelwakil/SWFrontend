@@ -2,19 +2,19 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
-import SignUp from '../components/user/SignUp';
+import Cookies from '../components/static/Cookies';
 
-function SignUpPage() {
+function CookiesPage() {
     return (
         <BrowserRouter>
             <div>
-                <title>Flickr Sign-Up</title>
+                <title>Help | Flickr</title>
                 <UserlessNaviagationBar />
-                <SignUp />
+                <Cookies />
                 {/*footer*/}
             </div>
         </BrowserRouter>
     );
 }
 
-export default SignUpPage;
+export default CookiesPage;

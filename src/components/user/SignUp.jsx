@@ -81,9 +81,9 @@ function SignUp(){
                       error = {passwordError => setpassWordError(passwordError)}
                      />
                      <button className ="btn-sign" onClick={Submit}>Sign Up</button>
-                     <p className="sign-policy">By signing up, you agree with Flickr's   <a href="">Terms of Services</a>  and <a href="">Privacy Policy.</a> </p>
+                     <p className="sign-policy">By signing up, you agree with Flickr's   <a href="/help/terms">Terms of Services</a>  and <a href="/help/privacy">Privacy Policy.</a> </p>
                      <hr></hr>
-                     <p className="sign-already-memeber">Already a Flickr member? <a href="">Log in here.</a> </p>
+                     <p className="sign-already-memeber">Already a Flickr member? <a href="/log-in">Log in here.</a> </p>
               </form>
         </div>
    </div>);
