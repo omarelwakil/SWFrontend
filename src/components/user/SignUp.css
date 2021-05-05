@@ -1,17 +1,101 @@
-
 .bg {
    background-image: url('../../images/SignUp-LoginBG.jpg');
-   height: 100vh;
+   height: calc(100vh - 50px);
    background-position: bottom;
    background-size: cover;
 }
 
-form {
-   
-   background-color: white;
-   position: absolute;
-   top: 20%;
-   left: 20%;
-   padding: 30px;
+
+#sign-up.container-fluid {
+   width: 420px;
+   padding-top: 0;
+   font-weight: normal;
   
+}
+
+
+form { 
+   background-color: white;
+   padding: 24px;
+   padding-top: 0;
+}
+
+#sign-up p {
+   text-align: center;
+   color:black;
+   font-size: 1.2rem;
+}
+
+#sign-up #div-logo{
+   display: block;
+   margin: auto;
+}
+
+.btn-sign {
+   background-color: #128fdc;
+   color: #fff;
+   width: 101%;
+   padding: 0.4rem ;
+   outline: 0;
+   border: 1px solid #128fdc;
+   border-radius: 4px;
+   font-size: 1rem;
+   margin: 1rem 0.3rem;
+   text-align: center;
+
+}
+
+.btn-sign:hover {
+   filter: brightness(105%);
+}
+
+#sign-up hr {
+   height: 0.0625rem;
+   background-color: grey;
+
+}
+
+#sign-up .sign-policy {
+   font-size: 0.75rem;
+   color:#898989;
+
+}
+
+#sign-up .sign-already-memeber {
+   font-size: 0.875rem;
+}
+
+
+
+@media (max-width: 1024px) and (min-width: 993px) {
+   #div-logo {
+      width: 10%;
+   }
+}
+
+@media (max-width: 767.98px) {
+
+   #sign-up #div-logo {
+       padding-left: 0;
+       width: 10%;
+   }
+
+}
+
+
+@media (max-width: 420px) {
+   #sign-up #div-logo {
+      padding-left: 0;
+      width: 10%;
+  }
+   #sign-up.container-fluid {
+      width:100%;
+      padding:0;
+   }
+}
+
+#sign-up a{
+   text-decoration:none;
+   color: #006dac;
+
 }
