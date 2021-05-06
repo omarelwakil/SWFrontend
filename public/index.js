@@ -38,4 +38,18 @@ $(document).ready(function () {
             $("#search-icon").removeClass("d-block");
         }
     });
+    // Landing Page Slider 
+    function showHide(){
+        var showToHide = $(".landing-carousel-img.show");
+        var hideToShow = $(".landing-carousel-img.show").next();
+        if(hideToShow.length === 0)
+        {
+            hideToShow = $(".landing-carousel-img.hide");
+        }
+        showToHide.removeClass("show");
+        showToHide.addClass("hide");
+        hideToShow.removeClass("hide");
+        hideToShow.addClass("show");        
+    }
+    setInterval(showHide,9000);
 });

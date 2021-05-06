@@ -1,0 +1,88 @@
+.bg {
+    background-image: url('../../images/SignUp-LoginBG.jpg');
+    height: calc(100vh - 50px);
+    background-position: bottom;
+    background-size: cover;
+}
+
+#login.container-fluid {
+    width: 420px;
+    padding-top: 20px;
+    font-weight: normal;
+}
+
+#login form {
+    background-color: white;
+    align-self: center;
+    display: block;
+    margin: auto;
+    position: relative;
+    padding: 1.5rem;
+    border-radius: .25rem;
+}
+
+#login p {
+    text-align: center;
+    color: black;
+    font-size: 1.2rem;
+}
+
+#login #div-logo {
+    display: block;
+    margin: auto;
+}
+
+.btn-login {
+    background-color: #128fdc;
+    color: #fff;
+    width: 101%;
+    padding: 0.4rem;
+    outline: 0;
+    border: 1px solid #128fdc;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin: 1rem 0.3rem;
+    text-align: center;
+}
+
+.btn-login:hover {
+    filter: brightness(105%);
+}
+
+#login hr {
+    height: 0.0625rem;
+    background-color: grey;
+}
+
+#login .login-not-memeber {
+    font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) and (min-width: 993px) {
+    #div-logo {
+        width: 10%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #login #div-logo {
+        padding-left: 0;
+        width: 10%;
+    }
+}
+
+@media (max-width: 420px) {
+    #login #div-logo {
+        padding-left: 0;
+        width: 10%;
+    }
+    #login.container-fluid {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+#login a {
+    text-decoration: none;
+    color: #006dac;
+}

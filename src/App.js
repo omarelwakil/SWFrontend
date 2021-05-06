@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
 import GuidelinesPage from './pages/GuidelinesPage';
+import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import AboutPage from './pages/AboutPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -14,6 +15,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/help/guidelines" component={GuidelinesPage} />
+        <Route exact path="/login" component={LoginPage} />
         <Route exact path="/sign-up" component={SignUpPage} />
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/help/privacy" component={PrivacyPage} />

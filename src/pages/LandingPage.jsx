@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import LandingNavigationBar from '../components/static/LandingNavigationBar';
+import Footer from '../components/static/Footer';
+import LandingSlider from '../components/static/LandingSlider';
 
 function LandingPage() {
     return (
@@ -9,8 +11,8 @@ function LandingPage() {
             <div>
                 <title>Find your inspiration. | Flickr</title>
                 <LandingNavigationBar />
-                {/* 1) Needs to add Landing Page Content
-                2) Needs to add a Footer */}
+                <LandingSlider />
+				<Footer />
             </div>
         </BrowserRouter>
     );
