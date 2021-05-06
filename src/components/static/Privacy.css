@@ -1,26 +1,27 @@
-.container-fluid {
+#privacy.container-fluid {
     padding-left: 0;
     padding-right: 0;
 }
+
 #privacy {
     text-align: left;
-  }
+}
 
-  #privacy .heading p{
-      background-color: white;
-      padding: 2rem;
-      font-size: 1.5rem;
-      font-weight: 1;
-  }
+#privacy .heading p {
+    background-color: white;
+    padding: 2rem;
+    font-size: 1.5rem;
+    font-weight: 1;
+}
 
-  #privacy .heading-title p{
+#privacy .heading-title p {
     padding: 2rem;
     padding-bottom: 1rem;
     font-size: 1.75rem;
     font-weight: 350;
 }
 
-#privacy .heading-title-i p{
+#privacy .heading-title-i p {
     padding: 1rem 2rem;
     padding-top: 1rem;
     font-size: 1.25rem;
@@ -29,41 +30,45 @@
 
 #privacy .bg-colored {
     background-color: #f3f5f6;
-   
+
 }
 
-#privacy .content-privacy p{
+#privacy .content-privacy p {
     padding: 0.5rem 2rem;
     font-size: 0.9rem;
 }
 
-#privacy .content-privacy ul{
+#privacy .content-privacy ul {
     padding: 0.5rem 2rem;
     padding-left: 5rem;
     font-size: 0.9rem;
 }
-#privacy .content-privacy li{
+
+#privacy .content-privacy li {
     padding: 0.5rem 0;
 }
-#privacy .content-privacy .inside-list{
+
+#privacy .content-privacy .inside-list {
     padding: 0.5rem 0;
     padding-left: 3rem;
 }
-#privacy .content-privacy .other-data{
+
+#privacy .content-privacy .other-data {
     padding: 0rem 0;
     padding-left: 2rem;
 }
 
-#privacy .flicker-contact-us{
+#privacy .flicker-contact-us {
     padding: 0.5rem 0;
     padding-left: 2rem;
     font-size: 2rem;
     padding-bottom: 5rem;
 }
-#privacy .flicker-contact-us p{
+
+#privacy .flicker-contact-us p {
     font-size: 0.9rem;
 }
 
 #privacy a {
-    color:#006dac;
+    color: #006dac;
 }
