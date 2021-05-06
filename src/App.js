@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
 import GuidelinesPage from './pages/GuidelinesPage';
+<<<<<<< Updated upstream
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import AboutPage from './pages/AboutPage';
@@ -11,11 +12,15 @@ import CookiesPage from './pages/CookiesPage';
 import TrendingPage from './pages/Trending/Trending';
 import SettingsPage from './pages/SettingsPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+=======
+import ExplorePage from './pages/ExplorePage';
+>>>>>>> Stashed changes
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
+<<<<<<< Updated upstream
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/help/guidelines" component={GuidelinesPage} />
         <Route exact path="/login" component={LoginPage} />
@@ -29,6 +34,11 @@ function App() {
         <Route exact path="/photos/tags-day" component={TrendingPage} />
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
+=======
+        <Route exact path="/"           component={LandingPage} />
+        <Route exact path="/guidelines" component={GuidelinesPage} />
+        <Route exact path="/explore"    component={ExplorePage} />
+>>>>>>> Stashed changes
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>

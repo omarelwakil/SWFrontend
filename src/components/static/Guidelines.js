@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import { Link } from 'react-router-dom';
-
 import './Guidelines.css';
 
 class Guidelines extends Component {
@@ -24,7 +22,7 @@ class Guidelines extends Component {
                     <section>
                       <h2 className="inner-title">Flickr Community guidelines</h2>
                       <p className="section-message fw-bold">Flickr accounts are intended for members to share original photos and video that they themselves have created.</p>
-                      <p className="section-message">These Community Guidelines are here to help you understand what it means to be a member of Flickr. Don't forget that your use of Flickr is subject to these Community Guidelines and our <Link to="/terms">Terms of Service</Link>.</p>
+                      <p className="section-message">These Community Guidelines are here to help you understand what it means to be a member of Flickr. Don't forget that your use of Flickr is subject to these Community Guidelines and our <a href="https://www.flickr.com/help/terms">Terms of Service</a>.</p>
                     </section>
                     <section className="help-section">
                       <p className="section-title fw-bold">Things to do</p>
@@ -74,11 +72,11 @@ class Guidelines extends Component {
                           <p className="section-message fw-bold">Don't forget to moderate your content</p>
                           <p className="section-message">Set the appropriate content filters for your images and videos. In general, anything containing mature content (e.g. nudity, gore) needs to be moderated appropriately. This includes your buddy icon and
                             cover
-                            photo. Also, sexually explicit videos (e.g. pornography) are not permitted. Videos of artistic nature or educational purpose that contain nudity may be allowed under the moderate safety setting. For additional details check <Link to="/safety">here</Link>.</p>
+                            photo. Also, sexually explicit videos (e.g. pornography) are not permitted. Videos of artistic nature or educational purpose that contain nudity may be allowed under the moderate safety setting. For additional details check <a href="https://help.flickr.com/en_us/set-the-safety-levels-of-your-flickr-content-or-account-BJlsk6mjym">here</a>.</p>
                         </li>
                         <li>
                           <p className="section-message fw-bold">Don’t forget to set the appropriate content type</p>
-                          <p className="section-message">Set the appropriate content type for your images. In general, anything that is not a photo or video should be classified as a Screenshot or Art/Illustration. For additional details check <Link to="/contenttype">here</Link>.</p>
+                          <p className="section-message">Set the appropriate content type for your images. In general, anything that is not a photo or video should be classified as a Screenshot or Art/Illustration. For additional details check <a href="https://flickr.kustomer.help/en_us/set-the-content-type-of-your-flickr-content-rkVAvyD1E">here</a>.</p>
                         </li>
                         <li>
                           <p className="section-message fw-bold">Don’t harm children</p>
@@ -101,7 +99,7 @@ class Guidelines extends Component {
                         </li>
                         <li>
                           <p className="section-message fw-bold">Don’t violate users’ privacy.</p>
-                          <p className="section-message">Flickr has a zero tolerance policy towards distributing sexually graphic images of another person without that person’s consent (Non-Consensual Pornography). If you’re a victim, please go <Link to="/support">here</Link> for 24-hour support, and <Link to="/badass-army">here</Link> to meet the Badass Army.</p>
+                          <p className="section-message">Flickr has a zero tolerance policy towards distributing sexually graphic images of another person without that person’s consent (Non-Consensual Pornography). If you’re a victim, please go <a href="https://www.cybercivilrights.org/ccri-crisis-helpline/">here</a> for 24-hour support, and <a href="https://badassarmy.org/gethelp/">here</a> to meet the Badass Army.</p>
                         </li>
                         <li>
                           <p className="section-message fw-bold">Don’t use hate speech.</p>
@@ -132,9 +130,9 @@ class Guidelines extends Component {
                       <p className="section-message">If you don't feel that you can abide by our Community Guidelines as outlined above, maybe Flickr isn't for you. We've crafted these guidelines to ensure that everyone within the Flickr community
                         has
                         a good time.</p>
-                      <p className="section-message">You may also want to check out our <Link to="/help">Help Center</Link> and <Link to="/privacy">Privacy Policy</Link>. If you ever have any questions or comments,
+                      <p className="section-message">You may also want to check out our <a href="http://help.flickr.com">Help Center</a> and <a href="https://www.smugmug.com/about/privacy-flickr">Privacy Policy</a>. If you ever have any questions or comments,
                         we'd
-                        love to hear from you. Please feel free to drop us a line via our <Link to="/contact">webform</Link>.</p>
+                        love to hear from you. Please feel free to drop us a line via our <a href="https://help.flickr.com/contact">webform</a>.</p>
                       <p className="section-message fw-bold">The Flickreenos, Dec 17, 2018</p>
                     </section>
                   </section>
