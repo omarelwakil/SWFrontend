@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './UserSettings.css';
 
 import userIcon from '../../images/usericon.png'
 
 function UserSettings() {
+    const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    if (isLoggedIn === null) {
+        localStorage.clear();
+        window.location.href = "/login";
+    }
     return (
         <div id="account-settings">
             <div className="container-fluid">
