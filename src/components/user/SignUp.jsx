@@ -39,7 +39,7 @@ function SignUp(){
           .then((response) => {
               localStorage.setItem("accessToken",response.data.accessToken);
               delete response.data.accessToken;
-              console.log(response.data);
+              //console.log(response.data);
               localStorage.setItem("userData",response.data);
               //To check of 
               setTimeout(() => {window.location.href = "/account";}, 5000);
@@ -111,7 +111,7 @@ function SignUp(){
                      <button className ="btn-sign" onClick={Submit}>Sign Up</button>
                      <p className="sign-policy">By signing up, you agree with Flickr's   <a href="/help/terms">Terms of Services</a>  and <a href="/help/privacy">Privacy Policy.</a> </p>
                      <hr></hr>
-                     <p className="sign-already-memeber">Already a Flickr member? <a href="/log-in">Log in here.</a> </p>
+                     <p className="sign-already-memeber">Already a Flickr member? <a href="/login">Log in here.</a> </p>
               </form>
         </div>
    </div>);
