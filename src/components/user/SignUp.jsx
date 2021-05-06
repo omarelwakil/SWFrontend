@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import FloatingInput from './FloatingInput';
 import FloatingInputPassoword from './FloatingInputPassword';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 import './SignUp.css';
@@ -19,11 +20,37 @@ function SignUp(){
   const [emailError,setEmailError] = useState('true');
   const [password,setPassword] = useState('');
   const [passwordError,setpassWordError] = useState('true');
+  //state for if the email exists
+  const [emailExist,setEmailExist] = useState(false);
 
 
   function Submit(event){
     if(!firstNameError&&!lastNameError&&!ageError&&!emailError&&!passwordError){
       //onClick send a request to api
+      axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+      const data ={
+        email:email,
+        password:password,
+        firstName:firstName,
+        lastName:lastName,
+        age:age
+      };
+      axios.post('/register/signUp',data)
+          .then((response) => {
+              localStorage.setItem("accessToken",response.data.accessToken);
+              delete response.data.accessToken;
+              console.log(response.data);
+              localStorage.setItem("userData",response.data);
+              //To check of 
+              setTimeout(() => {window.location.href = "/account";}, 5000);
+          })
+          .catch((error) => {
+              if (error.response.status === 403) {
+                  console.log(error.response.data.message);
+                  setEmailExist(true);
+                  setTimeout(() => {setEmailExist(false);}, 500);
+              }
+          });
     }
     event.preventDefault();
   }
@@ -73,6 +100,7 @@ function SignUp(){
                        name = "Email address" 
                        value ={email => setEmail(email)}
                        error = {emailError =>setEmailError(emailError)}
+                       emailExist ={emailExist}
                       />
                       <FloatingInputPassoword 
                       type ="password"

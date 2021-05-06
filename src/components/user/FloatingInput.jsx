@@ -58,6 +58,13 @@ function FloatingInput(props){
     //to Apply this After change in second parameters first time , to make the animation and error appear for first time
     // as set State doesn't happen immediaty 
     useEffect(()=> {setErrorAnimate(showError)},[showError]);
+    useEffect(()=>{
+    setShowError(showError || props.emailExist)
+    if(props.emailExist === true)
+    {
+        setErrorMsg("Email exists");
+    }
+    },[showError,props.emailExist]);
     //Update Error Msg and Animation if it is false
     function updateValiation (msg){
        if(showError) {
