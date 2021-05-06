@@ -16,8 +16,10 @@ function Trending() {
   
   //http requests
   useEffect(()=>{
-    axios.get('https://8c50b8cb-d4ba-4271-bb60-ebd5f626d072.mock.pstmn.io/tag/trending')
+    axios.defaults.baseURL = 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io';
+    axios.get('/tag/trending')
       .then(response => {
+        console.log(response);
         console.log(response.data);
       });
   },[]);
