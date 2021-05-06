@@ -3,6 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import SignUp from '../components/user/SignUp';
+import Footer from '../components/static/Footer';
+
 
 function SignUpPage() {
     return (
@@ -11,7 +13,7 @@ function SignUpPage() {
                 <title>Flickr Sign-Up</title>
                 <UserlessNaviagationBar />
                 <SignUp />
-                {/*footer*/}
+                <Footer />
             </div>
         </BrowserRouter>
     );
