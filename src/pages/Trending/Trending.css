@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Proxima Nova, helvetica neue, helvetica, arial, sans-serif;
+  background-color: #f3f5f6;
+}
+
+.custom-container {
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}

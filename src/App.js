@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
+import TrendingPage from './pages/Trending/Trending';
 
 function App() {
   return (
@@ -21,6 +22,11 @@ function App() {
         <Route exact path="/help/privacy" component={PrivacyPage} />
         <Route exact path="/help/terms" component={TermsPage} />
         <Route exact path="/help/cookies" component={CookiesPage} />
+
+        <Route exact path="/photos/tags" component={TrendingPage} />
+        <Route exact path="/photos/tags-day" component={TrendingPage} />
+        <Route exact path="/photos/tags-week" component={TrendingPage} />
+
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>

@@ -1,0 +1,130 @@
+.main {
+  margin-top: 60px; /*Change to margin!!*/
+  margin-bottom: 15px;
+}
+
+.trending-now,
+.trending-week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.trending-text {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  font-weight: 600;
+}
+
+.trending-text h5 {
+  font-size: 14px !important;
+  color: #212124;
+  margin: 14px 0 14px 0;
+  letter-spacing: 0.099ch;
+  line-height: 16px;
+}
+
+.trending-text a {
+  font-size: 14px;
+  cursor: pointer;
+  color: #006dac;
+  text-decoration: none;
+  display: block;
+}
+
+.trending-text.view-all {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.trending-text.view-all a {
+  font-size: 15px;
+  color: #212124;
+}
+.trending-text.view-all a:hover {
+  color: #006dac;
+  text-decoration: underline;
+}
+
+.trending-images {
+  width: 100%;
+  display: grid;
+  gap: 20px 20px;
+}
+
+.trending-now .trending-images {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.trending-week .trending-images {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.most-popular .trending-images {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  /* .main {
+    margin-top: 70px;
+  } */
+
+  .trending-text.view a {
+    display: none;
+  }
+  .trending-text.view a:last-child {
+    display: block !important;
+  }
+
+  .trending-week .trending-images {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .most-popular .trending-images,
+  .trending-now .trending-images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1230px) and (min-width: 769px) {
+  .main {
+    padding-top: 110px;
+  }
+
+  .trending-text.view a {
+    display: none;
+  }
+
+  .trending-text.view a:last-child {
+    display: block !important;
+  }
+
+  .trending-week .trending-images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .most-popular .trending-images,
+  .trending-now .trending-images {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .trending-now .trending-images .imageBox:last-child,
+  .trending-now .trending-images .imageBox:nth-child(5) {
+    display: none;
+  }
+
+  .trending-week .trending-images .imageBox:last-child {
+    display: none;
+  }
+}
+
+/* Utils */
+.flex-start {
+  justify-content: flex-start !important;
+}
