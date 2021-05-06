@@ -4,6 +4,8 @@ import './Trending.css';
 import Navbar from '../../components/Trending/Navbar/Navbar'
 import Main from '../../components/Trending/Main/Main'
 import UserlessNavigationBar from '../../components/user/UserlessNavigationBar'
+import Footer from '../../components/static/Footer';
+
 import fakeData from '../../assets/FakeData/FakeData'
 
 
@@ -43,6 +45,7 @@ function Trending() {
           mostPopular={mostPopular} 
           url={currentUrl} 
           setCurrentUrl={setCurrentUrl}/>
+        <Footer/>
       </div>
     </BrowserRouter>
   );

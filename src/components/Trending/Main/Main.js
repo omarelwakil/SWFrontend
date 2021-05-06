@@ -1,6 +1,6 @@
 import './Main.css';
 import ImageBox from '../ImageBox/ImageBox'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 const Main = (props) => {
@@ -12,7 +12,7 @@ const Main = (props) => {
 
     let main = null;
 
-    if(props.url == mainUrl){
+    if(props.url === mainUrl){
         main = (
             <div>
                 <div className="trending-now">
@@ -82,7 +82,7 @@ const Main = (props) => {
             </div>
         )
     } 
-    else if(props.url == allTrendingNowHref)
+    else if(props.url === allTrendingNowHref)
     {
         main=(
             <div className="trending-now">
@@ -111,7 +111,7 @@ const Main = (props) => {
             </div>
         )
     } 
-    else if(props.url==allTrendingWeekHref){  
+    else if(props.url===allTrendingWeekHref){  
         main=(
             <div className="trending-now">
                 <div className="trending-text flex-start view-all">
