@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import Cookies from '../components/static/Cookies';
+import Footer from '../components/static/Footer';
 
 function CookiesPage() {
     return (
@@ -11,7 +12,7 @@ function CookiesPage() {
                 <title>Help | Flickr</title>
                 <UserlessNaviagationBar />
                 <Cookies />
-                {/*footer*/}
+                <Footer />
             </div>
         </BrowserRouter>
     );

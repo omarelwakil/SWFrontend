@@ -28,6 +28,7 @@
   line-height: 170%;
   font-size: 12pt;
 }
+
 a:not([href]):not([class]) {
   color: #777;
 }
@@ -41,8 +42,13 @@ a:not([href]):not([class]) {
   padding: 12px 18px;
 }
 
+a#navbar-item-tag {
+  color: #777 !important;
+}
+
 .custom-navbar-ul li a:hover,
-.selected {
+.selected,
+#navbar-item-tag.selected {
   color: #222 !important;
   border-bottom: 3px solid #0091dc;
 }
@@ -52,6 +58,7 @@ a:not([href]):not([class]) {
     display: flex;
     justify-content: space-between;
   }
+
   .custom-navbar-ul li {
     width: 50%;
     text-align: center;

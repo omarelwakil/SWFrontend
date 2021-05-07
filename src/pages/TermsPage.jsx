@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import Terms from '../components/static/Terms';
+import Footer from '../components/static/Footer';
 
 function TermsPage() {
     return (
@@ -11,7 +12,7 @@ function TermsPage() {
                 <title>Help | Flickr</title>
                 <UserlessNaviagationBar />
                 <Terms />
-                {/*footer*/}
+                <Footer />
             </div>
         </BrowserRouter>
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Members from "../../Data/Members"
+import './About.css';
 function AboutIMG() {
-
       return ( 
             <div className="container-fluid" id="team-table">
                   <div className= "row justify-content-start">

@@ -39,17 +39,22 @@ $(document).ready(function () {
         }
     });
     // Landing Page Slider 
+    const images = [
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Tree_and_Morning_Mist_Jos_Buurmans.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Mists_of_renfrew_Adam_Gibbs.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Cool_Power_commended-LPOTY_UK_Steve_Cole.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Happy_Birthday_Adam_Iwona_Podlasinska.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Sheep_in_the_woods_II_James_Mills.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Dawn_of_Another_Day_Sky_Matthews.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/benito_druck.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Fantasy_Island_Daniel_Cheong.jpg',
+        'https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Frosch_Bokeh_2_Axel_F.jpg',
+    ]
     function showHide(){
-        var showToHide = $(".landing-carousel-img.show");
-        var hideToShow = $(".landing-carousel-img.show").next();
-        if(hideToShow.length === 0)
-        {
-            hideToShow = $(".landing-carousel-img.hide");
-        }
-        showToHide.removeClass("show");
-        showToHide.addClass("hide");
-        hideToShow.removeClass("hide");
-        hideToShow.addClass("show");        
+        var random = Math.floor(Math.random() * 9);
+        $('#LandingImg').css({
+            "background-image" : "url("+images[random]+")"
+        });     
     }
-    setInterval(showHide,9000);
+    setInterval(showHide,5000);
 });
