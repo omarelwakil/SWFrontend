@@ -19,14 +19,15 @@ function LandingSlider(){
         //     </div>
         // </div>
         <div className="landing-carousel">
-            <img className="landing-carousel-img show" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Cool_Power_commended-LPOTY_UK_Steve_Cole.jpg" alt="1-Cool_Power"/>
+            <div id="LandingImg" className="bg-image bg landing-carousel-img"></div>
+            {/* <img className="landing-carousel-img show" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Cool_Power_commended-LPOTY_UK_Steve_Cole.jpg" alt="1-Cool_Power"/>
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Happy_Birthday_Adam_Iwona_Podlasinska.jpg" alt="2-Cool_Power" />
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Tree_and_Morning_Mist_Jos_Buurmans.jpg" alt="3-Tree_and_Morning"/>
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Mists_of_renfrew_Adam_Gibbs.jpg" alt="4-renfrew"/>
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Cool_Power_commended-LPOTY_UK_Steve_Cole.jpg" alt="1-Cool_Power"/>
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Happy_Birthday_Adam_Iwona_Podlasinska.jpg" alt="2-Cool_Power" />
             <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Tree_and_Morning_Mist_Jos_Buurmans.jpg" alt="3-Tree_and_Morning"/>
-            <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Mists_of_renfrew_Adam_Gibbs.jpg" alt="4-renfrew"/>
+            <img className="landing-carousel-img hide" src="https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Mists_of_renfrew_Adam_Gibbs.jpg" alt="4-renfrew"/> */}
             <h1 className="landing-carousel-heading1">Find your inspiration.</h1>
             <h3 className="landing-carousel-heading3">Join the Flickr community, home to tens of billions of photos and 2 million groups.</h3>
             <a href="/sign-up" className="sign-up-free">Start for free</a>
