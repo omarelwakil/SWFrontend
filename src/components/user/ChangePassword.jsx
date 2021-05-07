@@ -28,7 +28,7 @@ function ChangePassword() {
             }
             axios.defaults.baseURL = "https://c22cc931-091d-4d2e-9b91-df72a4912d31.mock.pstmn.io";
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            axios.post('/register/logOut', data)
+            axios.post('/register/changePassword', data)
                 .then((response) => {
                     console.log(response.data.message);
                     window.location.href = "/";
@@ -68,7 +68,7 @@ function ChangePassword() {
                                 name="New Password"
                                 value={newPassword => setNewPassword(newPassword)}
                                 error={newError => setNewWordError(newError)}
-                                validation = {false}
+                                validation={false}
                             />
                             <input id="submit-change-password" type="submit" className="btn btn-primary fw-bold mt-2" value="Change your Flickr password" onClick={handleChangePassword} />
                             <div className="w-100 d-flex justify-content-center mt-3">
