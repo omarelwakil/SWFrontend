@@ -44,7 +44,6 @@
     border-radius: 3px;
     border: none;
     cursor: pointer;
-    min-width: 200px;
     color: #000;
     background-color: #fff;
     height: 64px;
@@ -52,16 +51,55 @@
     font-size: 24px;
     font-weight: 800;
 }
-.landing-carousel-img{
-    width: 100%;
-    height: 90vh;
-    z-index: 1;
+#LandingImg{
+    background-image: url('https://combo.staticflickr.com/ap/build/images/sohp/2020-top-25/Happy_Birthday_Adam_Iwona_Podlasinska.jpg');
+    height: calc(100vh - 50px);
+    background-position: bottom;
+    background-size: cover;
 }
-.show{
-    opacity: 1;
-    display: block;
+@media (max-width: 768px) {
+    .landing-carousel-heading3{
+        display: none;
+    }
+    .landing-carousel-heading1{
+        font-size: 36px;
+        line-height: 2.2rem;
+    }
+    .sign-up-free{
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        right: 60%;
+        -webkit-box-direction: normal;
+        box-sizing: border-box;
+        display: inline-block;
+        padding: 0 20px;
+        vertical-align: top;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 3px;
+        border: none;
+        cursor: pointer;
+        color: #000;
+        background-color: #fff;
+        height: 64px;
+        width: 177px;
+        line-height: 64px;
+        font-size: 24px;
+        font-weight: 800;
+    }
 }
-.hide{
-    opacity: 0;
-    display: none;
+@media (max-width: 610px) {
+    .sign-up-free{
+        position: absolute;
+        top: 50%;
+        left: 25%;
+    }
+}
+@media (max-width: 600px) {
+    .sign-up-free{
+        position: absolute;
+        top: 50%;
+        left: 33%;
+    }
 }
