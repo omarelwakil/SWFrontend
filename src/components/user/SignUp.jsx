@@ -107,6 +107,7 @@ function SignUp(){
                       name = "Password" 
                       value = {password => setPassword(password)} 
                       error = {passwordError => setpassWordError(passwordError)}
+                      validation = {true}
                      />
                      <button className ="btn-sign" onClick={Submit}>Sign Up</button>
                      <p className="sign-policy">By signing up, you agree with Flickr's   <a href="/help/terms">Terms of Services</a>  and <a href="/help/privacy">Privacy Policy.</a> </p>

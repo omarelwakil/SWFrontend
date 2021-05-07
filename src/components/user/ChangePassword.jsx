@@ -68,6 +68,7 @@ function ChangePassword() {
                                 name="New Password"
                                 value={newPassword => setNewPassword(newPassword)}
                                 error={newError => setNewWordError(newError)}
+                                validation = {false}
                             />
                             <input id="submit-change-password" type="submit" className="btn btn-primary fw-bold mt-2" value="Change your Flickr password" onClick={handleChangePassword} />
                             <div className="w-100 d-flex justify-content-center mt-3">

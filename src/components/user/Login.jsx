@@ -67,10 +67,12 @@ function Login() {
                 value = { email => setEmail(email) }
                 error = { emailError => setEmailError(emailError) }
                 /> 
-                <FloatingInputPassoword type = "password"
+                <FloatingInputPassoword 
+                type = "password"
                 name = "Password"
                 value = { password => setPassword(password) }
                 error = { passwordError => setpassWordError(passwordError) }
+                validation = {false}
                 /> 
                 <button className = "btn-login" onClick = { Submit } > Sign in </button> 
                 <p className = "login-not-memeber" > < a href = "/forgot-password" > Forgot password ? </a> </p>

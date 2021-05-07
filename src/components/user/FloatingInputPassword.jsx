@@ -193,9 +193,9 @@ function FloatingInputPassoword(props){
 
             <div className ="div-input">
                 <input type={visibleP ?"text" :props.type} value = {text} onChange = {handleTextChange} onBlur={textValiation} onFocus={onFocusPassword} className={showError&&!passwordFocus ?"error-input" :""}/>
-                <div className="password-meter" style={passwordFocus ? {visibility:'visible'}:{visibility:'hidden'}}>
+                {(props.validation) && (<div className="password-meter" style={passwordFocus ? {visibility:'visible'}:{visibility:'hidden'}}>
                     <PasswordMeter width={widthPM} bg = {backgroundPM} />
-                </div>
+                </div>)}
             </div>
             <label className = {isActive ? (showError&&!passwordFocus ? "Active error-label" : "Active") : (showError&&!passwordFocus ? "error-label" : "") } htmlFor={props.type} >
                 {props.name}
@@ -212,17 +212,19 @@ function FloatingInputPassoword(props){
                         </div>
                     </Animated>
             </CSSTransition>
-             <CSSTransition in = {passwordFocus} enter = {passwordFocus} timeout = {900} unmountOnExit = {passwordFocus} classNames = "slidePassword" nodeRef = {nodeRef}>
-                    <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={passwordFocus} animationOutDuration= {1500} >
-                        <div className = {"password-tests"} ref = {nodeRef}>
-                           {animatePassword && <div className={"password-tests"}> 
-                                <p>Please use at least:</p>
-                                <span><CheckboxIcon checked={firstTest} className={"icon-checkbox"} onClick={()=>{}}/>12 Characters </span>
-                                <span className={"right-test icon-checkbox"}> <CheckboxIcon checked={secondTest} onClick={()=>{}} /> No leading spaces</span>
-                            </div>}
-                        </div>
-                    </Animated>
-             </CSSTransition>
+            {(props.validation) && 
+            (<CSSTransition in = {passwordFocus} enter = {passwordFocus} timeout = {900} unmountOnExit = {passwordFocus} classNames = "slidePassword" nodeRef = {nodeRef}>
+               <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={passwordFocus} animationOutDuration= {1500} >
+                 <div className = {"password-tests"} ref = {nodeRef}>
+                      {animatePassword && <div className={"password-tests"}> 
+                        <p>Please use at least:</p>
+                        <span><CheckboxIcon checked={firstTest} className={"icon-checkbox"} onClick={()=>{}}/>12 Characters </span>
+                        <span className={"right-test icon-checkbox"}> <CheckboxIcon checked={secondTest} onClick={()=>{}} /> No leading spaces</span>
+                     </div>}
+                 </div>
+             </Animated>
+         </CSSTransition>)}
+            
         </div>
     );
 }
