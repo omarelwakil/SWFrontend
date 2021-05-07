@@ -24,15 +24,14 @@ function App() {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/help/privacy" component={PrivacyPage} />
         <Route exact path="/help/terms" component={TermsPage} />
+        <Route exact path="/help" component={TermsPage} />
         <Route exact path="/help/cookies" component={CookiesPage} />
         <Route exact path="/account" component={SettingsPage} />
         <Route exact path="/photos/tags" component={TrendingPage} />
         <Route exact path="/photos/tags-day" component={TrendingPage} />
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
-        <Route exact path="/"           component={LandingPage} />
-        <Route exact path="/guidelines" component={GuidelinesPage} />
-        <Route exact path="/explore"    component={ExplorePage} />
+        <Route exact path="/explore" component={ExplorePage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>
