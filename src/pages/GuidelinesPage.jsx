@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Guidelines from '../components/static/Guidelines';
 import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
+import Footer from '../components/static/Footer';
 
 function GuidelinesPage() {
     return (
@@ -11,7 +12,7 @@ function GuidelinesPage() {
                 <title>Flickr Community Guidelines | Flickr</title>
                 <UserlessNavigationBar />
                 <Guidelines />
-                {/* Will be add when mousa finishes footer component */}
+                <Footer />
             </div>
         </BrowserRouter>
     );
