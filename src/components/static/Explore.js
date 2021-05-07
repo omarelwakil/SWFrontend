@@ -9,9 +9,10 @@ class Explore extends Component {
   }
 
   componentDidMount () {
+    axios.defaults.baseURL = 'https://5ef8aca7-aab5-4b26-97c0-8b913e9ef7ec.mock.pstmn.io';
     axios.get('/photo/explore')
-    .then( response => {
-      const updatedPictures = response.data.map(picture => {
+    .then(response => {
+      const updatedPictures = response.data.photos.map(picture => {
         return {
           ...picture,
         className: 'myimg'
@@ -24,11 +25,11 @@ class Explore extends Component {
   render () {
     
     const pictures = this.state.pictures.map( (picture, index) => {
-      return  <div className="col-lg-4">
-                <img className ={picture.className} src={picture.url} key={index} alt={picture.title}/>
+      return  <div key={index} className="col-lg-3">
+                <img className ={picture.className} src={picture.url} alt={picture.title}/>
                 <div className="hide">  
                   <h2 className="picTitle fw-bold"> {picture.title} </h2>
-                  <h3 className="creator inline fw-bold"> By: {picture.creator} </h3>
+                  <h3 className="creator inline fw-bold"> By: {picture.creator.firstName} {picture.creator.lastName} </h3>
                   <button type="button" className="btn btn-light"> <i className="far fa-star inline">   </i> {picture.favouritesNum}  </button>
                   <button type="button" className="btn btn-light"> <i className="far fa-comment inline"></i> {picture.commentsNum}    </button>
                 </div>
