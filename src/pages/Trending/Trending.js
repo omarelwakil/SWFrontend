@@ -26,6 +26,11 @@ function Trending() {
   //Hrefs:
   const [currentUrl, setCurrentUrl] = useState(window.location.pathname);
 
+  const dataToSend = [
+    { title: "Explore", path: "/explore", selected: false },
+    { title: "Trending", path: "/photos/tags", selected: true }
+  ];
+
   let main = null; 
   if(trending !== null){
     main = (
@@ -42,7 +47,7 @@ function Trending() {
       <div className="trending">
         {/* It doesn't render the navbar each render */}
         <UserlessNavigationBar/>
-        <Navbar />
+        <Navbar items={dataToSend}/>
         {main}
         <Footer/>
       </div>
