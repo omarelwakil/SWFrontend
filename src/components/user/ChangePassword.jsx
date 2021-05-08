@@ -45,7 +45,7 @@ function ChangePassword() {
         }
     }
     return (
-        <div id="change-password-p" className="bg-dark">
+        <div id="change-password-p">
             <div className="container-fluid h-100">
                 <div className="row h-100">
                     <div className="col-12 d-flex align-items-center">
