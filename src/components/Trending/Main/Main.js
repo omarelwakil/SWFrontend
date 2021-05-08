@@ -8,6 +8,7 @@ const Main = (props) => {
     const mainUrl = "/photos/tags";
     const allTrendingNowHref = "/photos/tags-day/";
     const allTrendingWeekHref = "/photos/tags-week/";
+    const data = props.data;
 
 
     let main = null;
@@ -23,7 +24,7 @@ const Main = (props) => {
                     </div>
                     <div className="trending-images">
                     {
-                        props.trendingNow.slice(0,6).map((image) => {
+                        data.trendingNow.slice(0,6).map((image) => {
                             return (
                                 <ImageBox 
                                     key={image.id} 
@@ -45,7 +46,7 @@ const Main = (props) => {
                     </div>
                     <div className="trending-images">
                     {
-                        props.trendingWeek.slice(0,4).map((image) => {
+                        data.trendingWeek.slice(0,4).map((image) => {
                             return (
                                 <ImageBox 
                                     key={image.id} 
@@ -65,7 +66,7 @@ const Main = (props) => {
                     </div>
                     <div className="trending-images">
                         {
-                            props.mostPopular.map((image) => {
+                            data.mostPopular.map((image) => {
                                 return (
                                     <ImageBox 
                                         key={image.id} 
@@ -93,7 +94,7 @@ const Main = (props) => {
                 </div>
                 <div className="trending-images">
                 {
-                    props.trendingNow.map((image) => {
+                    data.trendingNow.map((image) => {
                         return (
                             <ImageBox 
                                 key={image.id} 
@@ -121,7 +122,7 @@ const Main = (props) => {
                 </div>
                 <div className="trending-images">
                 {
-                    props.trendingWeek.map((image) => {
+                    data.trendingWeek.map((image) => {
                         return (
                             <ImageBox 
                                 key={image.id} 

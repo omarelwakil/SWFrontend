@@ -6,8 +6,6 @@ import Main from '../../components/Trending/Main/Main'
 import UserlessNavigationBar from '../../components/user/UserlessNavigationBar'
 import Footer from '../../components/static/Footer';
 
-import fakeData from '../../assets/FakeData/FakeData'
-
 
 //Requests Package
 import axios from 'axios';
@@ -18,22 +16,25 @@ function Trending() {
   useEffect(()=>{
     axios.defaults.baseURL = 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io';
     axios.get('/tag/trending')
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-      });
-  },[]);
+      .then(response => response.data)
+      .then(data => setTrendingState(data))
+      .catch( error => console.log('Couldnot fetch data Trending.js'));
+    },[]);
 
-  console.log(JSON.stringify(fakeData));
+  const [trending, setTrendingState] = useState(null);
 
-  const [trendingNow, setTrendingNowState] = useState(fakeData.trendingNow);
-    
-  const [trendingWeek, setTrendingWeekState] = useState(fakeData.trendingWeek);
+  //Hrefs:
+  const [currentUrl, setCurrentUrl] = useState(window.location.pathname);
 
-  const [mostPopular, setMostPopular] = useState(fakeData.mostPopular);
-
-   //Hrefs:
-   let [currentUrl, setCurrentUrl] = useState(window.location.pathname);
+  let main = null; 
+  if(trending !== null){
+    main = (
+      <Main 
+        data={trending}
+        url={currentUrl} 
+        setCurrentUrl={setCurrentUrl}/>
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -41,12 +42,7 @@ function Trending() {
         {/* It doesn't render the navbar each render */}
         <UserlessNavigationBar/>
         <Navbar />
-        <Main 
-          trendingNow={trendingNow} 
-          trendingWeek={trendingWeek} 
-          mostPopular={mostPopular} 
-          url={currentUrl} 
-          setCurrentUrl={setCurrentUrl}/>
+        {main}
         <Footer/>
       </div>
     </BrowserRouter>
