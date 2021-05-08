@@ -5,7 +5,7 @@
   font-size: 1rem;
 }
 
-.main {
+#content .main {
   width: 80%;
   margin: auto;
   padding-top: 1.5%;
@@ -54,12 +54,12 @@
   display: none;
   position: relative;
   margin: 1%;
-  color:black;
+  color: black;
   width: 100%;
   bottom: 25%;
   background-color: whitesmoke;
   opacity: 0.7;
-} 
+}
 
 .picTitle {
   font-size: 0.8rem;
@@ -82,7 +82,7 @@
   display: block;
 }
 
-.myimg:hover + .hide {
+.myimg:hover+.hide {
   display: block;
 }
 
