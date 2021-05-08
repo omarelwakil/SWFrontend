@@ -1,0 +1,92 @@
+#content {
+  text-align: left;
+  background-color: #f3f5f6 !important;
+  font-family: Proxima Nova, helvetica neue, helvetica, arial, sans-serif;
+  font-size: 1rem;
+}
+
+.main {
+  width: 80%;
+  margin: auto;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+}
+
+.container {
+  width: 100%;
+}
+
+.title-row {
+  margin: 0;
+  margin-bottom: 3%;
+}
+
+.tools {
+  width: auto;
+  position: absolute;
+  right: 7%;
+}
+
+.Explore-Title {
+  width: auto;
+  position: relative;
+}
+
+.share-button {
+  right: 3%;
+}
+
+.justified {
+  right: 2%;
+}
+
+.story {
+  right: 1%;
+}
+
+.myimg {
+  height: 15rem;
+  width: 100%;
+  margin: 1%;
+}
+
+.hide {
+  display: none;
+  position: relative;
+  margin: 1%;
+  color:black;
+  width: 100%;
+  bottom: 25%;
+  background-color: whitesmoke;
+  opacity: 0.7;
+} 
+
+.picTitle {
+  font-size: 0.8rem;
+}
+
+.creator {
+  font-size: 0.6rem;
+  margin-right: 6%;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.myimg:hover {
+  cursor: pointer;
+}
+
+.hide:hover {
+  display: block;
+}
+
+.myimg:hover + .hide {
+  display: block;
+}
+
+.col-lg-3 {
+  height: 15rem;
+  margin-bottom: 1%;
+}

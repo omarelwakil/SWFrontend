@@ -1,13 +1,23 @@
+import React, { useState } from 'react';
 import './Navbar.css'
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const [items] = useState(props.items);
+    const navbarTestClasses = "custom-navbar " + props.position;
     return (
-        <nav data-testid="navbartest" className="custom-navbar">
+        <nav data-testid="navbartest" className={navbarTestClasses}>
             <div className="custom-container">
                 <ul className="custom-navbar-ul">
-                    {/* Link instead of a */}
-                    <li><a href="/explore">Explore</a></li>
-                    <li><a href="/photos/tags" className="selected">Trending</a></li>
+                    {items.map((item, index) => {
+                        const isSelected = item.selected ? "selected" : null;
+                        return (
+                            <li key={index}>
+                                <a id="navbar-item-tag" href={item.path} className={isSelected}>{item.title}</a>
+                            </li>
+                        );
+                    })}
+
+                    {/* <li><a href="/photos/tags" className="selected">Trending</a></li> */}
                 </ul>
             </div>
         </nav>

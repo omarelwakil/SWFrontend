@@ -20,13 +20,20 @@
     padding: 1.5rem;
     border-radius: .25rem;
 }
-
+#login .error-div p{
+    font-size: 1rem;
+    padding-bottom: 5px;
+}
 #login p {
     text-align: center;
     color: black;
     font-size: 1.2rem;
 }
-
+.error-div{
+    background-color: #ffd8dc;
+    border-radius: 5px;
+    padding-top: 5px;
+}
 #login #div-logo {
     display: block;
     margin: auto;

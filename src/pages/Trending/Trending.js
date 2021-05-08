@@ -1,5 +1,5 @@
-import {BrowserRouter} from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import './Trending.css';
 import Navbar from '../../components/Trending/Navbar/Navbar'
 import Main from '../../components/Trending/Main/Main'
@@ -11,9 +11,9 @@ import Footer from '../../components/static/Footer';
 import axios from 'axios';
 
 function Trending() {
-  
+
   //http requests
-  useEffect(()=>{
+  useEffect(() => {
     axios.defaults.baseURL = 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io';
     axios.get('/tag/trending')
       .then(response => response.data)
@@ -38,6 +38,7 @@ function Trending() {
 
   return (
     <BrowserRouter>
+      <title>Popular Tags on Flickr | Flickr</title>
       <div className="trending">
         {/* It doesn't render the navbar each render */}
         <UserlessNavigationBar/>

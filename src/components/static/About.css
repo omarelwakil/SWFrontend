@@ -1,3 +1,8 @@
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 35rem;
+}
 #main{
     width: 975px;
     margin-left: auto;
@@ -95,19 +100,25 @@
   }  
   #signup-block #mouse-over {
     list-style-type: none;
-  }   
-  #team-table{        
-    margin-left: 15px;     
+  }  
+  #team-table.container-fluid{        
+    margin-left: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 35rem;
+    height: 180vh; 
+  
+    
        
   }
   #team-table p{
-            font-size: 9px;
-            color: #999;
-            font-size:smaller;
-            white-space: nowrap;               
+    font-size: 9px;
+    color: #999;
+    font-size:smaller;
+    white-space: nowrap;               
   }
   #team-table img{
-            vertical-align: middle;               
+    vertical-align: middle;                         
   }
   #team-table img:hover{
     border-bottom-style: solid;

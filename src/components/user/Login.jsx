@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import FloatingInput from './FloatingInput';
 import FloatingInputPassoword from './FloatingInputPassword';
+import axios from 'axios';
+
 
 import "./Login.css"
 
@@ -10,12 +12,37 @@ function Login() {
     const [emailError, setEmailError] = useState('true');
     const [password, setPassword] = useState('');
     const [passwordError, setpassWordError] = useState('true');
+    const [errorMsg, setErrorMsg] = useState(null);
 
 
     function Submit(event) {
         if (!emailError && !passwordError) {
-            //onClick send a request to api
-        }
+            axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
+            const data ={
+              email:email,
+              password:password,
+            };
+            axios.post('/register/logIn',data)
+                .then((response) => {
+                    localStorage.setItem("accessToken",response.data.accessToken);
+                    delete response.data.accessToken;
+                    //console.log(response.data);
+                    localStorage.setItem("userData",response.data);
+                    //To check of 
+                    setTimeout(() => {window.location.href = "/account";}, 2000);
+                })
+                .catch((error) => {
+                    if (error.response.status === 401) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                    </div>));
+                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                    </div>));}, 5000);
+                    }
+                });
+          }
         event.preventDefault();
     }
     return ( 
@@ -34,15 +61,18 @@ function Login() {
                     </svg> 
                 </div> 
                 <p> Login to Flickr </p> 
+                {errorMsg}
                 <FloatingInput type = "email"
                 name = "Email address"
                 value = { email => setEmail(email) }
                 error = { emailError => setEmailError(emailError) }
                 /> 
-                <FloatingInputPassoword type = "password"
+                <FloatingInputPassoword 
+                type = "password"
                 name = "Password"
                 value = { password => setPassword(password) }
                 error = { passwordError => setpassWordError(passwordError) }
+                validation = {false}
                 /> 
                 <button className = "btn-login" onClick = { Submit } > Sign in </button> 
                 <p className = "login-not-memeber" > < a href = "/forgot-password" > Forgot password ? </a> </p>

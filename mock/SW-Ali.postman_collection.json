@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "c1e306ba-677c-4bcc-b806-9414d62789b8",
+		"name": "SW-Ali",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/h1/home",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}//h1/home",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"",
+						"h1",
+						"home"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/h1/home",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}//h1/home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"",
+								"h1",
+								"home"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 05 May 2021 20:28:16 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=b1a7e5a4a4c22e82"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=dcb2064db0141166"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "118"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1620246552"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk\""
+						}
+					],
+					"cookie": [],
+					"body": "hello world"
+				}
+			]
+		},
+		{
+			"name": "Sign-up",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n  \"email\": \"user@email.com\",\r\n  \"password\": \"12345678\",\r\n  \"firstName\": \"User\",\r\n  \"lastName\": \"User\",\r\n  \"age\": 18      \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/register/signUp",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"register",
+						"signUp"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n  \"email\": \"dsdssdf\",\r\n  \"password\": \"11212\",\r\n  \"firstName\": \"User\",\r\n  \"lastName\": \"User\",\r\n  \"age\": 18      \r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/register/signUp?key=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register",
+								"signUp"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"accessToken\": \"skdnksd7474g3kdbjfhf34\",\r\n    \"_id\": \"5349b4ddd2781d08c09890f4\",\r\n    \"email\": \"asdsad@gma.com\",\r\n    \"firstName\": \"User\",\r\n    \"lastName\": \"User\",\r\n    \"age\": 19\r\n }"
+				},
+				{
+					"name": "EmailExits",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n  \"email\": \"user@email.com\",\r\n  \"password\": \"12345678\",\r\n  \"firstName\": \"User\",\r\n  \"lastName\": \"User\",\r\n  \"age\": 18      \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/register/signUp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register",
+								"signUp"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "failed",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "text/html; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User Already Exists\"\n}"
+				}
+			]
+		}
+	]
+}
