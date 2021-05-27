@@ -39,19 +39,21 @@ function UserlessNavigationBar() {
 
     const UserLogOut = () => {
         const accessToken = localStorage.getItem("accessToken");
-        axios.defaults.baseURL = "https://c22cc931-091d-4d2e-9b91-df72a4912d31.mock.pstmn.io";
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         axios.post('/register/logOut')
             .then((response) => {
+                // debugger
                 console.log(response.data.message);
                 localStorage.clear();
                 window.location.href = "/";
             })
             .catch((error) => {
+                // debugger
                 if (error.response.status === 401) {
                     console.log(error.response.data.message);
-                    localStorage.clear();
-                    window.location.href = "/login";
+                    // localStorage.clear();
+                    // window.location.href = "/login";
                 }
             });
     }
