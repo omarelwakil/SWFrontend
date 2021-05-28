@@ -14,6 +14,7 @@ import UserImage from '../../images/usericon.png';
 function UserlessNavigationBar() {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
     console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
@@ -52,8 +53,8 @@ function UserlessNavigationBar() {
                 // debugger
                 if (error.response.status === 401) {
                     console.log(error.response.data.message);
-                    // localStorage.clear();
-                    // window.location.href = "/login";
+                    localStorage.clear();
+                    window.location.href = "/login";
                 }
             });
     }
@@ -146,7 +147,7 @@ function UserlessNavigationBar() {
                         <div id="user-settings" className="dropdown ms-2">
                             <img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
                             <div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
-                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {"{username}"}!</span>
+                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.userName}!</span>
                                 <span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English</span>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-black fs-7" href="/account">Settings</a>

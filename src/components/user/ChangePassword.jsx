@@ -26,14 +26,15 @@ function ChangePassword() {
                 oldPass: password,
                 newPass: newPassword
             }
-            axios.defaults.baseURL = "https://c22cc931-091d-4d2e-9b91-df72a4912d31.mock.pstmn.io";
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            axios.post('/register/changePassword', data)
+            axios.post('/register/changePassword', data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
-                    console.log(response.data.message);
-                    window.location.href = "/";
+                    debugger;
+                    window.location.href = "/account";
                 })
                 .catch((error) => {
+                    debugger;
                     if (error.response.status === 401) {
                         console.log(error.response.data.message);
                         localStorage.clear();
