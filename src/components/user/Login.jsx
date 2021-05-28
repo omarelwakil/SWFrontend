@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FloatingInput from './FloatingInput';
 import FloatingInputPassoword from './FloatingInputPassword';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
 
 
 import "./Login.css"
@@ -13,8 +14,38 @@ function Login() {
     const [password, setPassword] = useState('');
     const [passwordError, setpassWordError] = useState('true');
     const [errorMsg, setErrorMsg] = useState(null);
-
-
+    
+    const responseFacebook = (response) => {
+        console.log(response);
+        axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
+            const data ={
+                loginType  : "Facebook",
+                accessToken: response.accessToken,
+            };
+            axios.post('/register/loginWithFacebook',data)
+                .then((response) => {
+                    localStorage.setItem("accessToken",response.data.accessToken);
+                    delete response.data.accessToken;
+                    //console.log(response.data);
+                    localStorage.setItem("userData",response.data);
+                    //To check of 
+                    setTimeout(() => {window.location.href = "/account";}, 2000);
+                })
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                    </div>));
+                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                    </div>));}, 5000);
+                    }
+                });
+      }
+      const componentClicked = (data) => {
+        console.warn(data);
+      }
     function Submit(event) {
         if (!emailError && !passwordError) {
             axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
@@ -73,6 +104,14 @@ function Login() {
                 value = { password => setPassword(password) }
                 error = { passwordError => setpassWordError(passwordError) }
                 validation = {false}
+                />
+                <FacebookLogin
+                    appId="322610599248518"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    onClick={componentClicked}
+                    callback={responseFacebook}
+                    textButton="Login with Facebook" 
                 /> 
                 <button className = "btn-login" onClick = { Submit } > Sign in </button> 
                 <p className = "login-not-memeber" > < a href = "/forgot-password" > Forgot password ? </a> </p>
