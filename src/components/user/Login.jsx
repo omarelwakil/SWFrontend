@@ -17,7 +17,7 @@ function Login() {
     
     const responseFacebook = (response) => {
         console.log(response);
-        axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
             const data ={
                 loginType  : "Facebook",
                 accessToken: response.accessToken,
@@ -26,7 +26,7 @@ function Login() {
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
-                    //console.log(response.data);
+                    console.log(response.data);
                     localStorage.setItem("userData",response.data);
                     //To check of 
                     setTimeout(() => {window.location.href = "/account";}, 2000);
@@ -35,10 +35,19 @@ function Login() {
                     if (error.response.status === 400) {
                         console.log(error.response.data.message);
                         setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
-                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                        <p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. </p>
                     </div>));
                         setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
-                        <p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. </p>
+                        <p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. </p>
+                    </div>));}, 5000);
+                    }
+                    if (error.response.status === 404) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Please choose account. </p>
+                    </div>));
+                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Please choose account. </p>
                     </div>));}, 5000);
                     }
                 });
@@ -48,7 +57,7 @@ function Login() {
       }
     function Submit(event) {
         if (!emailError && !passwordError) {
-            axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
             const data ={
               email:email,
               password:password,
@@ -57,7 +66,7 @@ function Login() {
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
-                    //console.log(response.data);
+                    console.log(response.data);
                     localStorage.setItem("userData",response.data);
                     //To check of 
                     setTimeout(() => {window.location.href = "/account";}, 2000);
@@ -107,7 +116,7 @@ function Login() {
                 />
                 <FacebookLogin
                     appId="322610599248518"
-                    autoLoad={true}
+                    autoLoad={false}
                     fields="name,email,picture"
                     onClick={componentClicked}
                     callback={responseFacebook}
