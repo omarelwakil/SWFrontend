@@ -20,6 +20,8 @@ function ForgotPassword() {
     //State of Error Animation
     const [errorAnimate, setErrorAnimate] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+    //
+    const [successfullSend, setsuccessfullSend] = useState(false);
     
     //remove later
     const [password, setPassword] = useState('');
@@ -47,6 +49,8 @@ function ForgotPassword() {
                 })
                 .catch((error) => {
                     if (error.response.status === 404) {
+                        //for testing successfullSend
+                        setsuccessfullSend(true);
                         console.log(error.response.data.message);
                         setErrorMsg((<div class="error-div bg-red-light pa-2 b-rad-1 mb-5">
                         <p class="text-center ma-0 f-size-3 c-black"> User Not Found </p>
@@ -67,7 +71,7 @@ function ForgotPassword() {
                             <div className="w-100 d-flex justify-content-center mt-2 mb-3">
                                 <i id="lock-icon" className="fas fa-lock fa-1x"></i>
                             </div>
-                            <h5 className="text-center">Change your Flickr password</h5>
+                            {(!successfullSend) && (<div><h5 className="text-center">Change your Flickr password</h5>
                             <p class="text-center f-size-3">Please enter your email address below and we'll send you instructions on how to reset your password.</p>
                             <CSSTransition in = {errorAnimate} enter = {errorAnimate} timeout = {1100} unmountOnExit = {errorAnimate} classNames = "slide" nodeRef = {nodeRef}>
                                 <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={errorAnimate} animationOutDuration= {1500} >
@@ -85,6 +89,14 @@ function ForgotPassword() {
                             <div className="w-100 d-flex justify-content-center mt-3">
                                 <a href="/help" className="text-center fs-7">Can't access your email?</a>
                             </div>
+                            </div>)}
+                            {(successfullSend) && (<div><h5 className="text-center">Check your inbox</h5>
+                            <p class="text-center f-size-3">We sent a verification link to <strong> {email}</strong>. Please check your email to reset your password.</p>
+                            <input id="submit-change-password" type="submit" className="btn btn-primary fw-bold mt-2" value="Resend email" onClick={handleChangePassword} />
+                            <div className="w-100 d-flex justify-content-center mt-3">
+                                <a href="/help" className="text-center fs-7">Can't access your email?</a>
+                            </div>
+                            </div>)}
                         </div>
                     </div>
                 </div>
