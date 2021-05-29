@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import {Animated} from "react-animated-css";
+import {CSSTransition} from 'react-transition-group';
+
 import FloatingInput from './FloatingInput';
 
 import "./Login.css"
 import './ChangePassword.css'
 
 function ForgotPassword() {
+    //if not used there will be a warinng: findDOMNode
+    const nodeRef = React.useRef(null);
+
     const [accessToken] = useState(localStorage.getItem("accessToken"));
 
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('true');
+    //State of Error Animation
+    const [errorAnimate, setErrorAnimate] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+    
     //remove later
     const [password, setPassword] = useState('');
     const [passwordError, setpassWordError] = useState('true');
@@ -39,12 +48,12 @@ function ForgotPassword() {
                 .catch((error) => {
                     if (error.response.status === 404) {
                         console.log(error.response.data.message);
-                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
-                        <p class="text-center ma-0 f-size-3 c-black"> User Not Found. </p>
-                    </div>));
-                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
-                        <p class="text-center ma-0 f-size-3 c-black"> User Not Found. </p>
-                    </div>));}, 5000);
+                        setErrorMsg((<div class="error-div bg-red-light pa-2 b-rad-1 mb-5">
+                        <p class="text-center ma-0 f-size-3 c-black"> User Not Found </p>
+                   </div>));
+                        setErrorAnimate(true);
+                        setTimeout(() => {setErrorAnimate(false);}, 5000);
+                        setTimeout(() => {setErrorMsg(null);}, 5500);
                     }
                 });
         }
@@ -60,7 +69,13 @@ function ForgotPassword() {
                             </div>
                             <h5 className="text-center">Change your Flickr password</h5>
                             <p class="text-center f-size-3">Please enter your email address below and we'll send you instructions on how to reset your password.</p>
-                            {errorMsg}
+                            <CSSTransition in = {errorAnimate} enter = {errorAnimate} timeout = {1100} unmountOnExit = {errorAnimate} classNames = "slide" nodeRef = {nodeRef}>
+                                <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={errorAnimate} animationOutDuration= {1500} >
+                                    <div ref = {nodeRef}>
+                                    {errorMsg}
+                                    </div>
+                                </Animated>
+                            </CSSTransition>
                             <FloatingInput type = "email"
                             name = "Email address"
                             value = { email => setEmail(email) }
