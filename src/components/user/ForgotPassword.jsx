@@ -42,16 +42,16 @@ function ForgotPassword() {
             const data = {
                 email:email,
             }
+            console.log('data sent:');
+            console.log(data);
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.post('/register/forgetPassword', data)
                 .then((response) => {
                     console.log(response);
-                    window.location.href = "/login";
+                    setsuccessfullSend(true);
                 })
                 .catch((error) => {
                     if (error.response.status === 404) {
-                        //for testing successfullSend
-                        setsuccessfullSend(true);
                         console.log(error.response.data.message);
                         setErrorMsg((<div class="error-div bg-red-light pa-2 b-rad-1 mb-5">
                         <p class="text-center ma-0 f-size-3 c-black"> User Not Found </p>
