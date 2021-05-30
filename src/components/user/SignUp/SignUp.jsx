@@ -22,12 +22,13 @@ function SignUp(){
   const [passwordError,setpassWordError] = useState('true');
   //state for if the email exists
   const [emailExist,setEmailExist] = useState(false);
+  const [empty,setEmpty] = useState(false);
 
 
   function Submit(event){
     if(!firstNameError&&!lastNameError&&!ageError&&!emailError&&!passwordError){
       //onClick send a request to api
-      axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+      axios.defaults.baseURL = "https://qasaqees.tech/api";
       const data ={
         email:email,
         password:password,
@@ -35,14 +36,14 @@ function SignUp(){
         lastName:lastName,
         age:age
       };
-      axios.post('/register/signUp',data)
+      axios.post('/register/signUp',data,{headers: {"Content-type": "application/json"}})
           .then((response) => {
               localStorage.setItem("accessToken",response.data.accessToken);
               delete response.data.accessToken;
-              //console.log(response.data);
-              localStorage.setItem("userData",response.data);
+              console.log(response.data.user);
+              localStorage.setItem("userData",JSON.stringify(response.data.user));
               //To check of 
-              setTimeout(() => {window.location.href = "/account";}, 5000);
+              setTimeout(() => {window.location.href = "/account";}, 2000);
           })
           .catch((error) => {
               if (error.response.status === 403) {
@@ -51,6 +52,11 @@ function SignUp(){
                   setTimeout(() => {setEmailExist(false);}, 500);
               }
           });
+    }
+    else
+    {
+       setEmpty(true);
+       setTimeout(() => {setEmpty(false);}, 500);
     }
     event.preventDefault();
   }
@@ -82,18 +88,21 @@ function SignUp(){
                      name = "First name"
                      value = {firstName => setFirstName(firstName)} 
                      error = {firstNameError => setFirstNameError(firstNameError)}
+                     empty = {empty}
                      />
                      <FloatingInput 
                       type ="text"
                       name = "Last name" 
                       value ={lastName => setLastName(lastName)}
                       error = {lastNameError =>setLastNameError(lastNameError)}
+                      empty = {empty}
                      />
                      <FloatingInput 
                       type ="text"
                       name = "Your age" 
                       value ={age => setAge(age)}
                       error = {ageError =>setAgeError(ageError)}
+                      empty = {empty}
                      />
                      <FloatingInput 
                        type ="email"
@@ -101,6 +110,7 @@ function SignUp(){
                        value ={email => setEmail(email)}
                        error = {emailError =>setEmailError(emailError)}
                        emailExist ={emailExist}
+                       empty = {empty}
                       />
                       <FloatingInputPassoword 
                       type ="password"
@@ -108,6 +118,7 @@ function SignUp(){
                       value = {password => setPassword(password)} 
                       error = {passwordError => setpassWordError(passwordError)}
                       validation = {true}
+                      empty = {empty}
                      />
                      <button className ="btn-sign" onClick={Submit}>Sign Up</button>
                      <p className="sign-policy">By signing up, you agree with Flickr's   <a href="/help/terms">Terms of Services</a>  and <a href="/help/privacy">Privacy Policy.</a> </p>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import FloatingInput from './FloatingInput';
-import FloatingInputPassoword from './FloatingInputPassword';
+import FloatingInput from './SignUp/FloatingInput';
+import FloatingInputPassoword from './SignUp/FloatingInputPassword';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 

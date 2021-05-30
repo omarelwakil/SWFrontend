@@ -54,6 +54,14 @@ function FloatingInput(props){
         var validTest = /\S+@\S+\.\S+/;
         return validTest.test(email);
     }
+    //if userPressed submit and box is empty
+    useEffect(()=>{
+        setShowError(showError || props.empty)
+        if(props.empty === true)
+        {
+            setErrorMsg("Required");
+        }
+        },[showError,props.empty]);
 
     //to Apply this After change in second parameters first time , to make the animation and error appear for first time
     // as set State doesn't happen immediaty 
