@@ -12,6 +12,9 @@ import TrendingPage from './pages/Trending/Trending';
 import SettingsPage from './pages/SettingsPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ExplorePage from './pages/ExplorePage';
+import UploadPage from './pages/UploadMedia';
+import ViewFollowersPage from './pages/ViewFollowersPage';
+import ViewFollowingPage from './pages/ViewFollowingPage';
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
+        <Route exact path="/upload" component={UploadPage} />
+        <Route exact path="/view-followers" component={ViewFollowersPage} />
+        <Route exact path="/view-following" component={ViewFollowingPage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>
