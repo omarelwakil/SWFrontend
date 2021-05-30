@@ -21,6 +21,7 @@ function Login() {
         return;
     }
     const responseFacebook = (response) => {
+        console.log("facbook response: ");
         console.log(response);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
             const data ={
@@ -36,7 +37,7 @@ function Login() {
                     console.log(response.data.user);
                     localStorage.setItem("userData",JSON.stringify(response.data.user));
                     //To check of 
-                    setTimeout(() => {window.location.href = "/account";}, 2000);
+                    setTimeout(() => {window.location.href = "/account";}, 1000);
                 })
                 .catch((error) => {
                     if (error.response.status === 400) {
