@@ -22,6 +22,8 @@ function Login() {
                 loginType  : "Facebook",
                 accessToken: response.accessToken,
             };
+            console.log("data sent: ");
+            console.log(data);
             axios.post('/register/loginWithFacebook',data)
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
@@ -56,12 +58,15 @@ function Login() {
         console.warn(data);
       }
     function Submit(event) {
+        event.preventDefault();
         if (!emailError && !passwordError) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             const data ={
               email:email,
               password:password,
             };
+            console.log("form data: ");
+            console.log(data);
             axios.post('/register/logIn',data)
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
@@ -83,7 +88,9 @@ function Login() {
                     }
                 });
           }
-        event.preventDefault();
+        else{
+            console.log("Email or password error!!");
+        }
     }
     return ( 
         <div className = "bg-image bg ">
