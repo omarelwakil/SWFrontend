@@ -69,12 +69,13 @@ function Login() {
             console.log(data);
             axios.post('/register/logIn',data)
                 .then((response) => {
+                    //console.log(response.data);
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
                     console.log(response.data);
                     localStorage.setItem("userData",response.data);
                     //To check of 
-                    setTimeout(() => {window.location.href = "/account";}, 2000);
+                    setTimeout(() => {window.location.href = "/account";}, 1000);                    
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
