@@ -5,6 +5,7 @@ import {Animated} from "react-animated-css";
 import {CSSTransition} from 'react-transition-group';
 
 import FloatingInput from './FloatingInput';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "./Login.css"
 import './ChangePassword.css'
@@ -62,12 +63,21 @@ function ForgotPassword() {
                 });
         }
     }
+    function handleArrowBack(event) {
+        event.preventDefault();
+        setsuccessfullSend(false);
+    }
     return (
         <div id="change-password-p" className = "bg-image bg ">
             <div className="container-fluid h-100">
                 <div className="row h-100">
                     <div className="col-12 d-flex align-items-center">
                         <div id="row-ch-pass" className="border rounded bg-white px-3 pe-4 py-4 m-auto position-relative">
+                            {(successfullSend)&&(<div className="position-absolute">
+                                <a onClick={handleArrowBack} className="border-0 rounded-circle p-2" id="back-btn">
+                                    <ArrowBackIcon id="back-btn-icon" />
+                                </a>
+                            </div>)}
                             <div className="w-100 d-flex justify-content-center mt-2 mb-3">
                                 <i id="lock-icon" className="fas fa-lock fa-1x"></i>
                             </div>
