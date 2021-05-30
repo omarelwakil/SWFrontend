@@ -57,4 +57,17 @@ $(document).ready(function () {
         });     
     }
     setInterval(showHide,5000);
+    //Comment On Media
+    var textArea = document.getElementById("commentTextArea");
+    textArea.addEventListener("focus", myFocusFunction, true);
+    textArea.addEventListener("blur", myBlurFunction, true);
+
+    function myFocusFunction() {
+    document.getElementById("commentBtn").style.display = "inline-block";
+    }
+
+    function myBlurFunction() {
+    document.getElementById("commentBtn").style.display = "none"
+    }
+//
 });
