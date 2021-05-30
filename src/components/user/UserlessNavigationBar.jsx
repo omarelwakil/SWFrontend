@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import SearchDropDown from '../user/Search/SearchDropDown';
 import axios from 'axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -58,6 +58,14 @@ function UserlessNavigationBar() {
                 }
             });
     }
+    ////Drop box for search
+    const [showDropList,setShowDropList] = useState(false);
+    const [text , setText] = useState('');
+
+    function handleTextChange(event){
+        const {value} = event.target;
+        setText(value);
+    }
 
     return (
         <div id="global-nav">
@@ -110,7 +118,8 @@ function UserlessNavigationBar() {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" />
+                            id="search-box" autoComplete="off" onFocus={() => {setShowDropList(true)}} onBlur ={() => {setShowDropList(false)}} value={text} onChange ={handleTextChange}/>
+                        {showDropList&& <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />
                         <input type="button" className="bg-transparent border-0 rounded-15"
