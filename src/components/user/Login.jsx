@@ -8,13 +8,18 @@ import FacebookLogin from 'react-facebook-login';
 import "./Login.css"
 
 function Login() {
-    //State of each text box and its error to pass it to the mock server
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
+    //State of each text box and its error
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('true');
     const [password, setPassword] = useState('');
     const [passwordError, setpassWordError] = useState('true');
     const [errorMsg, setErrorMsg] = useState(null);
     
+    if (accessToken) {
+        window.location.href = "/account";
+        return;
+    }
     const responseFacebook = (response) => {
         console.log(response);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
@@ -24,12 +29,12 @@ function Login() {
             };
             console.log("data sent: ");
             console.log(data);
-            axios.post('/register/loginWithFacebook',data)
+            axios.post('/register/loginWithFacebook',data,{headers: {"Content-type": "application/json"}})
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
-                    console.log(response.data);
-                    localStorage.setItem("userData",response.data);
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data.user));
                     //To check of 
                     setTimeout(() => {window.location.href = "/account";}, 2000);
                 })
@@ -67,13 +72,12 @@ function Login() {
             };
             console.log("form data: ");
             console.log(data);
-            axios.post('/register/logIn',data)
+            axios.post('/register/logIn',data,{headers: {"Content-type": "application/json"}})
                 .then((response) => {
-                    //console.log(response.data);
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
-                    console.log(response.data);
-                    localStorage.setItem("userData",response.data);
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data.user));
                     //To check of 
                     setTimeout(() => {window.location.href = "/account";}, 1000);                    
                 })
