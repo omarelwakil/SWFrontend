@@ -1,0 +1,57 @@
+#album-internal .container-fluid{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+#album-internal .bg {
+    background-image: url('//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg');
+    background-position: bottom;
+}
+#album-internal .row {
+    --bs-gutter-x: 0rem;
+}
+#album-internal .album-image{
+    height: 300px;
+    color: white;
+}
+.album-back-icon{
+    margin-right: 5px;
+}
+.album-toolbar{
+    margin: 20px 0;
+    font-weight: 600;
+}
+#album-internal .album-edit-icon{
+    color: azure;
+    size: 5px;
+    width: auto;
+    float: right;
+    margin: 7px;
+}
+.album-edit-col{
+    height: 30px;
+}
+.album-title{
+    font-family: Proxima Nova,helvetica neue,helvetica,arial,sans-serif;
+    font-size: 2em;
+    margin-bottom: 0px;
+    font-weight: 300;
+}
+.album-description{
+    font-size: 18px;
+    margin-top: 13px;
+    margin-bottom: 0px;
+    opacity: .8;
+    font-family: "Georgia, serif";
+    font-style: italic;
+    font-weight: 300;
+}
+.album-img-num{
+    font-size: 14px;
+}
+#album-internal .album-icons{
+    margin: 0px 18px;
+    height: 24px;
+    width: 24px;
+}
