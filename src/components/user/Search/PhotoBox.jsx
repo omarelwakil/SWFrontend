@@ -11,6 +11,7 @@ const url = "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images
             <div className="image-data">
                 <StarBorderIcon/>
                 <ChatBubbleOutlineIcon />
+                d
             </div>
             
         </div>
