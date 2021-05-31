@@ -1,18 +1,18 @@
 import React,{useEffect, useState} from "react";
-import './Search.css'
+import './SearchPhotos.css'
 import Navbar from '../../Trending/Navbar/Navbar';
 import PhotoBox from './PhotoBox';
 import axios from 'axios';
 
-function Search(props){
-
-    const dataToSend = [
-        { title: "Photos", path: "/search", selected: true },
-        { title: "People", path: "/search", selected: false },
+function SearchPhotos(){
+  const pathOfCurrent = window.location.pathname;
+  const searchWord = pathOfCurrent.substr(15,pathOfCurrent.length-1);
+  console.log(searchWord);
+  const dataToSend = [
+        { title: "Photos", path: "/search/photos/"+searchWord, selected: true },
+        { title: "People", path: "/search/people/"+searchWord, selected: false },
   ];
   const position = "position-fixed";
-  const pathOfCurrent = window.location.pathname;
-  const searchWord = pathOfCurrent.substr(8,pathOfCurrent.length-1);
 
   const [photos,setPhotos]=useState([]);
   //Get All Photos from the BE
@@ -30,14 +30,8 @@ function Search(props){
     }));
   }
   //to call API only once
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {getAllPhotos();}, []);
-  
-  const url = "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/dog_cool_summer_slideshow/1800x1200_dog_cool_summer_other.jpg";
-  const firstName ="Ahmed";
-  const lastName ="sadsadsdsadsadsadsadasdasdas";
-  const userName = firstName + " "+lastName;
-  const title = "heeeeseey";
-  console.log(photos)
     return(
         <div id= "SearchPagePhotos">
             <Navbar items={dataToSend} position={position} />
@@ -55,4 +49,4 @@ function Search(props){
 
 
 
-export default Search;
+export default SearchPhotos;
