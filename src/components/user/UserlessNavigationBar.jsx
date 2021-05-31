@@ -11,11 +11,11 @@ import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
 
-function UserlessNavigationBar() {
+function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-    console.log(isLoggedIn);
+    //console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
@@ -60,7 +60,7 @@ function UserlessNavigationBar() {
     }
     ////Drop box for search
     const [showDropList,setShowDropList] = useState(false);
-    const [text , setText] = useState('');
+    const [text , setText] = useState(props.currentSearch);
 
     function handleTextChange(event){
         const {value} = event.target;
@@ -118,7 +118,7 @@ function UserlessNavigationBar() {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" autoComplete="off" onFocus={() => {setShowDropList(true)}} onBlur ={() => {setShowDropList(false)}} value={text} onChange ={handleTextChange}/>
+                            id="search-box" autoComplete="off" onFocus={() => {setShowDropList(true)}} onBlur ={() => {setTimeout(()=>{setShowDropList(false)},120)}} value={text} onChange ={handleTextChange}/>
                         {showDropList&& <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />

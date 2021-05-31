@@ -33,7 +33,7 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
-        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/search/:searchText" component={SearchPage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>

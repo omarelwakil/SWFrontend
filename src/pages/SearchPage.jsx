@@ -7,11 +7,13 @@ import Footer from '../components/static/Footer';
 
 
 function SearchPage() {
+    const pathOfCurrent = window.location.pathname;
+    const searchWord = pathOfCurrent.substr(8,pathOfCurrent.length-1);
     return (
         <BrowserRouter>
             <div>
-                <title>Search: |flicker</title>
-                <UserlessNaviagationBar />
+                <title>Search:{" "+searchWord} |flicker</title>
+                <UserlessNaviagationBar currentSearch={searchWord} />
                 <Search />
                 <Footer />
             </div>
