@@ -1,0 +1,55 @@
+.PhotoDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: #212124;
+  padding: 18px 13px 5px 25px;
+  height: 83vh;
+}
+
+.PhotoDiv .back-link {
+  align-self: flex-start;
+  color: #fff;
+}
+
+.PhotoDiv .back-link a {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.PhotoDiv .back-link a:hover span {
+  text-decoration: underline;
+}
+
+.PhotoDiv .photo-box {
+  margin: 0 0 20px 25px;
+  height: 86%;
+}
+
+.PhotoDiv .photo-box img {
+  object-fit: contain;
+  height: 100%;
+}
+
+.PhotoDiv .tools-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.PhotoDiv .tools-div .full-screen-tool {
+  align-self: flex-end;
+}
+
+.PhotoDiv .tools-div .tools-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PhotoDiv .tools-div .tools-buttons .Button {
+  margin-left: 12px;
+}

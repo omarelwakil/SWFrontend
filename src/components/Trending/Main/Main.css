@@ -12,6 +12,17 @@
   width: 100%;
 }
 
+.trending-text .caret {
+  display: inline-block;
+  margin: 0 12px 0 10px;
+  background: url(https://combo.staticflickr.com/ap/build/images/sprites/icons-32dc0fa1.png) -542px -470px
+    no-repeat;
+  width: 8px;
+  height: 14px;
+  position: relative;
+  top: 0px;
+}
+
 .trending-text {
   width: 100%;
   margin: 0;
