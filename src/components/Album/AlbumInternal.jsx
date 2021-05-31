@@ -13,7 +13,6 @@ function AlbumInternal() {
         localStorage.clear();
         window.location.href = "/login";
     }
-    const [successResponce, setsuccessResponce] = useState(false);
     const [media, setMedia] = useState([]);
     axios.defaults.baseURL = "https://599c770a-2052-400a-a709-295f306bdccc.mock.pstmn.io";
             axios.get('/album/1')
@@ -47,12 +46,12 @@ function AlbumInternal() {
                             <h3 className="album-title" contenteditable="true">Title</h3>
                             <p className="album-description" contenteditable="true">
 				                Click here to enter a description for this album</p>
-                            <p className="album-img-num">5 photos</p>
+                            <p className="album-img-num">{media.length} photos</p>
                             <i class="fas fa-share album-icons"></i>
                             <i class="fas fa-book-open album-icons"></i>
                             <i class="fas fa-download album-icons"></i>
                             <p className="album-description">
-				                By:Mousa</p>
+				                By:{userData.firstName}</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@ function AlbumInternal() {
                 { media.map((photo) => (
                     <AlbumPhotos
                         key={photo._id}
-                        url="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"
+                        url={photo.url}
                     />
                 ))}
                 </div>
