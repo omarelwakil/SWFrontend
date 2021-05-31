@@ -12,6 +12,7 @@ import TrendingPage from './pages/Trending/Trending';
 import SettingsPage from './pages/SettingsPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ExplorePage from './pages/ExplorePage';
+import AlbumInternalPage from './pages/Album/AlbumInternalPage';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
+        {/*for testing remove later as it will be called from clicking on album from profile*/}
+        <Route exact path="/album" component={AlbumInternalPage} />
+
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>
