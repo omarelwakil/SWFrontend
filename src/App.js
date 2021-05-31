@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
-        <Route exact path="/upload" component={UploadPage} />
+        <Route exact path="/photo/upload" component={UploadPage} />
         <Route exact path="/view-followers" component={ViewFollowersPage} />
         <Route exact path="/view-following" component={ViewFollowingPage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
