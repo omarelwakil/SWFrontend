@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import './AlbumInternal.css';
 
-import userIcon from '../../images/usericon.png'
+import AlbumPhotos from './AlbumPhotos';
 
 function AlbumInternal() {
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
@@ -12,6 +13,20 @@ function AlbumInternal() {
         localStorage.clear();
         window.location.href = "/login";
     }
+    const [successResponce, setsuccessResponce] = useState(false);
+    const [media, setMedia] = useState([]);
+    axios.defaults.baseURL = "https://599c770a-2052-400a-a709-295f306bdccc.mock.pstmn.io";
+            axios.get('/album/1')
+                .then((response) => {
+                    console.log(response.data);
+                    setMedia(response.data.media);
+                    console.log("url");
+                    console.log(media[0].url);
+                })
+                .catch((error) => {
+                    console.log(error.response.data.message);
+                });
+                console.log(media);
     return (
         <div id="album-internal">
             <div className="container-fluid">
@@ -42,21 +57,12 @@ function AlbumInternal() {
                     </div>
                 </div>
                 <div class="row gx-5">
-                    <div class="col-lg-3 col-sm-12">
-                        <img class="img-thumbnail" src="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"/>
-                    </div>
-                    <div class="col-lg-3 col-sm-12">
-                        <img class="img-thumbnail" src="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"/>
-                    </div>
-                    <div class="col-lg-3 col-sm-12">
-                        <img class="img-thumbnail" src="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"/>
-                    </div>
-                    <div class="col-lg-3 col-sm-12">
-                        <img class="img-thumbnail" src="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"/>
-                    </div>
-                    <div class="col-lg-3 col-sm-12">
-                        <img class="img-thumbnail" src="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"/>
-                    </div>
+                { media.map((photo) => (
+                    <AlbumPhotos
+                        key={photo._id}
+                        url="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"
+                    />
+                ))}
                 </div>
             </div>
         </div>

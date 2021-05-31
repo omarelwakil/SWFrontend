@@ -1,0 +1,18 @@
+{
+    "media": [
+       {
+           "_id": "5349b4ddd2781d08c09890f4",
+            "tags": ["Tower","Egypt"],
+            "views": 1023,
+            "favouritesNum": 1023,
+            "commentsNum": 1023,
+            "creator": {
+                "firstName": "Ahmed",
+                "lastName": "Ibrahim"
+            },
+           "url": "//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg",
+           "title": "Cairo Tower",
+           "description": "Cairo tower at the sunset"
+       }
+    ]
+  }
