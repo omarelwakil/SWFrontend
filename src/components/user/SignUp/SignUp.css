@@ -1,5 +1,5 @@
 .bg {
-   background-image: url('../../images/SignUp-LoginBG.jpg');
+   background-image: url('../../../images/SignUp-LoginBG.jpg');
    height: calc(100vh - 50px);
    background-position: bottom;
    background-size: cover;
