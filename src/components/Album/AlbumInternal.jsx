@@ -5,7 +5,7 @@ import './AlbumInternal.css';
 
 import AlbumPhotos from './AlbumPhotos';
 
-function AlbumInternal() {
+function AlbumInternal(probs) {//probs albumId
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
     console.log(userData);
@@ -14,8 +14,9 @@ function AlbumInternal() {
         window.location.href = "/login";
     }
     const [media, setMedia] = useState([]);
+    const [numIcons, setNumIcons] = useState(0);
     axios.defaults.baseURL = "https://599c770a-2052-400a-a709-295f306bdccc.mock.pstmn.io";
-            axios.get('/album/1')
+            axios.get('/album/'+probs.albumId)
                 .then((response) => {
                     console.log(response.data);
                     setMedia(response.data.media);
@@ -46,7 +47,8 @@ function AlbumInternal() {
                             <h3 className="album-title" contenteditable="true">Title</h3>
                             <p className="album-description" contenteditable="true">
 				                Click here to enter a description for this album</p>
-                            <p className="album-img-num">{media.length} photos</p>
+                            <button type="button" class="btn btn-dark edit-album-button">Done</button>
+                            <p className="album-img-num">{media.length} photos {numIcons}</p>
                             <i class="fas fa-share album-icons"></i>
                             <i class="fas fa-book-open album-icons"></i>
                             <i class="fas fa-download album-icons"></i>
@@ -62,6 +64,11 @@ function AlbumInternal() {
                         url={photo.url}
                     />
                 ))}
+                {/*Remove later*/}
+                <AlbumPhotos
+                        key="12"
+                        url="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"
+                    />
                 </div>
             </div>
         </div>
