@@ -13,11 +13,10 @@ function SearchPeople(){
   ];
   const position = "position-fixed";
   const [accessToken] = useState(localStorage.getItem("accessToken"));
-  const [notfound ,setNotFound]=useState(false);
   const [people,setPeople]=useState([]);
   //Get All Photos from the BE
   const getAllPeople = ()=>{
-      axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+      axios.defaults.baseURL = "https://qasaqees.tech/api";
       if (accessToken === null) {
           localStorage.clear();
       }else
@@ -31,7 +30,6 @@ function SearchPeople(){
       })
       .catch((error) => {
         if (error.response.status === 404) {
-            setNotFound(true);
             console.log(error.response.data.message);
         }
     }));
@@ -39,16 +37,18 @@ function SearchPeople(){
   //to call API only once
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {getAllPeople();}, []);
+  const monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return(
         <div id= "SearchPagePeople">
             <Navbar items={dataToSend} position={position} />
             <p>Flickr members</p>
             <div className="container-fluid">
                 <div className ="row justify-content-start">
-                     {(people.length > 0)&&(people.map((person,index)=>{return(<MemberBox key={index} id={person._id} 
+                     {(people.length > 0)?(people.map((person,index)=>{return(<MemberBox key={index} id={person._id} 
                      url = {person.profilePhotoUrl} name = {person.firstName + " "+person.lastName} followersNum={person.numberOfFollowers}
-                     photosNum={person.numberOfPhotos} isFollowing={person.isFollowing} date ={person.createdAt} />);}))}
-                     {notfound&&<div className="push-footer">No people are found</div>}
+                     photosNum={person.numberOfPhotos} isFollowing={person.isFollowing} 
+                     date ={monthNames[new Date(person.createdAt).getMonth()]+" "+ new Date(person.createdAt).getFullYear()} />);})):
+                     <div className="push-footer">No people are found</div>}
                 </div>
             </div>
         </div>

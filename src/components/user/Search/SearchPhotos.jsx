@@ -18,7 +18,7 @@ function SearchPhotos(){
   const [notfound ,setNotFound]=useState(false);
   //Get All Photos from the BE
   const getAllPhotos = ()=>{
-      axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+      axios.defaults.baseURL = "https://qasaqees.tech/api";
       return (axios.get('/photo/searchPhotos/'+searchWord)
       .then((response) => {
           const allPhotos = response.data.media;

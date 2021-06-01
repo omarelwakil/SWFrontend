@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchDropDown from '../user/Search/SearchDropDown';
 import axios from 'axios';
 
@@ -15,6 +15,7 @@ function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [isFocused, setIsFocused] = useState(false);
     //console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
@@ -61,6 +62,8 @@ function UserlessNavigationBar(props) {
     ////Drop box for search
     const [showDropList,setShowDropList] = useState(false);
     const [text , setText] = useState(props.currentSearch);
+
+   useEffect(()=>{setShowDropList(isFocused && (text !==""))},[isFocused,text])
 
     function handleTextChange(event){
         const {value} = event.target;
@@ -118,7 +121,7 @@ function UserlessNavigationBar(props) {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" autoComplete="off" onFocus={() => {setShowDropList(true)}} onBlur ={() => {setTimeout(()=>{setShowDropList(false)},120)}} value={text} onChange ={handleTextChange}/>
+                            id="search-box" autoComplete="off" onFocus={() => {setIsFocused(true)}} onBlur ={() => {setTimeout(()=>{setIsFocused(false)},120)}} value={text} onChange ={handleTextChange}/>
                         {showDropList&& <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />

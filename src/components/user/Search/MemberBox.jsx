@@ -13,7 +13,7 @@ function MemberBox(props){
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [isFollowing,setIsFollowing] =useState(props.isFollowing);
     const userID = {userId: props.id}
-    axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+    axios.defaults.baseURL = "https://qasaqees.tech/api";
 
     function followUser(){
      if (accessToken === null) {
