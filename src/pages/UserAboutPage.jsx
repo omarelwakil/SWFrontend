@@ -13,7 +13,7 @@ function SettingsPage() {
                 <title>About | Flickr</title>
                 <UserlessNavigationBar />
                 <UserAbout userInfo={id} />
-                {/* <Footer /> */}
+                <Footer />
             </div>
         </BrowserRouter>
     );
