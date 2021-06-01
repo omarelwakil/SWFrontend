@@ -74,7 +74,7 @@ function Cookies() {
                         <li>For information on how our advertising partners allow you to opt out of receiving ads based on your web browsing history, please visit <a href="http://optout.aboutads.info">http://optout.aboutads.info</a>. European users may opt out of receiving targeted advertising through the <a href="https://www.youronlinechoices.eu/">European Interactive Digital Advertising Alliance</a>.</li>
                         <li>To opt out of ads on Facebook, Pinterest, or Google that are targeted to your interests, use your <a href="https://www.facebook.com/adpreferences/ad_settings/?entry_product=settings_ads_page_redirection">Facebook</a>, <a href="https://help.pinterest.com/en/article/personalized-ads-on-pinterest">Pinterest</a>, or <a href="https://adssettings.google.com/authenticated">Google Ads</a> settings.</li>
                         <li>Check your mobile device for settings that control ads based on your interactions with the applications on your device. For example, on your iOS device, enable the “Limit Ad Tracking” setting, and on your Android device, enable the “Opt out of Ads Personalization” setting.</li>
-                        <li>o delete or disable flash cookies please visit <a href="https://www.adobe.com/devnet/flashplayer/security.html">https://www.adobe.com/devnet/flashplayer/security.html</a>.</li>
+                        <li>To delete or disable flash cookies please visit <a href="https://www.adobe.com/devnet/flashplayer/security.html">https://www.adobe.com/devnet/flashplayer/security.html</a>.</li>
                     </ul>
                 </div>
             </div>

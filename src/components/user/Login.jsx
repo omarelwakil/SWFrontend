@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import FloatingInput from './FloatingInput';
-import FloatingInputPassoword from './FloatingInputPassword';
+import FloatingInput from './SignUp/FloatingInput';
+import FloatingInputPassoword from './SignUp/FloatingInputPassword';
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 
