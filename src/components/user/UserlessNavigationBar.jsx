@@ -103,11 +103,11 @@ function UserlessNavigationBar(props) {
                                 <div className="dropdown">
                                     <a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</a>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id">About</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/photos/id">Photostream</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/albums">Albums</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/favorites">Faves</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/galleries">Galleries</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/people/" + userData.user._id}>About</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id}>Photostream</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/albums"}>Albums</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/favorites"}>Faves</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/galleries"}>Galleries</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/groups">Groups</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/cameraroll">Camera Roll</a></li>
                                     </ul>
@@ -159,7 +159,7 @@ function UserlessNavigationBar(props) {
                         <div id="user-settings" className="dropdown ms-2">
                             <img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
                             <div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
-                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.userName}!</span>
+                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.user.userName}!</span>
                                 <span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English</span>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-black fs-7" href="/account">Settings</a>

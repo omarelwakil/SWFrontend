@@ -107,12 +107,12 @@ function Footer() {
         </span> <span >
         Connecting people through photography. </span> 
         <ul className = "list-unstyled list-inline" >
-        <li className = "list-inline-item footer-lower-list-item" >
-        <a className = "footer-lower-list-item" href = "https://www.facebook.com/flickr" > < i className = "fab fa-facebook fa-lg footer-social-icons" > </i></a >
-        </li>
-        <li className = "list-inline-item footer-lower-list-item" > < a className = "footer-lower-list-item"
-        href = "https://twitter.com/flickr" > < i className = "fab fa-twitter fa-lg footer-social-icons" > </i></a></li> 
-        <li className = "list-inline-item footer-lower-list-item" > < a className = "footer-lower-list-item" href = "https://www.instagram.com/flickr/" > < i className = "fab fa-instagram fa-lg footer-social-icons" > </i></a ></li> 
+            <li className = "list-inline-item footer-lower-list-item" >
+            <a className = "footer-lower-list-item" href = "https://www.facebook.com/flickr"><i className = "fab fa-facebook fa-lg footer-social-icons" > </i></a>
+            </li>
+            <li className = "list-inline-item footer-lower-list-item" > < a className = "footer-lower-list-item"
+            href = "https://twitter.com/flickr" > < i className = "fab fa-twitter fa-lg footer-social-icons" > </i></a></li> 
+            <li className = "list-inline-item footer-lower-list-item" > < a className = "footer-lower-list-item" href = "https://www.instagram.com/flickr/" > < i className = "fab fa-instagram fa-lg footer-social-icons" > </i></a ></li> 
         </ul> 
         </div> 
         </div> 
