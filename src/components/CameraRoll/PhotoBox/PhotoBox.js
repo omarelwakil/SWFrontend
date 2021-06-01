@@ -11,8 +11,8 @@ const PhotoBox = (props) => {
 
     const [photo, setPhoto] = useState(props.photo);
 
-    const [privacy, setPrivacy] = useState('public'); //TODO
-
+    const [privacy, setPrivacy] = useState(photo.isPublic); //TODO
+    const [allowCommenting, setAllowCommenting] = useState(photo.allowCommenting);
     const [Desc, setDesc] = useState(photo.description);
     const [title, setTitle] = useState(photo.title);
     const [tags, setTags] = useState(photo.tags);
@@ -32,8 +32,12 @@ const PhotoBox = (props) => {
     }
 
     
-    const handleChange = (e) => {
+    const handlePrivacy = (e) => {
         setPrivacy(e.target.value);
+    }
+
+    const handleAllowCommenting = (e) => {
+        setAllowCommenting(e.target.value);
     }
 
     const handleTitle = (e) => {
@@ -55,6 +59,8 @@ const PhotoBox = (props) => {
         photoCopy['title'] = title;
         photoCopy['description'] = Desc;
         photoCopy['tags'] = tagsArr;
+        photoCopy['isPublic'] = privacy;
+        photoCopy['allowCommenting'] = allowCommenting;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
               "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
@@ -79,9 +85,16 @@ const PhotoBox = (props) => {
                 </label>
                 <label>
                     Privacy 
-                    <select value={privacy} onChange={handleChange}>
+                    <select value={privacy} onChange={handlePrivacy}>
                         <option value="public">Public</option>
                         <option value="private">Private</option>
+                    </select>
+                </label>
+                <label>
+                    Allow Commenting
+                    <select value={allowCommenting} onChange={handleAllowCommenting}>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
                     </select>
                 </label>
                 <label>
