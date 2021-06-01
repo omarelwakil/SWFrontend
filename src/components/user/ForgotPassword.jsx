@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Animated} from "react-animated-css";
 import {CSSTransition} from 'react-transition-group';
 
-import FloatingInput from './FloatingInput';
+import FloatingInput from './SignUp/FloatingInput';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "./Login.css"
