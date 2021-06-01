@@ -1,0 +1,9 @@
+.PhotoPage {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* TO BE CHANGED */
+.PhotoPage #sec-nav-userless {
+  background-color: black;
+}
