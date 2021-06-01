@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
-import SignUp from '../components/user/SignUp';
+import SignUp from '../components/user/SignUp/SignUp';
 import Footer from '../components/static/Footer';
 
 

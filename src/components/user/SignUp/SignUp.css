@@ -1,5 +1,5 @@
 .bg {
-   background-image: url('../../images/SignUp-LoginBG.jpg');
+   background-image: url('../../../images/SignUp-LoginBG.jpg');
    height: calc(100vh - 50px);
    background-position: bottom;
    background-size: cover;
@@ -31,6 +31,21 @@ form {
    margin: auto;
 }
 
+.btn-sign-facebook {
+   background-color: #4C69BA;
+   color: #fff;
+   width: 101%;
+   padding: 0.4rem ;
+   outline: 0;
+   border: 1px solid #128fdc;
+   border-radius: 4px;
+   font-size: 1rem;
+   margin: 0rem 0.3rem;
+   margin-bottom: 0.5rem;
+   text-align: center;
+
+}
+
 .btn-sign {
    background-color: #128fdc;
    color: #fff;
@@ -41,6 +56,7 @@ form {
    border-radius: 4px;
    font-size: 1rem;
    margin: 1rem 0.3rem;
+   margin-bottom: 0.5rem;
    text-align: center;
 
 }
@@ -99,3 +115,4 @@ form {
    color: #006dac;
 
 }
+

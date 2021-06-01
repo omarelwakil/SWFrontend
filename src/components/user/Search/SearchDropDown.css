@@ -1,0 +1,40 @@
+#SearchDropDown .SearchDropDown-list {
+    position: relative;
+    overflow: hidden; 
+ 
+}
+
+#SearchDropDown .list-group{
+    width: 100%;
+    position: absolute;
+  
+
+}
+
+#SearchDropDown .list-group li{
+    color: #0063dA;
+    font-size: 0.875rem;
+    height: 2.3rem;
+    padding: 0.5rem;
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+}
+
+#SearchDropDown .list-group li:hover {
+    cursor:pointer;
+    background-color: #d3d3d3 ;
+}
+
+@media (max-width: 1024px) {
+    #SearchDropDown .list-group{
+       width: 92%;
+    }
+    
+}
+
+@media (max-width: 575.98px) {
+    #SearchDropDown .list-group{
+        width: 90%;
+     }
+
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import SearchDropDown from '../user/Search/SearchDropDown';
 import axios from 'axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,10 +11,12 @@ import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
 
-function UserlessNavigationBar() {
+function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
-    console.log(isLoggedIn);
+    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
+   
+    //console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
@@ -39,21 +41,33 @@ function UserlessNavigationBar() {
 
     const UserLogOut = () => {
         const accessToken = localStorage.getItem("accessToken");
-        axios.defaults.baseURL = "https://c22cc931-091d-4d2e-9b91-df72a4912d31.mock.pstmn.io";
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         axios.post('/register/logOut')
             .then((response) => {
+                // debugger
                 console.log(response.data.message);
                 localStorage.clear();
                 window.location.href = "/";
             })
             .catch((error) => {
+                // debugger
                 if (error.response.status === 401) {
                     console.log(error.response.data.message);
                     localStorage.clear();
                     window.location.href = "/login";
                 }
             });
+    }
+    ////Drop box for search
+    const [showDropList,setShowDropList] = useState(false);
+    const [text , setText] = useState(props.currentSearch);
+    const [isFocused, setIsFocused] = useState(false);
+   useEffect(()=>{setShowDropList(isFocused && (text !==""))},[isFocused,text])
+
+    function handleTextChange(event){
+        const {value} = event.target;
+        setText(value);
     }
 
     return (
@@ -89,11 +103,11 @@ function UserlessNavigationBar() {
                                 <div className="dropdown">
                                     <a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</a>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id">About</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/photos/id">Photostream</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/albums">Albums</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/favorites">Faves</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/galleries">Galleries</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/people/" + userData.user._id}>About</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id}>Photostream</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/albums"}>Albums</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/favorites"}>Faves</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/galleries"}>Galleries</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/groups">Groups</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/cameraroll">Camera Roll</a></li>
                                     </ul>
@@ -107,7 +121,8 @@ function UserlessNavigationBar() {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" />
+                            id="search-box" autoComplete="off" onFocus={() => {setIsFocused(true)}} onBlur ={() => {setTimeout(()=>{setIsFocused(false)},120)}} value={text} onChange ={handleTextChange}/>
+                        {showDropList&& <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />
                         <input type="button" className="bg-transparent border-0 rounded-15"
@@ -144,7 +159,7 @@ function UserlessNavigationBar() {
                         <div id="user-settings" className="dropdown ms-2">
                             <img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
                             <div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
-                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {"{username}"}!</span>
+                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.user.userName}!</span>
                                 <span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English</span>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-black fs-7" href="/account">Settings</a>
