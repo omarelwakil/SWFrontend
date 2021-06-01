@@ -103,6 +103,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .PhotoMain .photo-desc-comments textarea {
@@ -172,19 +173,14 @@
   margin-top: -4px;
 }
 
-.PhotoMain .photo-details .albums-tags-people div {
+.PhotoMain .photo-details .albums-tags-people div:first-child,
+.PhotoMain .photo-details .albums-tags-people div:nth-child(2) {
   margin-top: 12px;
   display: flex;
   justify-content: space-between;
 }
 
-.PhotoMain .photo-details .albums-tags-people div:last-child {
-  display: flex;
-  justify-content: space-between;
-}
-
-.PhotoMain .photo-details .albums-tags-people div:last-child .photo-tags,
-.PhotoMain .photo-details .albums-tags-people div:last-child .photo-people {
+.PhotoMain .photo-details .albums-tags-people .photo-tags {
   display: flex;
   justify-content: space-between;
   border: 1px solid #cfd6d9;
@@ -193,4 +189,53 @@
   border-radius: 3px;
   font-size: 14px;
   line-height: 1;
+}
+.PhotoMain .photo-details .albums-tags-people .tags {
+  padding: 10px 0;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+.PhotoMain .photo-details .albums-tags-people .tags .tag {
+  position: relative;
+  top: 10%;
+  background-color: #999;
+  padding: 5px 35px 5px 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #000;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.PhotoMain .photo-details .albums-tags-people .tags .tag span {
+  position: absolute;
+  right: 5px;
+  top: 3px;
+}
+.PhotoMain .hidden {
+  display: none;
+}
+
+@media (max-width: 1190px) and (min-width: 320px) {
+  .PhotoMain {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    display: block;
+    margin-top: 15px;
+  }
+
+  .PhotoMain .photo-details {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .PhotoMain .photo-details .details {
+    display: block;
+  }
+
+  .PhotoMain .hidden {
+    display: block;
+  }
 }

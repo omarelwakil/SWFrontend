@@ -1,0 +1,68 @@
+.CameraRoll .PhotoBox {
+  margin-right: 15px;
+  width: 100%;
+}
+
+.CameraRoll .Main .PhotoBox img:hover {
+  cursor: pointer;
+  outline: 2px solid #128fdc;
+}
+
+.CameraRoll .Main .PhotoBox img {
+  height: 128px;
+  width: 128px;
+}
+
+.CameraRoll .Main .button {
+  background-color: #128fdc;
+  border: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  padding: 5px;
+  color: #fff;
+  width: 40%;
+}
+
+.CameraRoll form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+  outline: 2px solid #128fdc;
+  margin: 10px auto;
+  position: absolute;
+  height: 230px;
+  top: 30%;
+  left: 40%;
+  font-size: 14px;
+  background-color: #fff;
+  width: 350px;
+  z-index: 5;
+}
+
+.CameraRoll label {
+  width: 90%;
+}
+
+.CameraRoll label input,
+select {
+  width: 70%;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.CameraRoll .delete-button {
+  margin-top: 5px;
+  display: block;
+  width: 100px !important;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .CameraRoll form {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+  }
+}
