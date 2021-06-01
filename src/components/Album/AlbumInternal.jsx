@@ -5,7 +5,7 @@ import './AlbumInternal.css';
 
 import AlbumPhotos from './AlbumPhotos';
 
-function AlbumInternal(probs) {//probs albumId
+function AlbumInternal(probs) {//probs {"albumId":"123"}
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
     console.log(userData);
@@ -19,18 +19,20 @@ function AlbumInternal(probs) {//probs albumId
     const [descriptionText, setDescriptionText] = useState("");
     const albumId = 2;
     axios.defaults.baseURL = "https://qasaqees.tech/api";
-            axios.get('/album/'+probs.albumId.toString())
+            axios.get('/album/'+probs.albumId)
                 .then((response) => {
                     console.log(response.data);
                     setMedia(response.data.media);
                     console.log("url");
                     console.log(media[0].url);
+                    document.getElementById('album-internal-img').style.backgroundImage =
+                        "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url("+media[0].url+")";
                 })
                 .catch((error) => {
                     console.log(error.response.data.message);
                 });
                 console.log(media);
-    function Submit(event) {
+    function Submit(event) {//title and description 
             event.preventDefault();
             //get data 
             setTitleText(document.getElementById("albumTitle").innerText);
@@ -45,7 +47,7 @@ function AlbumInternal(probs) {//probs albumId
             };
             console.log("data sent:");
             console.log(data);
-            axios.patch('/album/'+probs.albumId.toString(), data, { headers: { "Content-Type": "application/json" } })
+            axios.patch('/album/'+probs.albumId, data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     console.log(response.data);
                 })
@@ -65,10 +67,9 @@ function AlbumInternal(probs) {//probs albumId
                         <a><i class="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
                     </div>
                     <div className="col-3">
-			            <span>icons</span>
                     </div>
                 </div>
-                <div className="row bg-image bg album-image">
+                <div id="album-internal-img" className="row bg-image album-image">
                     <div className="col album-edit-col">
                         <i className="far fa-edit album-edit-icon"></i>
                     </div>

@@ -4,9 +4,10 @@
     margin-right: auto;
     box-sizing: border-box;
 }
-#album-internal .bg {
+#album-internal-img {
     background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg');
     background-position: bottom;
+    background-size: cover;
 }
 #album-internal .row {
     --bs-gutter-x: 0rem;
