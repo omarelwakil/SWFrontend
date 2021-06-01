@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+//import Modal from "react-bootstrap/Modal";
+//import "bootstrap/dist/css/bootstrap.min.css";
+
 import axios from 'axios';
 
 import './AlbumInternal.css';
@@ -14,24 +17,43 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
         window.location.href = "/login";
     }
     const [media, setMedia] = useState([]);
-    const [numIcons, setNumIcons] = useState(0);
     const [titleText, setTitleText] = useState("");
     const [descriptionText, setDescriptionText] = useState("");
-    const albumId = 2;
+    //remove later just for testing replace with probs.albumId
+    const albumId = "60b64d67c3f8f600120f8b57";
     axios.defaults.baseURL = "https://qasaqees.tech/api";
-            axios.get('/album/'+probs.albumId)
+    // get album details
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+    useEffect(() => {
+        axios.patch('/album/'+albumId, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
-                    console.log(response.data);
-                    setMedia(response.data.media);
-                    console.log("url");
-                    console.log(media[0].url);
-                    document.getElementById('album-internal-img').style.backgroundImage =
-                        "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url("+media[0].url+")";
+                    setTitleText(response.data.title);
+                    setDescriptionText(response.data.description);
                 })
                 .catch((error) => {
-                    console.log(error.response.data.message);
+                    if (error.response.status === 401) {
+                        console.log(error.response.data.message);
+                    }else if(error.response.status === 404){
+                        console.log(error.response.data.message);
+                    }
                 });
-                console.log(media);
+      });
+      useEffect(() => {
+        axios.get('/album/'+albumId)
+                .then((response) => {
+                    if(media.length > 0){
+                        console.log("url");
+                        console.log(media[0].url);
+                        document.getElementById('album-internal-img').style.backgroundImage =
+                            "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url("+media[0].url+")";
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status === 404) {
+                        //console.log(error.response.data.message);
+                    }
+                });
+      });
     function Submit(event) {//title and description 
             event.preventDefault();
             //get data 
@@ -39,7 +61,6 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             setDescriptionText(document.getElementById("albumDesc").innerText);
             document.getElementById("edit-album-button").style.display = "none";
             
-            axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             const data ={
                 title:titleText,
@@ -47,7 +68,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             };
             console.log("data sent:");
             console.log(data);
-            axios.patch('/album/'+probs.albumId, data, { headers: { "Content-Type": "application/json" } })
+            axios.patch('/album/'+albumId, data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     console.log(response.data);
                 })
@@ -75,9 +96,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     </div>
                     <div className="row">
                         <div className="col text-center">
-                            <h3 id="albumTitle" className="album-title" contentEditable="true">Title</h3>
+                            <h3 id="albumTitle" className="album-title" contentEditable="true">{titleText}</h3>
                             <p id="albumDesc" className="album-description" contentEditable="true">
-				                Click here to enter a description for this album</p>
+				                {descriptionText}</p>
                             <button id="edit-album-button" type="button" class="btn btn-dark" onClick = { Submit }>Done</button>
                             <p id="imgNum" className="album-img-num">{media.length} photos</p>
                             <i className="fas fa-share album-icons album-remove"></i>
@@ -99,7 +120,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 <AlbumPhotos
                         key="12"
                         url="//live.staticflickr.com/65535/51215214338_79a9910831_n.jpg"
-                    />
+                />
                 </div>
             </div>
         </div>
