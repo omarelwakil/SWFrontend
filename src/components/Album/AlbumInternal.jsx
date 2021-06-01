@@ -6,17 +6,20 @@ import './AlbumInternal.css';
 import AlbumPhotos from './AlbumPhotos';
 
 function AlbumInternal(probs) {//probs albumId
-    const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
     console.log(userData);
-    if (isLoggedIn === null) {
+    if (accessToken === null) {
         localStorage.clear();
         window.location.href = "/login";
     }
     const [media, setMedia] = useState([]);
     const [numIcons, setNumIcons] = useState(0);
-    axios.defaults.baseURL = "https://599c770a-2052-400a-a709-295f306bdccc.mock.pstmn.io";
-            axios.get('/album/'+probs.albumId)
+    const [titleText, setTitleText] = useState("");
+    const [descriptionText, setDescriptionText] = useState("");
+    const albumId = 2;
+    axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.get('/album/'+albumId.toString())
                 .then((response) => {
                     console.log(response.data);
                     setMedia(response.data.media);
@@ -27,6 +30,33 @@ function AlbumInternal(probs) {//probs albumId
                     console.log(error.response.data.message);
                 });
                 console.log(media);
+    function Submit(event) {
+            event.preventDefault();
+            //get data 
+            setTitleText(document.getElementById("albumTitle").innerText);
+            setDescriptionText(document.getElementById("albumDesc").innerText);
+            document.getElementById("edit-album-button").style.display = "none";
+            
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+            const data ={
+                title:titleText,
+                description:descriptionText,
+            };
+            console.log("data sent:");
+            console.log(data);
+            axios.patch('/album/'+albumId.toString(), data, { headers: { "Content-Type": "application/json" } })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    if (error.response.status === 401) {
+                        console.log(error.response.data.message);
+                    }else if(error.response.status === 404){
+                        console.log(error.response.data.message);
+                    }
+                });
+            }
     return (
         <div id="album-internal">
             <div className="container-fluid">
@@ -40,24 +70,24 @@ function AlbumInternal(probs) {//probs albumId
                 </div>
                 <div className="row bg-image bg album-image">
                     <div className="col album-edit-col">
-                        <i class="far fa-edit album-edit-icon"></i>
+                        <i className="far fa-edit album-edit-icon"></i>
                     </div>
                     <div className="row">
                         <div className="col text-center">
-                            <h3 className="album-title" contenteditable="true">Title</h3>
-                            <p className="album-description" contenteditable="true">
+                            <h3 id="albumTitle" className="album-title" contentEditable="true">Title</h3>
+                            <p id="albumDesc" className="album-description" contentEditable="true">
 				                Click here to enter a description for this album</p>
-                            <button type="button" class="btn btn-dark edit-album-button">Done</button>
-                            <p className="album-img-num">{media.length} photos {numIcons}</p>
-                            <i class="fas fa-share album-icons"></i>
-                            <i class="fas fa-book-open album-icons"></i>
-                            <i class="fas fa-download album-icons"></i>
+                            <button id="edit-album-button" type="button" class="btn btn-dark" onClick = { Submit }>Done</button>
+                            <p id="imgNum" className="album-img-num">{media.length} photos</p>
+                            <i className="fas fa-share album-icons album-remove"></i>
+                            <i className="fas fa-book-open album-icons album-remove"></i>
+                            <i className="fas fa-download album-icons album-remove"></i>
                             <p className="album-description">
 				                By:{userData.firstName}</p>
                         </div>
                     </div>
                 </div>
-                <div class="row gx-5">
+                <div className="row gx-5">
                 { media.map((photo) => (
                     <AlbumPhotos
                         key={photo._id}
