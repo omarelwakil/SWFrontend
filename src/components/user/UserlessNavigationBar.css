@@ -219,6 +219,7 @@ body {
     #div-user-less-search {
         display: flex !important;
         margin-left: auto !important;
+        flex-direction: column;
     }
 }
 
