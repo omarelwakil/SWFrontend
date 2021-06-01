@@ -60,14 +60,9 @@ $(document).ready(function () {
     //Comment On Media
     var textArea = document.getElementById("commentTextArea");
     textArea.addEventListener("focus", commentFocusFunction, true);
-    textArea.addEventListener("blur", commentBlurFunction, true);
 
     function commentFocusFunction() {
     document.getElementById("commentBtn").style.display = "inline-block";
-    }
-
-    function commentBlurFunction() {
-    document.getElementById("commentBtn").style.display = "none"
     }
 //
 });
