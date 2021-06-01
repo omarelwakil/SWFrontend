@@ -75,10 +75,9 @@ $(document).ready(function () {
     }
 
     function myBlurFunction() {
-    //setTimeout(() => {document.getElementById("edit-album-button").style.display = "none";}, 200);
     document.getElementById("imgNum").style.display = "block";
     for (let index = 0; index < document.getElementsByClassName("album-remove").length; index++) {
         document.getElementsByClassName("album-remove")[index].style.display = "inline";
-    }
+     }
     }
 });

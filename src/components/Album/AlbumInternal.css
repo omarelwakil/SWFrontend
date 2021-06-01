@@ -29,6 +29,16 @@
     size: 5px;
     width: auto;
     float: right;
+    margin: 0px;
+}
+.album-photoStream{
+}
+.photoStreamSelected{
+    border-color: crimson;
+}
+#album-internal .album-edit-btn{
+    float: right;
+    padding: 0;
     margin: 7px;
 }
 .album-edit-col{
