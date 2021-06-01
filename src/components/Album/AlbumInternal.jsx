@@ -16,7 +16,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
         localStorage.clear();
         window.location.href = "/login";
     }
-    const [media, setMedia] = useState([]);
+    var media = [];
     const [titleText, setTitleText] = useState("");
     const [descriptionText, setDescriptionText] = useState("");
     //remove later just for testing replace with probs.albumId
@@ -41,6 +41,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
       useEffect(() => {
         axios.get('/album/'+albumId)
                 .then((response) => {
+                    media = response.data.media;
                     if(media.length > 0){
                         console.log("url");
                         console.log(media[0].url);
@@ -57,14 +58,14 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
     function Submit(event) {//title and description 
             event.preventDefault();
             //get data 
-            setTitleText(document.getElementById("albumTitle").innerText);
-            setDescriptionText(document.getElementById("albumDesc").innerText);
+            console.log(document.getElementById("albumTitle").innerText);
+            console.log(document.getElementById("albumDesc").innerText);
             document.getElementById("edit-album-button").style.display = "none";
             
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             const data ={
-                title:titleText,
-                description:descriptionText,
+                title:document.getElementById("albumTitle").innerText,
+                description:document.getElementById("albumDesc").innerText,
             };
             console.log("data sent:");
             console.log(data);
