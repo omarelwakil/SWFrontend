@@ -15,7 +15,7 @@ function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-   
+
     //console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
@@ -60,15 +60,16 @@ function UserlessNavigationBar(props) {
             });
     }
     ////Drop box for search
-    const [showDropList,setShowDropList] = useState(false);
-    const [text , setText] = useState(props.currentSearch);
+    const [showDropList, setShowDropList] = useState(false);
+    const [text, setText] = useState(props.currentSearch);
     const [isFocused, setIsFocused] = useState(false);
-   useEffect(()=>{setShowDropList(isFocused && (text !==""))},[isFocused,text])
+    useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
 
-    function handleTextChange(event){
-        const {value} = event.target;
+    function handleTextChange(event) {
+        const { value } = event.target;
         setText(value);
     }
+    console.log(userData)
 
     return (
         <div id="global-nav">
@@ -99,7 +100,7 @@ function UserlessNavigationBar(props) {
                     </div>
                     <div id="div-nav-items">
                         <nav className="nav ps-3">
-                            {isLoggedIn === null ? null :
+                            {isLoggedIn === null || userData === null ? null :
                                 <div className="dropdown">
                                     <a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</a>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -121,8 +122,8 @@ function UserlessNavigationBar(props) {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" autoComplete="off" onFocus={() => {setIsFocused(true)}} onBlur ={() => {setTimeout(()=>{setIsFocused(false)},120)}} value={text} onChange ={handleTextChange}/>
-                        {showDropList&& <SearchDropDown search={text} />}
+                            id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 120) }} value={text} onChange={handleTextChange} />
+                        {showDropList && <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />
                         <input type="button" className="bg-transparent border-0 rounded-15"
@@ -131,7 +132,7 @@ function UserlessNavigationBar(props) {
                     <div id="div-upload" className="d-flex justify-content-center">
                         <input type="button" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity" value="" />
                     </div>
-                    {isLoggedIn === null ?
+                    {isLoggedIn === null || userData === null ?
                         <a href="/login"
                             className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
                             id="log-in">
@@ -150,7 +151,7 @@ function UserlessNavigationBar(props) {
                             </div>
                         </div>
                     }
-                    {isLoggedIn === null ?
+                    {isLoggedIn === null || userData === null ?
                         <a href="/sign-up"
                             className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
                             id="sign-up-btn">
@@ -170,7 +171,7 @@ function UserlessNavigationBar(props) {
                     }
                 </div>
                 <div id="div-side-nav" className="h-100 position-fixed pt-2">
-                    {isLoggedIn === null ?
+                    {isLoggedIn === null || userData === null ?
                         <a className="d-block text-decoration-none text-white side-bar-items" href="/log-in">Log In</a> :
                         <div>
                             <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid">Photostream</a>
@@ -220,7 +221,7 @@ function UserlessNavigationBar(props) {
                 </div>
             </div>
             <div className="fixed-height"></div>
-        </div>
+        </div >
     );
 }
 
