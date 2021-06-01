@@ -16,6 +16,9 @@ import ExplorePage from './pages/ExplorePage';
 import SearchPhotosPage from './pages/SearchPhotosPage';
 import SearchPeoplePage from './pages/SearchPeoplePage';
 import UserAboutPage from './pages/UserAboutPage';
+import PhotoPage from './pages/PhotoPage/PhotoPage';
+import PhotoStream from './pages/PhotoStream/PhotoStream';
+import CameraRoll from './pages/CameraRoll/CameraRoll';
 
 function App() {
   return (
