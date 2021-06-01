@@ -15,6 +15,7 @@ function SearchPhotos(){
   const position = "position-fixed";
 
   const [photos,setPhotos]=useState([]);
+  const [notfound ,setNotFound]=useState(false);
   //Get All Photos from the BE
   const getAllPhotos = ()=>{
       axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
@@ -25,6 +26,7 @@ function SearchPhotos(){
       })
       .catch((error) => {
         if (error.response.status === 404) {
+            setNotFound(true);
             console.log(error.response.data.message);
         }
     }));
@@ -41,6 +43,7 @@ function SearchPhotos(){
                     {(photos.length > 0)&&(photos.map((photo,index)=>{return(<PhotoBox key={index} id={photo._id} 
                      url = {photo.url} title = {photo.title} userName={photo.creator.firstName +" "+ photo.creator.lastName} 
                      favNum={photo.favouriteCount} comNum={photo.commentsNum}/>);}))}
+                      {notfound&&<div className="push-footer">No Photos are found</div>}
                 </div>
             </div>
         </div>
