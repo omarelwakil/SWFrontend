@@ -19,7 +19,7 @@ function AlbumInternal(probs) {//probs albumId
     const [descriptionText, setDescriptionText] = useState("");
     const albumId = 2;
     axios.defaults.baseURL = "https://qasaqees.tech/api";
-            axios.get('/album/'+albumId.toString())
+            axios.get('/album/'+probs.albumId.toString())
                 .then((response) => {
                     console.log(response.data);
                     setMedia(response.data.media);
@@ -45,7 +45,7 @@ function AlbumInternal(probs) {//probs albumId
             };
             console.log("data sent:");
             console.log(data);
-            axios.patch('/album/'+albumId.toString(), data, { headers: { "Content-Type": "application/json" } })
+            axios.patch('/album/'+probs.albumId.toString(), data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     console.log(response.data);
                 })
