@@ -46,7 +46,7 @@ function SignUp(){
                 localStorage.setItem("accessToken",response.data.accessToken);
                 delete response.data.accessToken;
                 console.log(response.data.user);
-                localStorage.setItem("userData",JSON.stringify(response.data.user));
+                localStorage.setItem("userData",JSON.stringify(response.data));
                 //To check of 
                 setTimeout(() => {window.location.href = "/account";}, 1000);
             })
@@ -83,7 +83,7 @@ function SignUp(){
               localStorage.setItem("accessToken",response.data.accessToken);
               delete response.data.accessToken;
               console.log(response.data.user);
-              localStorage.setItem("userData",JSON.stringify(response.data.user));
+              localStorage.setItem("userData",JSON.stringify(response.data));
               //To check of 
               setTimeout(() => {window.location.href = "/account";}, 2000);
           })
