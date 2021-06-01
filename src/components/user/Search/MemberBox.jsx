@@ -61,7 +61,7 @@ function MemberBox(props){
                        <a href={userPath} >
                           <div className ="user-data">
                                 <span className ="name">{props.name}</span>
-                                <span className ="Grey-small user-name">{props.id}</span>
+                                <span className ="Grey-small user-name">{props.userName}</span>
                                 <span className ="Grey-small"><PhotoSizeSelectActualOutlinedIcon />  {photosNum} <PeopleIcon /> {followersNum}</span>
                           </div>
                         </a>

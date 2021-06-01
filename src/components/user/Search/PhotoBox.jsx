@@ -7,7 +7,7 @@ import './PhotoBox.css'
 
 function PhotoBox(props){   
     const [showData,setShowData] = useState(false);
-    const photoLink = "/photos/"+props.id;
+    const photoLink = "/photos/getDetails/"+props.id;
     const favoritesNumber = props.favNum > "999" ? "999+": props.favNum;
     const commentNumber = props.comNum > "999" ? "999+": props.comNum;
     return(

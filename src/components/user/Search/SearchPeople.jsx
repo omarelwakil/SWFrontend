@@ -45,7 +45,7 @@ function SearchPeople(){
             <div className="container-fluid">
                 <div className ="row justify-content-start">
                      {(people.length > 0)?(people.map((person,index)=>{return(<MemberBox key={index} id={person._id} 
-                     url = {person.profilePhotoUrl} name = {person.firstName + " "+person.lastName} followersNum={person.numberOfFollowers}
+                     url = {person.profilePhotoUrl} userName ={person.userName} name = {person.firstName + " "+person.lastName} followersNum={person.numberOfFollowers}
                      photosNum={person.numberOfPhotos} isFollowing={person.isFollowing} 
                      date ={monthNames[new Date(person.createdAt).getMonth()]+" "+ new Date(person.createdAt).getFullYear()} />);})):
                      <div className="push-footer">No people are found</div>}
