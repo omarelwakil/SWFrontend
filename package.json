@@ -17,6 +17,7 @@
     "font-awesome": "^4.7.0",
     "jest": "^26.5.0",
     "masonry-layout": "^4.2.2",
+    "msw": "^0.29.0",
     "react": "^17.0.2",
     "react-animated-css": "^1.2.1",
     "react-dom": "^17.0.2",
@@ -27,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "react-scripts test",
     "test_watch": "react-scripts test",
     "eject": "react-scripts eject"
   },

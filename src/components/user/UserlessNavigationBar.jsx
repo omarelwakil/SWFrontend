@@ -15,7 +15,7 @@ function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-    const [isFocused, setIsFocused] = useState(false);
+   
     //console.log(isLoggedIn);
 
     function ToggleSideNavigationBar() {
@@ -62,7 +62,7 @@ function UserlessNavigationBar(props) {
     ////Drop box for search
     const [showDropList,setShowDropList] = useState(false);
     const [text , setText] = useState(props.currentSearch);
-
+    const [isFocused, setIsFocused] = useState(false);
    useEffect(()=>{setShowDropList(isFocused && (text !==""))},[isFocused,text])
 
     function handleTextChange(event){
