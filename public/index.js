@@ -59,14 +59,14 @@ $(document).ready(function () {
     setInterval(showHide,5000);
     //Comment On Media
     var textArea = document.getElementById("commentTextArea");
-    textArea.addEventListener("focus", myFocusFunction, true);
-    textArea.addEventListener("blur", myBlurFunction, true);
+    textArea.addEventListener("focus", commentFocusFunction, true);
+    textArea.addEventListener("blur", commentBlurFunction, true);
 
-    function myFocusFunction() {
+    function commentFocusFunction() {
     document.getElementById("commentBtn").style.display = "inline-block";
     }
 
-    function myBlurFunction() {
+    function commentBlurFunction() {
     document.getElementById("commentBtn").style.display = "none"
     }
 //

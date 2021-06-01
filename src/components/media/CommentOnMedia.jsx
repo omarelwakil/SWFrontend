@@ -13,10 +13,6 @@ function CommentOnMedia(probs){//props:{photo_id}
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Recent Comments</h4>
-                    <h6 class="card-subtitle">Latest Comments section by users</h6>
-                </div>
                 <div class="comment-widgets m-b-20">
                 {comments.map((comment) => (
                     <Comment
