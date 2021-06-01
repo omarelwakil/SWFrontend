@@ -64,6 +64,14 @@
 #login .login-not-memeber {
     font-size: 0.875rem;
 }
+.kep-login-facebook.metro{
+    border-radius: 10px;
+    width: 53%;
+    height: 0;
+    margin-top: 3px;
+    padding-top: inherit;
+    font-size: 11px;    
+}
 
 @media (max-width: 1024px) and (min-width: 993px) {
     #div-logo {

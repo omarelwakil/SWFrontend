@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "font-awesome": "^4.7.0",
     "jest": "^26.5.0",
+    "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "react": "^17.0.2",
     "react-animated-css": "^1.2.1",

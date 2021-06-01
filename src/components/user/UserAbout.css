@@ -1,0 +1,169 @@
+.edit-m-ui-btn,
+.add-m-ui-btn {
+    color: #999;
+    cursor: pointer;
+}
+
+#about-yourself-text-btn {
+    font-style: italic;
+}
+
+
+#about-yourself-text-btn:hover {
+    text-decoration: underline;
+}
+
+#user-about .centered {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#user-about .hyperlink-btn {
+    color: #006dac;
+    text-decoration: none;
+}
+
+#user-about .hyperlink-btn:hover {
+    text-decoration: underline;
+}
+
+#user-about .container-fluid {
+    padding: 0;
+    width: 80%;
+}
+
+#user-about #user-about-navbar {
+    height: 50px;
+}
+
+#user-about #user-description-textarea {
+    min-height: 200px;
+}
+
+#user-about .btn-sv-cl-size {
+    min-width: 80px;
+    height: 32px;
+}
+
+#user-about .btn-save,
+#user-about .btn-cancel {
+    min-width: 80px;
+    height: 32px;
+    color: #fff;
+    transition: opacity .2s ease-in-out;
+}
+
+#user-about .btn-save:hover,
+#user-about .btn-cancel:hover {
+    opacity: .8;
+}
+
+#user-about .btn-save {
+    background-color: #128fdc;
+}
+
+#user-about .btn-cancel {
+    background-color: #a4acb0;
+}
+
+#user-about .user-info-input {
+    width: 300px;
+}
+
+#user-about .modal-body {
+    min-height: 60vh;
+}
+
+#user-about #user-description-textarea:focus-visible,
+#user-about .user-info-input:focus-visible {
+    box-shadow: inset 0 0 .5px 1px #008ddf;
+    outline: none;
+}
+
+#user-about .image-selector {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}
+
+#user-about .bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    cursor: pointer;
+}
+
+#user-about .selector-title {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+    min-height: 17px;
+    text-shadow: 1px 1px 3px #000;
+}
+
+#user-about .selector-creator {
+    color: hsla(0, 0%, 100%, .7);
+    font-size: 11px;
+    text-shadow: 1px 1px 3px #000;
+}
+
+#user-about .image-selector:hover~.bottom-left,
+#user-about .image-selector~.bottom-left:hover,
+#user-about .image-lodash~.bottom-left:hover,
+#user-about .image-lodash:hover~.bottom-left {
+    opacity: 1;
+}
+
+#user-about .image-lodash {
+    object-fit: cover;
+    max-height: 200px;
+    max-width: 400px;
+    width: 100%;
+    height: 100%;
+}
+
+#user-about .lodash-wrapper {
+    height: fit-content;
+    width: fit-content;
+}
+
+#user-about .selected-image {
+    border: 3px solid #0091dc;
+    border-radius: 5px;
+}
+
+@media (max-width: 991.98px) {
+    #user-about .container-fluid {
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .px-md-6 {
+        padding-left: 6rem !important;
+        padding-right: 6rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #user-about .user-info-input {
+        width: 100% !important;
+    }
+}
+
+/* Lodash  */
+
+#user-about .grid {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-auto-rows: 1px;
+}
+
+#user-about .grid__item {
+    grid-row-end: span var(--row-span, 23);
+}
