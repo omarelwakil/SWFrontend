@@ -275,7 +275,7 @@ function UserAbout(props) {
     return (
         <div id="user-about">
             {userToRender != null ?
-                <UserCover userData={userToRender} /> : null
+                <UserCover userData={userToRender.user} /> : null
             }
             <div id="user-about-navbar">
                 {userToRender != null ?
