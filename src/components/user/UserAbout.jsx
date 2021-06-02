@@ -56,7 +56,7 @@ function UserAbout(props) {
         { title: "Faves", path: "/photos/" + userToRenderId + "/favorites", selected: false },
         { title: "Camera Roll", path: "/cameraroll", selected: false }
     ];
-    const position = "position-fixed";
+    const position = "position-static";
 
     const ToggleUserDescriptionEdit = () => {
         if (userDescriptionEdit) {
@@ -274,7 +274,9 @@ function UserAbout(props) {
 
     return (
         <div id="user-about">
-            <UserCover userData={userToRender} />
+            {userToRender != null ?
+                <UserCover userData={userToRender} /> : null
+            }
             <div id="user-about-navbar">
                 {userToRender != null ?
                     <div>
