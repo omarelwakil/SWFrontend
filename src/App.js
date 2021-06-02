@@ -19,6 +19,7 @@ import UserAboutPage from './pages/UserAboutPage';
 import PhotoPage from './pages/PhotoPage/PhotoPage';
 import PhotoStream from './pages/PhotoStream/PhotoStream';
 import CameraRoll from './pages/CameraRoll/CameraRoll';
+import UploadPage from './pages/UploadPage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route exact path="/search/photos/:searchText" component={SearchPhotosPage} />
         <Route exact path="/search/people/:searchText" component={SearchPeoplePage} />
         <Route exact path="/people/:id" component={UserAboutPage} />
+        <Route exact path="/photos/upload" component={UploadPage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>
