@@ -89,7 +89,8 @@ const Main = (props) => {
             <div className="trending-now">
                 <div className="trending-text flex-start view-all">
                     <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
-                    <span>&nbsp;--&gt;&nbsp;&nbsp;</span>
+                    {/* <span>&nbsp;--&gt;&nbsp;&nbsp;</span> */}
+                    <span className="caret"></span>
                     <Link to="#">Trending Now</Link>
                 </div>
                 <div className="trending-images">
@@ -117,7 +118,8 @@ const Main = (props) => {
             <div className="trending-now">
                 <div className="trending-text flex-start view-all">
                     <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
-                    <span>&nbsp;--&gt;&nbsp;&nbsp;</span>
+                    {/* <span>&nbsp;--&gt;&nbsp;&nbsp;</span> */}
+                    <span className="caret"></span>
                     <Link to="#">Trending Now</Link>
                 </div>
                 <div className="trending-images">

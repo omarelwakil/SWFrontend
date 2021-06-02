@@ -14,8 +14,12 @@ function Trending() {
 
   //http requests
   useEffect(() => {
-    axios.defaults.baseURL = 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io';
-    axios.get('/tag/trending')
+    axios.defaults.baseURL = 'https://api.qasaqees.tech';
+    axios.get('/tag/trending',{
+      headers: {
+        "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
+        'Content-type': 'application/json'
+      }})
       .then(response => response.data)
       .then(data => setTrendingState(data))
       .catch( error => console.log('Couldnot fetch data Trending.js'));

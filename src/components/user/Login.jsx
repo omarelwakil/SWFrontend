@@ -2,34 +2,85 @@ import React, { useState } from 'react';
 import FloatingInput from './SignUp/FloatingInput';
 import FloatingInputPassoword from './SignUp/FloatingInputPassword';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
 
 
 import "./Login.css"
 
 function Login() {
-    //State of each text box and its error to pass it to the mock server
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
+    //State of each text box and its error
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('true');
     const [password, setPassword] = useState('');
     const [passwordError, setpassWordError] = useState('true');
     const [errorMsg, setErrorMsg] = useState(null);
-
-
+    
+    if (accessToken) {
+        window.location.href = "/account";
+        return;
+    }
+    const responseFacebook = (response) => {
+        console.log("facbook response: ");
+        console.log(response);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+            const data ={
+                loginType  : "Facebook",
+                accessToken: response.accessToken,
+            };
+            console.log("data sent: ");
+            console.log(data);
+            axios.post('/register/loginWithFacebook',data,{headers: {"Content-type": "application/json"}})
+                .then((response) => {
+                    localStorage.setItem("accessToken",response.data.accessToken);
+                    delete response.data.accessToken;
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data));
+                    //To check of 
+                    setTimeout(() => {window.location.href = "/account";}, 1000);
+                })
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. </p>
+                    </div>));
+                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. </p>
+                    </div>));}, 5000);
+                    }
+                    if (error.response.status === 404) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Please choose account. </p>
+                    </div>));
+                        setTimeout(() => {setErrorMsg((<div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        <p class="text-center ma-0 f-size-3 c-black"> Please choose account. </p>
+                    </div>));}, 5000);
+                    }
+                });
+      }
+      const componentClicked = (data) => {
+        console.warn(data);
+      }
     function Submit(event) {
+        event.preventDefault();
         if (!emailError && !passwordError) {
-            axios.defaults.baseURL = "https://208085ed-03fd-41c8-93ff-e8c2b9f55b8f.mock.pstmn.io";
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
             const data ={
               email:email,
               password:password,
             };
-            axios.post('/register/logIn',data)
+            console.log("form data: ");
+            console.log(data);
+            axios.post('/register/logIn',data,{headers: {"Content-type": "application/json"}})
                 .then((response) => {
                     localStorage.setItem("accessToken",response.data.accessToken);
                     delete response.data.accessToken;
-                    //console.log(response.data);
-                    localStorage.setItem("userData",response.data);
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data));
                     //To check of 
-                    setTimeout(() => {window.location.href = "/account";}, 2000);
+                    setTimeout(() => {window.location.href = "/account";}, 1000);                    
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
@@ -43,7 +94,9 @@ function Login() {
                     }
                 });
           }
-        event.preventDefault();
+        else{
+            console.log("Email or password error!!");
+        }
     }
     return ( 
         <div className = "bg-image bg ">
@@ -73,6 +126,14 @@ function Login() {
                 value = { password => setPassword(password) }
                 error = { passwordError => setpassWordError(passwordError) }
                 validation = {false}
+                />
+                <FacebookLogin
+                    appId="322610599248518"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={componentClicked}
+                    callback={responseFacebook}
+                    textButton="Login with Facebook" 
                 /> 
                 <button className = "btn-login" onClick = { Submit } > Sign in </button> 
                 <p className = "login-not-memeber" > < a href = "/forgot-password" > Forgot password ? </a> </p>

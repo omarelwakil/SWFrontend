@@ -1,0 +1,32 @@
+.Button {
+  width: 34px;
+  height: 34px;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.Button svg {
+  height: 100%;
+  width: 100% !important;
+  color: #fff;
+}
+
+.Button .text {
+  visibility: hidden;
+  font-size: 12px;
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid #fff;
+  width: 120px;
+  left: 50%;
+  text-transform: capitalize;
+}
+
+.Button:hover .text {
+  visibility: visible;
+}

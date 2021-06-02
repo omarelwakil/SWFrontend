@@ -1,0 +1,16 @@
+.PhotoStream .PhotoBox {
+  position: relative;
+}
+.PhotoStream .PhotoBox:hover img {
+  outline: 2px solid #008ddf;
+}
+.PhotoStream .PhotoBox .details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 12px;
+  z-index: 5;
+}
+.PhotoStream .PhotoBox svg {
+  color: #333;
+}

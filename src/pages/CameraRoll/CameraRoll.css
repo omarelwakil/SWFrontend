@@ -1,0 +1,22 @@
+.CameraRoll {
+  overflow: hidden;
+}
+.CameraRoll .custom-navbar {
+  top: 300px !important;
+  position: absolute;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .CameraRoll .custom-container {
+    width: 100%;
+  }
+
+  .CameraRoll .custom-navbar .custom-navbar-ul {
+    display: block;
+  }
+
+  .CameraRoll .custom-navbar .custom-navbar-ul li {
+    width: 100%;
+    text-align: center;
+  }
+}
