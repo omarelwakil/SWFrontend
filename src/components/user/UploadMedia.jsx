@@ -9,6 +9,9 @@ function UploadMedia() {
     const [filesToBeUploaded, setFilesToBeUploaded] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
 
+    if (accessToken === null)
+        window.location.href = "/login";
+
     const TogglePhotoTitle = (e) => {
         if (document.getElementById("photo-title-input").classList.contains("d-none")) {
             document.getElementById("photo-title-input").classList.remove("d-none");
