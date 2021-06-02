@@ -5,7 +5,7 @@ import UserImage from '../UserImage/UserImage';
 
 const UserCover = (props) => {
     
-    const user = props.userData;
+    const user = props.userData.showCase;
 
     const coverStyling = {
         backGround: `linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.03) 8%, rgba(0, 0, 0, 0.11) 21%, rgba(0, 0, 0, 0.61) 78%, rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.7)), url("${user.coverPhotoUrl}") no-repeat center`
