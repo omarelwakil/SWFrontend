@@ -130,7 +130,7 @@ function UserlessNavigationBar(props) {
                             id="search-icon-sm" value="" />
                     </div>
                     <div id="div-upload" className="d-flex justify-content-center">
-                        <input type="button" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity" value="" />
+                        <a href="/photos/upload" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity"> </a>
                     </div>
                     {isLoggedIn === null || userData === null ?
                         <a href="/login"
@@ -174,17 +174,13 @@ function UserlessNavigationBar(props) {
                     {isLoggedIn === null || userData === null ?
                         <a className="d-block text-decoration-none text-white side-bar-items" href="/log-in">Log In</a> :
                         <div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid">Photostream</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id}>Photostream</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/albums">Albums</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/albums"}>Albums</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/favorites">Favorites</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/favorites"}>Favorites</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/galleries">Galleries</a>
-                            <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/groups">Groups</a>
-                            <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/people/id">About</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/people/" + userData.user._id}>About</a>
                         </div>
                     }
                     <hr className="text-white" />
