@@ -33,8 +33,7 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
-        {/*for testing remove later as it will be called from clicking on album from profile*/}
-        <Route exact path="/album" component={AlbumInternalPage} />
+        <Route exact path="/photos/:userid/albums/:albumid" component={AlbumInternalPage} />
 
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
