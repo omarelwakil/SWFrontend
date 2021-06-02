@@ -30,7 +30,7 @@ const UserCover = (props) => {
                             <div className="col-lg-2 p-0">{user.userName}</div>
                             <div className="col-lg-8 row">
                                 <div className="col-6">{user.numberOfFollowers} Followers . {user.numberOfFollowings} Following</div>
-                                <div className="col-6 text-end hidden">{user.showCase.photos.length} photo</div>
+                                <div className="col-6 text-end hidden">{user.numberOfPhotos} photo</div>
                             </div>
                             <div className="col-2 hidden">Joined {user.createdAt.slice(0,4)}</div>
                         </div>
