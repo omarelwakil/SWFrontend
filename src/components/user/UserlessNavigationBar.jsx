@@ -129,9 +129,11 @@ function UserlessNavigationBar(props) {
                         <input type="button" className="bg-transparent border-0 rounded-15"
                             id="search-icon-sm" value="" />
                     </div>
-                    <div id="div-upload" className="d-flex justify-content-center">
-                        <a href="/photos/upload" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity"> </a>
-                    </div>
+                    {isLoggedIn !== null && userData !== null ?
+                        <div id="div-upload" className="d-flex justify-content-center">
+                            <a href="/photos/upload" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity"> </a>
+                        </div> : null
+                    }
                     {isLoggedIn === null || userData === null ?
                         <a href="/login"
                             className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
