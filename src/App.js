@@ -13,6 +13,7 @@ import TrendingPage from './pages/Trending/Trending';
 import SettingsPage from './pages/SettingsPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ExplorePage from './pages/ExplorePage';
+import AlbumInternalPage from './pages/Album/AlbumInternalPage';
 import SearchPhotosPage from './pages/SearchPhotosPage';
 import SearchPeoplePage from './pages/SearchPeoplePage';
 import UserAboutPage from './pages/UserAboutPage';
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
+        <Route exact path="/photos/:userid/albums/:albumid" component={AlbumInternalPage} />
         <Route exact path="/photo/getDetails/:id" component={PhotoPage} />
         <Route exact path="/user/photostream/:id" component={PhotoStream} />
         <Route exact path="/user/cameraRoll/:id" component={CameraRoll} />
