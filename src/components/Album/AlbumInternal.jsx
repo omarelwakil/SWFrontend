@@ -24,7 +24,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
     const [titleText, setTitleText] = useState("");
     const [descriptionText, setDescriptionText] = useState("");
     //remove later just for testing replace with probs.albumId
-    const albumId = "60b64d67c3f8f600120f8b57";
+    const albumId = probs.albumId;
     axios.defaults.baseURL = "https://qasaqees.tech/api";
     // get album details
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
@@ -44,8 +44,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
       });
       function LoadAlbumMedia(event) {
         document.getElementById("loadAlbumBtn").style.display = "none";    
-        axios.defaults.baseURL = "https://ac24a9e7-e28b-43d8-a7a2-c95916b587eb.mock.pstmn.io";
-            axios.get('/album/asd')
+            axios.get('/album/'+albumId)
             .then((response) => {
                 console.log("response.data.media");
                 console.log(response.data.media);
@@ -89,10 +88,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             }
     function LoadPhotoStream(event){
         event.preventDefault();
-            //console.log("data sent:");
-            //console.log(userData.id);
-            axios.defaults.baseURL = "https://d31b89f1-e90d-454a-8e03-71311aae3f12.mock.pstmn.io";
-            axios.get('/user/photostream/asd')//+userData.id)
+            console.log("data sent in /user/photostream/:");
+            console.log(userData.id);
+            axios.get('/user/photostream/'+userData.id)
                 .then((response) => {
                     console.log(response.data);
                     setPhotoStream(response.data.photos);
@@ -131,6 +129,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     photoId:event.target.id,
                     albumId:probs.albumId 
                 });
+                // remove it from add list if exists
+                addPhotos = addPhotos.filter(function( photo ) {
+                    return photo._id !== event.target.id;
+                });
                 console.log(removePhotos);
             }else{
                 //then select it and add it to add list
@@ -138,6 +140,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 addPhotos.push({
                     photoId:event.target.id,
                     albumId:probs.albumId 
+                });
+                // remove it from remove list if exists
+                removePhotos = removePhotos.filter(function( photo ) {
+                    return photo._id !== event.target.id;
                 });
                 console.log(addPhotos);
             }
@@ -159,7 +165,6 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         }
                     });
         }
-        
         //Remove section
         if(removePhotos.length > 0){
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;

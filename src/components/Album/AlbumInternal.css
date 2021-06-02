@@ -34,7 +34,8 @@
 .album-photoStream{
 }
 .photoStreamSelected{
-    border-color: crimson;
+    border-color: #128FDC;
+    border-width: thick;
 }
 #album-internal .album-edit-btn{
     float: right;
