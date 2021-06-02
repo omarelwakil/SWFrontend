@@ -10,6 +10,7 @@ import './SignUp.css';
 
 function SignUp(){
   //State of each text box and its error to pass it to the mock server
+  const [accessToken] = useState(localStorage.getItem("accessToken"));
   const [firstName,setFirstName] = useState('');
   const [firstNameError,setFirstNameError] = useState(true);
   const [lastName,setLastName] = useState('');
@@ -29,6 +30,11 @@ function SignUp(){
   const [emailEmpty,setEmailEmpty] = useState(false);
   const [passwordEmpty,setpassWordEmpty] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+    //if user is logged in redirect to account
+    if (accessToken) {
+      window.location.href = "/account";
+      return;
+    }
 
   //Sign-Up facebook
   const responseFacebook = (response) => {

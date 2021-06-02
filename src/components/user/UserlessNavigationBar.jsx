@@ -61,7 +61,7 @@ function UserlessNavigationBar(props) {
     }
     ////Drop box for search
     const [showDropList, setShowDropList] = useState(false);
-    const [text, setText] = useState(props.currentSearch);
+    const [text, setText] = useState(props.currentSearch || "");
     const [isFocused, setIsFocused] = useState(false);
     useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
 
