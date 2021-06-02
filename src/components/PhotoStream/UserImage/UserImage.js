@@ -1,12 +1,13 @@
+//TO USE: takes 2 props imgUrl & width(optional)
 import './UserImage.css'
 
 const UserImage = (props) => {
 
-    const imgSource = "https://combo.staticflickr.com/pw/images/buddyicon03_l.png#192784739@N02";
+    const imgUrl = props.imgUrl;
 
     return (
         <div className="UserImage">
-            <img src={imgSource} style={{width: props.width}}/>
+            <img src={imgUrl} style={{width: props.width}}/>
         </div>
     );
 }
