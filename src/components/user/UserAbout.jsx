@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 
 import Navbar from '../Trending/Navbar/Navbar';
+import UserCover from '../PhotoStream/UserCover/UserCover';
 
 import './UserAbout.css';
 
@@ -55,7 +56,7 @@ function UserAbout(props) {
         { title: "Faves", path: "/photos/" + userToRenderId + "/favorites", selected: false },
         { title: "Camera Roll", path: "/cameraroll", selected: false }
     ];
-    const position = "position-fixed";
+    const position = "position-static";
 
     const ToggleUserDescriptionEdit = () => {
         if (userDescriptionEdit) {
@@ -273,6 +274,9 @@ function UserAbout(props) {
 
     return (
         <div id="user-about">
+            {userToRender != null ?
+                <UserCover userData={userToRender.user} /> : null
+            }
             <div id="user-about-navbar">
                 {userToRender != null ?
                     <div>
