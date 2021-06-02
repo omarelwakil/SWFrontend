@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 
 import Navbar from '../Trending/Navbar/Navbar';
+import UserCover from '../PhotoStream/UserCover/UserCover';
 
 import './UserAbout.css';
 
@@ -273,6 +274,7 @@ function UserAbout(props) {
 
     return (
         <div id="user-about">
+            <UserCover userData={userToRender} />
             <div id="user-about-navbar">
                 {userToRender != null ?
                     <div>
