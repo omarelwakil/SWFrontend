@@ -11,8 +11,7 @@ const PhotoMain = props => {
 
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
 
-    const userToken =  'fafafafa';
-    //localStorage.getItem['accessToken'];
+    const userToken = localStorage.getItem('accessToken');
 
     //TODO: Returned user data from api --> useEffect&axios
     const user = props.user;
@@ -90,27 +89,32 @@ const PhotoMain = props => {
         photoCopy['tags'] = tagsArr;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + userToken,
+              "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))
         .catch(error => console.log(error));
     }
 
-    //TOBE CHANGED!
     const addTags = (e,inputTag) => {
         let tagsArr = [...tags];
-        tagsArr.push(inputTag.value);
+        let newTags = inputTag.value;
+        newTags = newTags.split(' ');
+        tagsArr = [...tagsArr,...newTags];
         setTags(tagsArr);
-        let photoCopy = {...photo};
-        photoCopy['tags'] = tagsArr;
-        axios.patch(`/photo/${photo._id}`,photoCopy,{
-            headers: {
-              "Authorization": 'Bearer' + userToken,
-              'Content-type': 'application/json'
-            }})
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+        tagsArr.forEach(tag => {
+            axios.patch(`/photo/addTags/${photo._id}`,{
+                headers: {
+                  "Authorization": 'Bearer ' + userToken,
+                  'Content-type': 'application/json'
+                },
+                params: {
+                    tag: tag
+                }
+            })
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error));
+        });
     }
     return(
         <div className="PhotoMain">
@@ -122,7 +126,6 @@ const PhotoMain = props => {
                     <div className="profile-name-desc">
                         <h5 className="profile-name"><a href={"/user/photostream/" + user.id}>{user.name}</a></h5>
                         <div className="profile-desc" onClick={showDescription} >
-                            {/* TODO: Edit description */}
                             {description}
                         </div>
                         <div className="line"></div>

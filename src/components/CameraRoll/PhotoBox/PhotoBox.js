@@ -12,16 +12,15 @@ const PhotoBox = (props) => {
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
 
     const [photo, setPhoto] = useState(props.photo);
-
-    const [privacy, setPrivacy] = useState(photo.isPublic); //TODO
+    const [privacy, setPrivacy] = useState(photo.isPublic); 
     const [allowCommenting, setAllowCommenting] = useState(photo.allowCommenting);
     const [Desc, setDesc] = useState(photo.description);
     const [title, setTitle] = useState(photo.title);
     const [tags, setTags] = useState(photo.tags);
+
     const [showForms, setShowForms] = useState(false);
     
     const [showEdit, setShowEdit] = useState(false);
-
     const showEditButton = () => setShowEdit(!showEdit);
 
     let inputTag;
@@ -65,7 +64,7 @@ const PhotoBox = (props) => {
         photoCopy['allowCommenting'] = allowCommenting;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + userToken,
+              "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))

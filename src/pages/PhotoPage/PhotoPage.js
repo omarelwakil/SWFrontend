@@ -28,7 +28,7 @@ const PhotoPage = props => {
         axios.defaults.baseURL = baseUrl;
         axios.get(`/photo/getDetails`,{
             headers: {
-              "Authorization": 'Bearer' + userToken,
+              "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
             },
             params: {

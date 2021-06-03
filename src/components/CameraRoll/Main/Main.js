@@ -24,7 +24,7 @@ const Main = (props) => {
 
         axios.delete(`/photo/${photoId}`,{
             headers: {
-              "Authorization": 'Bearer' + userToken,
+              "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))

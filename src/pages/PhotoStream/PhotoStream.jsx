@@ -48,9 +48,6 @@ const PhotoStream = () => {
         { title: "Photostream", path: "/photos/" + user._id, selected: true },
         { title: "Albums", path: "/photos/"+user._id+"/albums", selected: false },
         { title: "Faves", path: "/photos/"+user._id+"/favorites", selected: false },
-        { title: "Galleries", path: "/photos/"+user._id+"/galleries", selected: false },
-        { title: "Groups", path: "/groups", selected: false },
-        { title: "Stats", path: "/photos/"+user._id+"/stats", selected: false },
         { title: "Camera Roll", path: "/cameraroll", selected: false },
     ];
 
