@@ -20,7 +20,7 @@ import UserAboutPage from './pages/UserAboutPage';
 import PhotoPage from './pages/PhotoPage/PhotoPage';
 import PhotoStream from './pages/PhotoStream/PhotoStream';
 import CameraRoll from './pages/CameraRoll/CameraRoll';
-import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
+// import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import UploadPage from './pages/UploadPage';
 
 function App() {
