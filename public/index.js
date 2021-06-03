@@ -57,4 +57,27 @@ $(document).ready(function () {
         });     
     }
     setInterval(showHide,5000);
+    //Album Internal Page
+    var albumTitle = document.getElementById("albumTitle");
+    albumTitle.addEventListener("focus", myFocusFunction, true);
+    albumTitle.addEventListener("blur", myBlurFunction, true);
+    var albumDesc = document.getElementById("albumDesc");
+    albumDesc.addEventListener("focus", myFocusFunction, true);
+    albumDesc.addEventListener("blur", myBlurFunction, true);
+
+    function myFocusFunction() {
+    document.getElementById("edit-album-button").style.display = "inline-block";
+    document.getElementById("imgNum").style.display = "none";
+    for (let index = 0; index < document.getElementsByClassName("album-remove").length; index++) {
+        document.getElementsByClassName("album-remove")[index].style.display = "none";
+        
+    }
+    }
+
+    function myBlurFunction() {
+    document.getElementById("imgNum").style.display = "block";
+    for (let index = 0; index < document.getElementsByClassName("album-remove").length; index++) {
+        document.getElementsByClassName("album-remove")[index].style.display = "inline";
+     }
+    }
 });

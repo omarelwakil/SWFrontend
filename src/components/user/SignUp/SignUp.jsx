@@ -3,31 +3,80 @@ import FloatingInput from './FloatingInput';
 import FloatingInputPassoword from './FloatingInputPassword';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import FacebookLogin from 'react-facebook-login';
 
 import './SignUp.css';
 
 
 function SignUp(){
   //State of each text box and its error to pass it to the mock server
+  const [accessToken] = useState(localStorage.getItem("accessToken"));
   const [firstName,setFirstName] = useState('');
-  const [firstNameError,setFirstNameError] = useState('true');
+  const [firstNameError,setFirstNameError] = useState(true);
   const [lastName,setLastName] = useState('');
-  const [lastNameError,setLastNameError] = useState('true');
+  const [lastNameError,setLastNameError] = useState(true);
   const [age,setAge] = useState('');
-  const [ageError,setAgeError] = useState('true');
+  const [ageError,setAgeError] = useState(true);
   const [email,setEmail] = useState('');
-  const [emailError,setEmailError] = useState('true');
+  const [emailError,setEmailError] = useState(true);
   const [password,setPassword] = useState('');
-  const [passwordError,setpassWordError] = useState('true');
+  const [passwordError,setpassWordError] = useState(true);
   //state for if the email exists
   const [emailExist,setEmailExist] = useState(false);
+  //Empty error
+  const [firstNameEmpty,setFirstNameEmpty] = useState(false);
+  const [lastNameEmpty,setLastNameEmpty] = useState(false);
+  const [ageEmpty,setAgeEmpty]= useState(false);
+  const [emailEmpty,setEmailEmpty] = useState(false);
+  const [passwordEmpty,setpassWordEmpty] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+    //if user is logged in redirect to account
+    if (accessToken) {
+      window.location.href = "/account";
+      return;
+    }
+
+  //Sign-Up facebook
+  const responseFacebook = (response) => {
+    console.log("facbook response: ");
+    console.log(response);
+    axios.defaults.baseURL = "https://qasaqees.tech/api";
+        const data ={
+            loginType  : "Facebook",
+            accessToken: response.accessToken,
+        };
+        console.log("data sent: ");
+        console.log(data);
+        axios.post('/register/signUpWithFacebook',data,{headers: {"Content-type": "application/json"}})
+            .then((response) => {
+                localStorage.setItem("accessToken",response.data.accessToken);
+                delete response.data.accessToken;
+                console.log(response.data.user);
+                localStorage.setItem("userData",JSON.stringify(response.data));
+                //To check of 
+                setTimeout(() => {window.location.href = "/account";}, 1000);
+            })
+            .catch((error) => {
+                if (error.response.status === 400) {
+                    console.log(error.response.data.message);
+                    setErrorMsg((<div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                    <p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. </p>
+                </div>));
+                    setTimeout(() => {setErrorMsg(null);}, 5000);
+                }
+            });
+  }
+  const componentClicked = (data) => {
+    console.warn(data);
+  }
 
 
+
+  //Sigu-up Normal
   function Submit(event){
     if(!firstNameError&&!lastNameError&&!ageError&&!emailError&&!passwordError){
       //onClick send a request to api
-      axios.defaults.baseURL = "https://50e48386-d0d0-4857-a11a-07b37edb0347.mock.pstmn.io";
+      axios.defaults.baseURL = "https://qasaqees.tech/api";
       const data ={
         email:email,
         password:password,
@@ -35,14 +84,14 @@ function SignUp(){
         lastName:lastName,
         age:age
       };
-      axios.post('/register/signUp',data)
+      axios.post('/register/signUp',data,{headers: {"Content-type": "application/json"}})
           .then((response) => {
               localStorage.setItem("accessToken",response.data.accessToken);
               delete response.data.accessToken;
-              //console.log(response.data);
-              localStorage.setItem("userData",response.data);
+              console.log(response.data.user);
+              localStorage.setItem("userData",JSON.stringify(response.data));
               //To check of 
-              setTimeout(() => {window.location.href = "/account";}, 5000);
+              setTimeout(() => {window.location.href = "/account";}, 2000);
           })
           .catch((error) => {
               if (error.response.status === 403) {
@@ -51,6 +100,30 @@ function SignUp(){
                   setTimeout(() => {setEmailExist(false);}, 500);
               }
           });
+    }
+    else
+    {
+      console.log(firstName);
+       if(firstName === ''){
+         setFirstNameEmpty(true);
+         setTimeout(() => {setFirstNameEmpty(false);}, 500);
+       }
+       if(lastName === ''){
+        setLastNameEmpty(true);
+        setTimeout(() => {setLastNameEmpty(false);}, 500);
+      }
+      if(age === ''){
+        setAgeEmpty(true);
+        setTimeout(() => {setAgeEmpty(false);}, 500);
+      }
+      if(email === ''){
+        setEmailEmpty(true);
+        setTimeout(() => {setEmailEmpty(false);}, 500);
+      }
+      if(password === ''){
+        setpassWordEmpty(true);
+        setTimeout(() => {setpassWordEmpty(false);}, 500);
+      }
     }
     event.preventDefault();
   }
@@ -77,23 +150,27 @@ function SignUp(){
                         </Link>
                     </div>
                     <p>Sign up for Flickr</p>
+                    {errorMsg}
                     <FloatingInput 
                      type ="text"
                      name = "First name"
                      value = {firstName => setFirstName(firstName)} 
                      error = {firstNameError => setFirstNameError(firstNameError)}
+                     empty = {firstNameEmpty}
                      />
                      <FloatingInput 
                       type ="text"
                       name = "Last name" 
                       value ={lastName => setLastName(lastName)}
                       error = {lastNameError =>setLastNameError(lastNameError)}
+                      empty = {lastNameEmpty}
                      />
                      <FloatingInput 
                       type ="text"
                       name = "Your age" 
                       value ={age => setAge(age)}
                       error = {ageError =>setAgeError(ageError)}
+                      empty = {ageEmpty}
                      />
                      <FloatingInput 
                        type ="email"
@@ -101,6 +178,7 @@ function SignUp(){
                        value ={email => setEmail(email)}
                        error = {emailError =>setEmailError(emailError)}
                        emailExist ={emailExist}
+                       empty = {emailEmpty}
                       />
                       <FloatingInputPassoword 
                       type ="password"
@@ -108,8 +186,18 @@ function SignUp(){
                       value = {password => setPassword(password)} 
                       error = {passwordError => setpassWordError(passwordError)}
                       validation = {true}
+                      empty = {passwordEmpty}
                      />
                      <button className ="btn-sign" onClick={Submit}>Sign Up</button>
+                     <FacebookLogin
+                     appId="322610599248518"
+                     autoLoad={false}
+                     fields="name,email,picture"
+                     onClick={componentClicked}
+                     callback={responseFacebook}
+                     cssClass="btn-sign-facebook"
+                     textButton="Sign Up with Facebook" 
+                     /> 
                      <p className="sign-policy">By signing up, you agree with Flickr's   <a href="/help/terms">Terms of Services</a>  and <a href="/help/privacy">Privacy Policy.</a> </p>
                      <hr></hr>
                      <p className="sign-already-memeber">Already a Flickr member? <a href="/login">Log in here.</a> </p>
