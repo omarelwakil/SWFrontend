@@ -2,8 +2,8 @@
   overflow: hidden;
 }
 .CameraRoll .custom-navbar {
-  top: 300px !important;
-  position: absolute;
+  top: auto;
+  position: static;
 }
 
 .CameraRoll .error-photos {

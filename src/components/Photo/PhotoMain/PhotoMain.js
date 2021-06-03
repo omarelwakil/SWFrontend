@@ -1,8 +1,7 @@
 import './PhotoMain.css';
 import { useState } from 'react';
 import React from 'react';
-import Comment from './Comment/Comment'
-import Button from '../Button/Button'
+import CommentOnMedia from '../../media/CommentOnMedia';
 //Might need to divide to further components
 
 import axios from 'axios';
@@ -10,6 +9,8 @@ import axios from 'axios';
 const PhotoMain = props => {
 
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
+
+    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
 
     const userToken = localStorage.getItem('accessToken');
 
@@ -66,7 +67,7 @@ const PhotoMain = props => {
                 <p className="desc">{photo.description}</p>
             </React.Fragment>
         );
-    } else {
+    } else if(showDescriptionInputs && loggedInUser._id === user._id) {
 
         description = (
             <React.Fragment>
@@ -99,32 +100,34 @@ const PhotoMain = props => {
     const addTags = (e,inputTag) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
-        newTags = newTags.split(' ');
-        tagsArr = [...tagsArr,...newTags];
-        setTags(tagsArr);
-        tagsArr.forEach(tag => {
-            axios.patch(`/photo/addTags/${photo._id}`,{
-                headers: {
-                  "Authorization": 'Bearer ' + userToken,
-                  'Content-type': 'application/json'
-                },
-                params: {
-                    tag: tag
-                }
-            })
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error));
-        });
+        if(newTags!=''){
+            newTags = newTags.split(' ');
+            tagsArr = [...tagsArr,...newTags];
+            setTags(tagsArr);
+            tagsArr.forEach(tag => {
+                axios.patch(`/photo/addTags/${photo._id}`,{
+                    headers: {
+                      "Authorization": 'Bearer ' + userToken,
+                      'Content-type': 'application/json'
+                    },
+                    params: {
+                        tag: tag
+                    }
+                })
+                .then(res => console.log(res.data))
+                .catch(error => console.log(error));
+            });
+        }
     }
     return (
         <div className="PhotoMain">
             <div className="photo-desc-comments">
                 <div className="photo-desc">
                     <div className="profile-photo">
-                        <img src={user.photoUrl} />
+                        <img src={user.profilePhotoUrl} />
                     </div>
                     <div className="profile-name-desc">
-                        <h5 className="profile-name"><a href={"/user/photostream/" + user.id}>{user.name}</a></h5>
+                        <h5 className="profile-name"><a href={"/photos/" + user._id}>{user.firstName+' '+user.lastName}</a></h5>
                         <div className="profile-desc" onClick={showDescription} >
                             {description}
                         </div>
@@ -132,13 +135,10 @@ const PhotoMain = props => {
                     </div>
                 </div>
                 <div className="photo-comments">
-                    {/* TODO: comments */}
-                    {/* {
-                        user.comments.map(comment => <Comment user={user} showTools={showTools} showCommentTools={showCommentTools}/>)
-                    } */}
+                    <CommentOnMedia photoId={photo._id}/>
                     <div className="add-comment">
                         <div className="user-img">
-                            <img src={user.photoUrl} />
+                            <img src={loggedInUser.profilePhotoUrl} />
                         </div>
                         <textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}></textarea>
                     </div>

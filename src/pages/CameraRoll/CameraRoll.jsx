@@ -23,7 +23,7 @@ const CameraRoll = () => {
 
     const baseUrl = 'https://api.qasaqees.tech';
 
-    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
+    //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
 
     useEffect(() => {
         axios.defaults.baseURL = baseUrl;

@@ -1,18 +1,16 @@
 import './Main.css'
 import PhotoBox from '../PhotoBox/PhotoBox';
-import {Link} from 'react-router-dom';
 
 const Main = (props) => {
 
 
     const userPhotos = props.userPhotos;
 
-    const cameraRoll = () => window.location.pathname = `/user/cameraRoll/${props.userId}`;
+    const cameraRoll = () => window.location.pathname = `/cameraRoll`;
 
     let main = null;
 
-    if(userPhotos!==null&&userPhotos.length!==0){
-        
+    if(userPhotos.length!==0){
         main = (
             <div className="photos">
                 {userPhotos.map(photo => {

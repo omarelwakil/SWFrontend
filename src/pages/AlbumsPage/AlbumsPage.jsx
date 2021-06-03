@@ -9,32 +9,41 @@ import Navbar from '../../components/Trending/Navbar/Navbar';
 import Albums from '../../components/Albums/Albums';
 import axios from 'axios';
 
-const AlbumsPage = () => {
-    
-    const cameraRollUrl = () => window.location.pathname = `/cameraroll`;
-
-    
-    const albumCoverPhoto = "https://live.staticflickr.com/65535/51140121587_393ff56218_n.jpg";
-
-    
-    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
-
-    const user = JSON.parse(localStorage.getItem('userData')).user;
-    const userToken = localStorage.getItem('accessToken');
+const AlbumsPage = (props) => {
 
     const baseUrl = 'https://api.qasaqees.tech';
 
     const homePage = () => window.location.pathname = '/';
+    
+    const albumCoverPhoto = "https://live.staticflickr.com/65535/51140121587_393ff56218_n.jpg";
 
-    let main=null, newAlbum = null, inputTitle, inputDesc;
+    
+    //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
+
+    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
+    const loggedInUserId = loggedInUser._id;
+    const userToken = localStorage.getItem('accessToken');
+
+
+    const userId = props.match.params.id;
+    
+    const [user, setUser] = useState(null);
+
+
+    let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null;
 
     useEffect(()=>{
         axios.defaults.baseURL = baseUrl;
 
-        axios.get(`/user/albums/${user._id}`)
+        axios.get(`/user/albums/${userId}`)
         .then(response => response.data)
         .then(data => setUserAlbums(data['albums']))
         .catch(error => console.log('Couldnot fetch album albums.jsx'));
+
+        axios.get(`/user/about/${userId}`)
+        .then(response => response.data)
+        .then(data => setUser(data['user']))
+        .catch(error => console.log('Couldnot fetch user albums.jsx'));
     },[]);
 
     const [userAlbums, setUserAlbums] = useState(null);
@@ -42,7 +51,6 @@ const AlbumsPage = () => {
 
     const newAlbumHandler = () => setShowNewAlbum(!showNewAlbum);
 
-    //TODO
     const deleteAlbum = (e, albumId) => {
         const albums = [...userAlbums];
 
@@ -86,7 +94,8 @@ const AlbumsPage = () => {
                 albumCover={albumCoverPhoto} 
                 deleteAlbum={deleteAlbum} 
                 newAlbumHandler={newAlbumHandler} 
-                userId={user._id}/>
+                userId={userId}
+                loggedInUserId={loggedInUserId}/>
         )
     } else {
         main = (
@@ -98,7 +107,7 @@ const AlbumsPage = () => {
     }
 
 
-    if(showNewAlbum){
+    if(showNewAlbum && loggedInUserId === userId){
         newAlbum = (
             <div className="new-album-div">
                 <div className="new-album-dialog text-black-50">
@@ -121,20 +130,23 @@ const AlbumsPage = () => {
 
 
     const dataToSend = [
-        { title: "About", path: "/people/"+user._id, selected: false },
-        { title: "Photostream", path: "/photos/" + user._id, selected: false },
-        { title: "Albums", path: "/photos/"+user._id+"/albums", selected: true },
-        { title: "Faves", path: "/photos/"+user._id+"/favorites", selected: false },
+        { title: "About", path: "/people/"+userId, selected: false },
+        { title: "Photostream", path: "/photos/" + userId, selected: false },
+        { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
+        { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
         { title: "Camera Roll", path: "/cameraroll", selected: false },
     ];
 
+    if(user){
+        userCover = <UserCover userData={user}/>;
+    }
 
 
     return(
         <BrowserRouter>
             <div className="AlbumsPage">
                 <UserlessNavigationBar/>
-                <UserCover userData={user}/>
+                {userCover}
                 <Navbar items={dataToSend} />
                 {main}
                 {newAlbum}

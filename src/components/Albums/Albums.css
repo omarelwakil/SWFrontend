@@ -2,19 +2,27 @@
   width: 80%;
   display: flex;
   flex-direction: column;
-  margin: 55px auto;
+  margin: 0px auto;
 }
 .AlbumsPage .Albums .new-album {
   align-self: flex-end;
 }
+.AlbumsPage .Albums .new-album a {
+  background-color: #008ddf;
+  padding: 10px 15px 12px 10px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+}
 .AlbumsPage .Albums .new-album a:hover {
   cursor: pointer;
-  color: #333;
+  background-color: #448ddf;
 }
 .AlbumsPage .Albums .new-album p,
 .AlbumsPage .Albums svg {
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.5) !important;
   margin-right: 0;
 }
 
@@ -36,7 +44,7 @@
 
 @media (max-width: 1000px) and (min-width: 320px) {
   .AlbumsPage .Albums {
-    margin-top: 430px;
+    margin-top: 0px;
   }
 
   .AlbumsPage .Albums .albums {

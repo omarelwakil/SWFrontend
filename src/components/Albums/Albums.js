@@ -8,13 +8,15 @@ const Albums = (props) => {
     
     let main = null;
     const userAlbums = props.userAlbums;
-        
+    const userId = props.userId;
+    const loggedInUserId = props.loggedInUserId;
+
     const cameraRoll = () => window.location.pathname = `/cameraRoll`;
 
-    if(userAlbums.length!==0){
+    if(userAlbums.length!==0&&loggedInUserId === userId){
         main = ( 
             <React.Fragment>
-                <div className="new-album"><a onClick={props.newAlbumHandler}><Button tool="create"/> New Album</a></div>
+                
                 <div className="albums">
                     {userAlbums.map(album => {
                         return <Album 
@@ -27,15 +29,20 @@ const Albums = (props) => {
                 </div>
             </React.Fragment>
         );
-    } else {
+    } else if (userAlbums.length===0&&loggedInUserId === userId) {
         main = (
             <div className="no-photos row text-center">
                 <div className="fs-4 mb-3 mt-3">Let's make an album.</div>
                 <div className="fs-6 mb-2">Easily organize all your photos into beautiful albums to share with friends, family, or even other</div>
                 <p>Flickr members.</p>
-                <div className=""><button onClick={cameraRoll} className="no-photos-button">Go to Camera Roll</button></div>
+                <div className="new-album"><a onClick={props.newAlbumHandler}><Button tool="create"/>New Album</a></div>
+                {/* <div className=""><button onClick={cameraRoll} className="no-photos-button">Go to Camera Roll</button></div> */}
             </div>
         );
+    } else {
+        <div className="no-photos row text-center">
+            <div className="fs-4 mb-3 mt-3">The user has no albums.</div>
+        </div>
     }
 
 
