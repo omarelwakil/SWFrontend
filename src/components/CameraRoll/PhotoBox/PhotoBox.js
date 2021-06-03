@@ -7,6 +7,8 @@ import axios from 'axios';
 
 const PhotoBox = (props) => {
 
+    const userToken =  props.userToken;
+
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
 
     const [photo, setPhoto] = useState(props.photo);
@@ -63,7 +65,7 @@ const PhotoBox = (props) => {
         photoCopy['allowCommenting'] = allowCommenting;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
+              "Authorization": 'Bearer' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))
@@ -109,7 +111,7 @@ const PhotoBox = (props) => {
         <React.Fragment>
             {forms}
             <div className="PhotoBox">
-                <img src={props.photo.url} onClick={showEditButton}/>
+                <img src={photo.url} onClick={showEditButton}/>
                 <br></br>
                 {edit}
                 <input className="delete-button button" type="button" value="Delete Photo" onClick={props.deleteHandler}/>

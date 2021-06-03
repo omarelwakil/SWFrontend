@@ -10,45 +10,55 @@ import './PhotoStream.css'
 import axios from 'axios';
 
 const PhotoStream = () => {
+    
+    let main = null;
 
-    const user = JSON.parse(localStorage.getItem['userData']);
+    const [userPhotos, setUserPhotos] = useState(null);
+    
+    const user = JSON.parse(localStorage.getItem('userData')).user;
+    const baseUrl = 'https://api.qasaqees.tech';
 
+    const homePage = () => window.location.pathname = '/';
+
+    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
 
     useEffect(()=>{
-        axios.defaults.baseURL = 'https://api.qasaqees.tech';
-        axios.get(`/user/photostream/${user._id}`,{
-            headers: {
-              "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
-              'Content-type': 'application/json'
-            }})
+        axios.defaults.baseURL = baseUrl;
+
+        axios.get(`/user/photostream/${user._id}`)
           .then(response => response.data)
           .then(data => setUserPhotos(data))
           .catch( error => console.log('Couldnot fetch photos PhotoStream.jsx'));
     },[]);
 
-    const [userPhotos, setUserPhotos] = useState(null);
 
-    let main = null;
     if(userPhotos){
         main = <Main userPhotos={userPhotos['photos']} userId={user._id} />
+    } else {
+        main=( 
+            <div className="error-photos">
+                <h1>Error! Sorry, no data was found! </h1>
+                <div className=""><button onClick={homePage} className="no-photos-button">Go to HomePage</button></div>
+            </div>
+        );
     }
 
-    const dataToSend = [
-        { title: "About", path: "/about", selected: false },
-        { title: "Photostream", path: "/user/photostream/" + user._id, selected: true },
-        { title: "Albums", path: "" , selected: false },
-        { title: "Faves", path: "", selected: false },
-        { title: "Galleries", path: "", selected: false },
-        { title: "Groups", path: "", selected: false },
-        { title: "Stats", path: "", selected: false },
-        { title: "Camera Roll", path: "/user/cameraRoll/" + user._id, selected: false },
+  const dataToSend = [
+        { title: "About", path: "/people/"+user._id, selected: false },
+        { title: "Photostream", path: "/photos/" + user._id, selected: true },
+        { title: "Albums", path: "/photos/"+user._id+"/albums", selected: false },
+        { title: "Faves", path: "/photos/"+user._id+"/favorites", selected: false },
+        { title: "Galleries", path: "/photos/"+user._id+"/galleries", selected: false },
+        { title: "Groups", path: "/groups", selected: false },
+        { title: "Stats", path: "/photos/"+user._id+"/stats", selected: false },
+        { title: "Camera Roll", path: "/cameraroll", selected: false },
     ];
 
     return (
         <BrowserRouter>
             <div className="PhotoStream">
                 <UserlessNavigationBar/>
-                <UserCover user={user}/>
+                <UserCover userData={user}/>
                 <Navbar items={dataToSend} />
                 {main}
                 <Footer/>

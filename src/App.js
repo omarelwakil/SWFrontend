@@ -15,6 +15,7 @@ import ExplorePage from './pages/ExplorePage';
 import PhotoPage from './pages/PhotoPage/PhotoPage';
 import PhotoStream from './pages/PhotoStream/PhotoStream';
 import CameraRoll from './pages/CameraRoll/CameraRoll';
+import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 
 function App() {
   return (
@@ -35,9 +36,12 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
-        <Route exact path="/photo/getDetails/:id" component={PhotoPage} />
-        <Route exact path="/user/photostream/:id" component={PhotoStream} />
-        <Route exact path="/user/cameraRoll/:id" component={CameraRoll} />
+        
+        <Route exact path="/photo/getdetails/:id" component={PhotoPage} />
+        
+        <Route exact path="/photos/:id" component={PhotoStream} />
+        <Route exact path="/cameraroll" component={CameraRoll} />
+        <Route exact path="/photos/:id/albums" component={AlbumsPage} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>

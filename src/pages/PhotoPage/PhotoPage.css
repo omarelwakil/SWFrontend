@@ -7,3 +7,27 @@
 .PhotoPage #sec-nav-userless {
   background-color: black;
 }
+
+.PhotoPage .error-photos {
+  width: 60%;
+  height: 343px;
+  margin: 120px 0 120px 170px;
+}
+
+.PhotoPage .error-photos h1 {
+  margin-bottom: 25px;
+}
+
+.PhotoPage .error-photos .no-photos-button {
+  background-color: #008ddf;
+  text-decoration: none;
+  padding: 10px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+.PhotoPage .error-photos .no-photos-button:hover {
+  background-color: #448ddf;
+}
