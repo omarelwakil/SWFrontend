@@ -78,11 +78,11 @@ const PhotoBox = (props) => {
             <form id="form" onSubmit={handleSubmit}>
                 <label>
                     Title 
-                    <input type="text" onChange={handleTitle} value={title}/>
+                    <input required type="text" onChange={handleTitle} value={title}/>
                 </label>
                 <label>
                     Description 
-                    <input type="text" onChange={handleDesc} value={Desc}></input>
+                    <input required type="text" onChange={handleDesc} value={Desc}></input>
                 </label>
                 <label>
                     Privacy 
@@ -100,7 +100,7 @@ const PhotoBox = (props) => {
                 </label>
                 <label>
                     Add tags 
-                    <input type="text" ref={el => inputTag = el}/>
+                    <input required type="text" ref={el => inputTag = el}/>
                 </label>
                 <input type="submit" value="Done"/>
             </form>

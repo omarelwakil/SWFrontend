@@ -30,7 +30,7 @@ const PhotoBox = (props) => {
     return (
         <div className="PhotoBox">
             <a href={"/photo/getdetails/"+photo._id} onMouseEnter={handlePhotoTools} onMouseLeave={handlePhotoTools}>
-                <img src={photo.photoUrl} style={{width: props.width, height: props.height}}/>
+                <img src={photo.url} style={{width: props.width, height: props.height}}/>
             </a>
         </div>
     );

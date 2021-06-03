@@ -14,14 +14,18 @@ const PhotoPage = props => {
 
     const [photo, setPhoto] = useState(null);
 
-    const user = JSON.parse(localStorage.getItem('userData')).user;
+    //const user = JSON.parse(localStorage.getItem('userData')).user;
     const userToken = localStorage.getItem('accessToken');
     const baseUrl = 'https://api.qasaqees.tech';
 
+    const photoId = props.match.params.id;
+
+    const [user, setUser] = useState(null);
+    //const loggedInUserId = photo.creator._id;
+
     const homePage = () => window.location.pathname = '/';
 
-    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
-    const photoId = props.match.params.id;
+    //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
     let main = null;
 
     useEffect(() => {
@@ -30,20 +34,23 @@ const PhotoPage = props => {
             headers: {
                 "Authorization": 'Bearer ' + userToken,
                 'Content-type': 'application/json'
-            },
+                },
             params: {
                 photoId: photoId
             }
         })
             .then(response => response.data)
-            .then(data => setPhoto(data))
+            .then(data => {
+                setPhoto(data);
+                setUser(data.creator)
+            })
             .catch(error => console.log(error));
     }, []);
 
 
 
 
-    if (photo) {
+    if (photo&&user) {
         main = (
             <React.Fragment>
                 <PhotoDiv url={photo.url} photoId={photoId} userId={user._id} />
