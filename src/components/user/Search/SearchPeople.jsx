@@ -14,7 +14,7 @@ function SearchPeople(){
   ];
   const position = "position-fixed";
   const [accessToken] = useState(localStorage.getItem("accessToken"));
-  const currentUserID = JSON.parse(localStorage.getItem("userData")).user._id;
+  const currentUserID = (accessToken === null) ? -1 :JSON.parse(localStorage.getItem("userData")).user._id;
   const [people,setPeople]=useState([]);
   //Get All Photos from the BE
   const getAllPeople = ()=>{
