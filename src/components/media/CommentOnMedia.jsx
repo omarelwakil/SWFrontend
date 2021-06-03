@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import comments from "../../Data/Comments.json"
@@ -8,6 +8,7 @@ import "./CommentOnMedia.css"
 
 function CommentOnMedia(probs){//probs:{photoId}
     const [newComment,setNewComment] = useState("");
+    
     console.log(comments);
     function Submit(event){
         event.preventDefault();
