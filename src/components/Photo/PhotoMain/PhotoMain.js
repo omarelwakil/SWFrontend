@@ -11,6 +11,9 @@ const PhotoMain = props => {
 
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
 
+    const userToken =  'fafafafa';
+    //localStorage.getItem['accessToken'];
+
     //TODO: Returned user data from api --> useEffect&axios
     const user = props.user;
     const [photo, setPhoto] = useState(props.photo);
@@ -78,6 +81,7 @@ const PhotoMain = props => {
 
     const handleRemoveTag = (e, tag) => {
         e.stopPropagation();
+
         let tagsArr = [...tags];
         let tagIndex = tagsArr.findIndex(x => x==tag);
         tagsArr.splice(tagIndex,1);
@@ -86,13 +90,14 @@ const PhotoMain = props => {
         photoCopy['tags'] = tagsArr;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
+              "Authorization": 'Bearer' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))
         .catch(error => console.log(error));
     }
 
+    //TOBE CHANGED!
     const addTags = (e,inputTag) => {
         let tagsArr = [...tags];
         tagsArr.push(inputTag.value);
@@ -101,7 +106,7 @@ const PhotoMain = props => {
         photoCopy['tags'] = tagsArr;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
+              "Authorization": 'Bearer' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))

@@ -20,6 +20,7 @@ import UserAboutPage from './pages/UserAboutPage';
 import PhotoPage from './pages/PhotoPage/PhotoPage';
 import PhotoStream from './pages/PhotoStream/PhotoStream';
 import CameraRoll from './pages/CameraRoll/CameraRoll';
+import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import UploadPage from './pages/UploadPage';
 
 function App() {
@@ -42,6 +43,10 @@ function App() {
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
         <Route exact path="/explore" component={ExplorePage} />
+        <Route exact path="/photo/getdetails/:id" component={PhotoPage} />
+        <Route exact path="/photos/:id" component={PhotoStream} />
+        <Route exact path="/cameraroll" component={CameraRoll} />
+        <Route exact path="/photos/:id/albums" component={AlbumsPage} />
         <Route exact path="/photos/:userid/albums/:albumid" component={AlbumInternalPage} />
         <Route exact path="/photo/getDetails/:id" component={PhotoPage} />
         <Route exact path="/user/photostream/:id" component={PhotoStream} />
