@@ -6,7 +6,7 @@ import Comment from "./Comment";
 
 import "./CommentOnMedia.css"
 
-function CommentOnMedia(probs){//probs:{photo_id}
+function CommentOnMedia(probs){//probs:{photoId}
     const [newComment,setNewComment] = useState("");
     console.log(comments);
     function Submit(event){
@@ -35,8 +35,8 @@ function CommentOnMedia(probs){//probs:{photo_id}
             });
     }
     return (
-        <div>
-          <div class="container d-flex justify-content-center mt-100 mb-100">
+    <div>
+    <div class="container justify-content-center">
     <div class="row">
         <div class="col-md-12">
             <div class="card">

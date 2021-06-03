@@ -11,7 +11,7 @@ function MediaProfile() {
         <div>
         <title > photo </title> 
         <UserlessNaviagationBar />
-        <CommentOnMedia />
+        <CommentOnMedia photoId={"5349b4ddd2781d08c09890f4"}/>
         <Footer />
         </div> 
         </BrowserRouter>
