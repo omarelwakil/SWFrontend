@@ -65,7 +65,7 @@ const PhotoBox = (props) => {
         photoCopy['allowCommenting'] = allowCommenting;
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
-              "Authorization": 'Bearer' + userToken,
+              "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
             }})
         .then(res => console.log(res.data))

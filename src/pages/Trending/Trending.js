@@ -15,15 +15,16 @@ function Trending() {
   //http requests
   useEffect(() => {
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
-    axios.get('/tag/trending',{
+    axios.get('/tag/trending', {
       headers: {
-        "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
+        "Authorization": 'Bearer ' + localStorage.getItem['accessToken'],
         'Content-type': 'application/json'
-      }})
+      }
+    })
       .then(response => response.data)
       .then(data => setTrendingState(data))
-      .catch( error => console.log('Couldnot fetch data Trending.js'));
-    },[]);
+      .catch(error => console.log('Couldnot fetch data Trending.js'));
+  }, []);
 
   const [trending, setTrendingState] = useState(null);
 
@@ -35,13 +36,13 @@ function Trending() {
     { title: "Trending", path: "/photos/tags", selected: true }
   ];
 
-  let main = null; 
-  if(trending !== null){
+  let main = null;
+  if (trending !== null) {
     main = (
-      <Main 
+      <Main
         data={trending}
-        url={currentUrl} 
-        setCurrentUrl={setCurrentUrl}/>
+        url={currentUrl}
+        setCurrentUrl={setCurrentUrl} />
     );
   }
 
@@ -50,10 +51,10 @@ function Trending() {
       <title>Popular Tags on Flickr | Flickr</title>
       <div className="trending">
         {/* It doesn't render the navbar each render */}
-        <UserlessNavigationBar/>
-        <Navbar items={dataToSend}/>
+        <UserlessNavigationBar />
+        <Navbar items={dataToSend} />
         {main}
-        <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   );
