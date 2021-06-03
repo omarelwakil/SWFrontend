@@ -1,5 +1,5 @@
 import './PhotoMain.css';
-import {useState} from 'react';
+import { useState } from 'react';
 import React from 'react';
 import Comment from './Comment/Comment'
 import Button from '../Button/Button'
@@ -23,40 +23,40 @@ const PhotoMain = props => {
     const [tags, setTags] = useState(photo.tags);
 
     const changeImageName = (event, photoObj) => {
-        const photo = {...photoObj};
-        
+        const photo = { ...photoObj };
+
         photo.title = event.target.value;
 
         setPhoto(photo);
     }
 
     const changeDescription = (event, photoObj) => {
-        const photo = {...photoObj};
+        const photo = { ...photoObj };
 
         photo.description = event.target.value;
 
         setPhoto(photo);
-        
+
     }
 
-    let button = null,  description=null;
+    let button = null, description = null;
     let inputTag;
 
     const showCommentButtonHandler = () => setShowCommentButton(!showCommentButton);
-    if(showCommentButton){
+    if (showCommentButton) {
         button = (<button className="button">Comment</button>);
     }
 
     const showTools = () => setShowCommentTools(!showCommentTools);
 
-    
+
     const showDescription = () => setShowDescriptionInputs(!showDescriptionInputs);
-    if(!showDescriptionInputs){
+    if (!showDescriptionInputs) {
         let desc = null;
 
-        if(photo.description!=null){
+        if (photo.description != null) {
             desc = photo.description;
-        } else{
+        } else {
             desc = 'Add description';
         }
 
@@ -66,11 +66,11 @@ const PhotoMain = props => {
                 <p className="desc">{photo.description}</p>
             </React.Fragment>
         );
-    }else{
+    } else {
 
         description = (
             <React.Fragment>
-                <input className="image-name" onClick={(event) => event.stopPropagation()} type="text" value={photo.title} onChange={(event)=>changeImageName(event, photo)}/>
+                <input className="image-name" onClick={(event) => event.stopPropagation()} type="text" value={photo.title} onChange={(event) => changeImageName(event, photo)} />
                 <textarea className="desc-box" onClick={(event) => event.stopPropagation()} value={photo.description} onChange={(event) => changeDescription(event, photo)}></textarea>
                 <button className="button" onClick={showDescription}>Done</button>
             </React.Fragment>
@@ -82,12 +82,12 @@ const PhotoMain = props => {
         e.stopPropagation();
 
         let tagsArr = [...tags];
-        let tagIndex = tagsArr.findIndex(x => x==tag);
-        tagsArr.splice(tagIndex,1);
+        let tagIndex = tagsArr.findIndex(x => x == tag);
+        tagsArr.splice(tagIndex, 1);
         setTags(tagsArr);
-        let photoCopy = {...photo};
+        let photoCopy = { ...photo };
         photoCopy['tags'] = tagsArr;
-        axios.patch(`/photo/${photo._id}`,photoCopy,{
+        axios.patch(`/photo/${photo._id}`, photoCopy, {
             headers: {
               "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
@@ -116,12 +116,12 @@ const PhotoMain = props => {
             .catch(error => console.log(error));
         });
     }
-    return(
+    return (
         <div className="PhotoMain">
             <div className="photo-desc-comments">
                 <div className="photo-desc">
                     <div className="profile-photo">
-                        <img src={user.photoUrl}/>
+                        <img src={user.photoUrl} />
                     </div>
                     <div className="profile-name-desc">
                         <h5 className="profile-name"><a href={"/user/photostream/" + user.id}>{user.name}</a></h5>
@@ -138,7 +138,7 @@ const PhotoMain = props => {
                     } */}
                     <div className="add-comment">
                         <div className="user-img">
-                            <img src={user.photoUrl}/>
+                            <img src={user.photoUrl} />
                         </div>
                         <textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}></textarea>
                     </div>
@@ -181,13 +181,13 @@ const PhotoMain = props => {
                             <div><a href="">Tags</a></div>
                             <div><a className="" onClick={(e) => addTags(e, inputTag)}>Add tags</a></div>
                         </div>
-                        
+
                     </div>
                     <div className="tags">
-                            <input type="text" placeholder="add a tag" ref={el => inputTag = el}/>
-                            {
-                                tags.map(tag => <a onClick={e=>e.stopPropagation()} className="tag">{tag} <span onClick={(e)=>handleRemoveTag(e,tag)} className="remove">x</span></a>)
-                            }
+                        <input type="text" placeholder="add a tag" ref={el => inputTag = el} />
+                        {
+                            tags.map(tag => <a onClick={e => e.stopPropagation()} className="tag">{tag} <span onClick={(e) => handleRemoveTag(e, tag)} className="remove">x</span></a>)
+                        }
                     </div>
                 </div>
                 <div></div>

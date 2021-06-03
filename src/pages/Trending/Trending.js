@@ -42,10 +42,10 @@ function Trending() {
 
   if(trending){
     main = (
-      <Main 
+      <Main
         data={trending}
-        url={currentUrl} 
-        setCurrentUrl={setCurrentUrl}/>
+        url={currentUrl}
+        setCurrentUrl={setCurrentUrl} />
     );
 
   } else{
@@ -62,10 +62,10 @@ function Trending() {
       <title>Popular Tags on Flickr | Flickr</title>
       <div className="trending">
         {/* It doesn't render the navbar each render */}
-        <UserlessNavigationBar/>
-        <Navbar items={dataToSend}/>
+        <UserlessNavigationBar />
+        <Navbar items={dataToSend} />
         {main}
-        <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   );

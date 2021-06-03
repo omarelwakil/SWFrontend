@@ -7,10 +7,10 @@ const Main = (props) => {
 
     const uploadPhotosPage = () => window.location.pathname = props.uploadPhotosPage;
 
-    const userToken =  props.userToken;
-    const [userPhotos, setUserPhotos] = useState(props.userPhotos); 
+    const userToken = props.userToken;
+    const [userPhotos, setUserPhotos] = useState(props.userPhotos);
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
-    
+
     let main = null;
 
     const deleteHandler = (e, photoId) => {
@@ -19,26 +19,27 @@ const Main = (props) => {
         let photoIndex = photosArr.findIndex(el => el._id = photoId);
 
         photosArr.splice(photoIndex, 1);
-        
+
         setUserPhotos(photosArr);
 
-        axios.delete(`/photo/${photoId}`,{
+        axios.delete(`/photo/${photoId}`, {
             headers: {
-              "Authorization": 'Bearer ' + userToken,
-              'Content-type': 'application/json'
-            }})
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+                "Authorization": 'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            }
+        })
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error));
     }
 
-    if(userPhotos.length!==0){
+    if (userPhotos.length !== 0) {
         main = (
             <div className="photos">
                 {userPhotos.map(photo => {
                     return <PhotoBox
                         photo={photo}
                         key={photo._id}
-                        deleteHandler={(e) => deleteHandler(e,photo._id)}
+                        deleteHandler={(e) => deleteHandler(e, photo._id)}
                         userToken={userToken}
                     />;
                 })}

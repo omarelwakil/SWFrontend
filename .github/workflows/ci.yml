@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Unit testing
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup testing environment
+      run: make setup_test_env
+
+    - name: Run tests
+      run: make run_tests
+
+  build_publish:
+    name: Build & Publish
+    runs-on: ubuntu-18.04
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Inject variables
+      uses: rlespinasse/github-slug-action@v3.x
+
+    - name: Docker build & tag images
+      run: >
+        docker build 
+        -t ghcr.io/${{secrets.GHCR_USERNAME}}/${{env.GITHUB_REPOSITORY_NAME_PART_SLUG}}:latest
+        -t ghcr.io/${{secrets.GHCR_USERNAME}}/${{env.GITHUB_REPOSITORY_NAME_PART_SLUG}}:${{env.GITHUB_SHA_SHORT}}
+        .
+      
+    - name: Docker push images
+      run: |
+        echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+        docker push ghcr.io/${{secrets.GHCR_USERNAME}}/${{env.GITHUB_REPOSITORY_NAME_PART_SLUG}}:latest
+        docker push ghcr.io/${{secrets.GHCR_USERNAME}}/${{env.GITHUB_REPOSITORY_NAME_PART_SLUG}}:${{env.GITHUB_SHA_SHORT}}
+  deploy:
+    name: Deploy  
+    runs-on: ubuntu-18.04
+    needs: build_publish
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/prod.key
+          chmod 600 ~/.ssh/prod.key
+          cat >>~/.ssh/config <<END
+          Host prod
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/prod.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}  
+
+      - name: Deploy to the server
+        run: ssh prod '~/scripts/deploy.sh'
