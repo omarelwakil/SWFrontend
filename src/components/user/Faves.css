@@ -1,0 +1,57 @@
+                    #faves.container-fluid {
+                                        padding-left: 0;
+                                        padding-right: 0;
+                                        padding-bottom: 35rem;
+                                
+                    }
+                    
+                    #faves .heading {
+                                    text-align: center;
+                    
+                    
+                    }
+                    #faves .heading h1 {
+                    
+                                         text-align: center;
+                                         font-size: 24px;
+                                        line-height: 30px;
+                                         margin-bottom: 15px;
+                    
+                    }
+                    
+                    #faves .heading p{
+                    
+                                        width: auto;
+                                        max-width: 700px;
+                                        padding: 0 16px;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                        text-align: center;
+                    
+                    }
+                    #faves .heading button{                 
+                                        border: none;
+                                        color: white;
+                                        padding: 15px 32px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        background-color: #1781c2;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                        
+                                        
+                                       
+                    }
+                    #faves.central{
+                                        margin: 0;
+                                        position: absolute;
+                                        top: 50%;
+                                        -ms-transform: translateY(-50%);
+                                        transform: translateY(-50%);
+                    
+                    
+                    }

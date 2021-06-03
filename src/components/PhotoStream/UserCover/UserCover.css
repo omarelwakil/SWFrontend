@@ -27,6 +27,12 @@
   font-size: 32px;
 }
 
+.UserCover a{
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
 @media (max-width: 1000px) and (min-width: 320px) {
   .UserCover .container .row {
     flex-direction: column;
