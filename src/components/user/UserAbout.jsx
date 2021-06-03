@@ -12,7 +12,6 @@ import UserCover from '../PhotoStream/UserCover/UserCover';
 import './UserAbout.css';
 
 import emptyShowCase from '../../images/empty-showcase.jpg';
-import i1 from '../../images/i1.jpeg';
 
 function UserAbout(props) {
     const [loggedUserData, setLoggedUserData] = useState(JSON.parse(localStorage.getItem("userData")));
@@ -27,7 +26,6 @@ function UserAbout(props) {
 
     useEffect(() => {
         if (queryUser !== loggedUserData.user._id) {
-            console.log("not equal")
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + queryUser)
                 .then((response) => {
@@ -235,12 +233,14 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
+                debugger;
                 loggedUserData.user.description = response.data.description;
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 loggedUserData.user.showCase.photos = response.data.showCase.photos;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
+                debugger;
                 console.log(error.config);
             });
     }
@@ -366,18 +366,19 @@ function UserAbout(props) {
                                         }
                                         <div className="col-12">
                                             <div className="grid" >
-                                                {
-                                                    userToRender.user.showCase.photos.map(photo => {
-                                                        return (
-                                                            <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
-                                                                <img className="image-lodash" src={photo.photoUrl} alt="" _id={photo._id} />
-                                                                <div className="bottom-left">
-                                                                    <p className="selector-title m-0">{photo.title}</p>
-                                                                    <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
-                                                                </div>
+                                                {userToRender.user.showCase.photos.map(photo => {
+                                                    return (
+                                                        <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
+                                                            <a href={"/photo/getdetails/" + photo._id} alt="">
+                                                                <img className="image-lodash" src={photo.url} alt="" _id={photo._id} />
+                                                            </a>
+                                                            <div className="bottom-left">
+                                                                <p className="selector-title m-0">{photo.title}</p>
+                                                                <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
                                                             </div>
-                                                        );
-                                                    })
+                                                        </div>
+                                                    );
+                                                })
                                                 }
                                             </div>
                                         </div>
@@ -448,7 +449,7 @@ function UserAbout(props) {
                                                 return (
                                                     <div className="col-md-2 d-flex justify-content-center" key={photo._id}>
                                                         <div className="position-relative">
-                                                            <img src={i1} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                            <img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
                                                             <div className="bottom-left">
                                                                 <p className="selector-title m-0">{photo.title}</p>
                                                                 <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
