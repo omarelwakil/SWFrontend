@@ -46,7 +46,7 @@ function App() {
         <Route exact path="/photo/getdetails/:id" component={PhotoPage} />
         <Route exact path="/photos/:id" component={PhotoStream} />
         <Route exact path="/cameraroll" component={CameraRoll} />
-        <Route exact path="/photos/:id/albums" component={AlbumsPage} />
+        {/* <Route exact path="/photos/:id/albums" component={AlbumsPage} /> */}
         <Route exact path="/photos/:userid/albums/:albumid" component={AlbumInternalPage} />
         <Route exact path="/search/photos/:searchText" component={SearchPhotosPage} />
         <Route exact path="/search/people/:searchText" component={SearchPeoplePage} />
