@@ -3,6 +3,7 @@ import './SearchPeople.css'
 import Navbar from '../../Trending/Navbar/Navbar';
 import MemberBox from './MemberBox';
 import axios from 'axios';
+import { PersonPin } from "@material-ui/icons";
 
 function SearchPeople(){
   const pathOfCurrent = window.location.pathname;
@@ -13,6 +14,7 @@ function SearchPeople(){
   ];
   const position = "position-fixed";
   const [accessToken] = useState(localStorage.getItem("accessToken"));
+  const currentUserID = JSON.parse(localStorage.getItem("userData")).user._id;
   const [people,setPeople]=useState([]);
   //Get All Photos from the BE
   const getAllPeople = ()=>{
@@ -44,7 +46,7 @@ function SearchPeople(){
             <p>Flickr members</p>
             <div className="container-fluid">
                 <div className ="row justify-content-start">
-                     {(people.length > 0)?(people.map((person,index)=>{return(<MemberBox key={index} id={person._id} 
+                     {(people.length > 0)?(people.map((person,index)=>{return((person._id !== currentUserID)&&<MemberBox key={index} id={person._id} 
                      url = {person.profilePhotoUrl} userName ={person.userName} name = {person.firstName + " "+person.lastName} followersNum={person.numberOfFollowers}
                      photosNum={person.numberOfPhotos} isFollowing={person.isFollowing} 
                      date ={monthNames[new Date(person.createdAt).getMonth()]+" "+ new Date(person.createdAt).getFullYear()} />);})):
