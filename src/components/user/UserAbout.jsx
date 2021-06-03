@@ -272,6 +272,10 @@ function UserAbout(props) {
         }
     };
 
+    const redirectToPhoto = (e) => {
+        window.location.href = "/photos/getdetails/" + e.currentTarget.getAttribute("_id");
+    }
+
     return (
         <div id="user-about">
             {userToRender != null ?
@@ -369,9 +373,7 @@ function UserAbout(props) {
                                                 {userToRender.user.showCase.photos.map(photo => {
                                                     return (
                                                         <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
-                                                            <a href={"/photo/getdetails/" + photo._id} alt="">
-                                                                <img className="image-lodash" src={photo.url} alt="" _id={photo._id} />
-                                                            </a>
+                                                            <img className="image-lodash cursor-pointer" src={photo.url} alt="" _id={photo._id} onClick={redirectToPhoto} />
                                                             <div className="bottom-left">
                                                                 <p className="selector-title m-0">{photo.title}</p>
                                                                 <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
