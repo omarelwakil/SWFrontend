@@ -3,6 +3,31 @@
   position: absolute;
 }
 
+.PhotoStream .error-photos {
+  width: 60%;
+  height: 153px;
+  margin: 120px 0 60px 170px;
+}
+
+.PhotoStream .error-photos h1 {
+  margin-bottom: 25px;
+}
+
+.PhotoStream .error-photos .no-photos-button {
+  background-color: #008ddf;
+  text-decoration: none;
+  padding: 10px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.PhotoStream .error-photos .no-photos-button:hover {
+  background-color: #448ddf;
+}
+
 @media (max-width: 1000px) and (min-width: 320px) {
   .PhotoStream .custom-container {
     width: 100%;

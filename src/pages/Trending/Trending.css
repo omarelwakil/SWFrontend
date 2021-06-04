@@ -2,13 +2,37 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Proxima Nova Rg', helvetica neue, helvetica, arial, sans-serif;
-  background-color: #f3f5f6;
-}
-
 .custom-container {
   width: 80%;
   margin: auto;
   overflow: hidden;
+}
+
+.trending .error-photos {
+  width: 60%;
+  height: 343px;
+  margin: 120px 0 120px 170px;
+}
+
+.trending .error-photos .no-photos-button {
+  background-color: #008ddf;
+  text-decoration: none;
+  padding: 10px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.trending .error-photos .no-photos-button:hover {
+  background-color: #448ddf;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .trending .no-photos {
+    width: 60%;
+    height: 200px;
+    margin: 120px auto;
+  }
 }

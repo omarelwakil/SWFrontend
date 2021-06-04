@@ -18,7 +18,7 @@ const PhotoBox = (props) => {
                     <span> By YOU!</span>
                 </div>
                 <div className="col-6 text-start align-self-end">
-                    {['fav','comment'].map(tool => <Button key={tool} tool={tool} url={"/photos/"+photo._id}/>)}
+                    {['fav','comment'].map(tool => <Button key={tool} tool={tool}/>)}
                 </div>
             </div> 
         );
@@ -29,7 +29,7 @@ const PhotoBox = (props) => {
     
     return (
         <div className="PhotoBox">
-            <a href={"/photo/getDetails/"+photo._id} onMouseEnter={handlePhotoTools} onMouseLeave={handlePhotoTools}>
+            <a href={"/photo/getdetails/"+photo._id} onMouseEnter={handlePhotoTools} onMouseLeave={handlePhotoTools}>
                 <img src={photo.photoUrl} style={{width: props.width, height: props.height}}/>
             </a>
         </div>

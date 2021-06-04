@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { BrowserRouter} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import UserlessNavigationBar from '../../components/user/UserlessNavigationBar';
 import UserCover from '../../components/PhotoStream/UserCover/UserCover';
 import Footer from '../../components/static/Footer';
@@ -11,56 +11,63 @@ import axios from 'axios';
 
 const CameraRoll = () => {
 
-    const user = JSON.parse(localStorage.getItem['userData']);
-    //  {
-    //     id: '60b466483892750012b61753',
-    //     name: 'ahmed hany',
-    //     email: 'ahmed.haanyyy',
-    //     followers: 0,
-    //     following: 1,
-    //     numberOfPhotos: 1,
-    //     date: '2021'
-    // }
-
-    useEffect(()=>{
-        axios.defaults.baseURL = 'https://api.qasaqees.tech';
-        axios.get(`/user/cameraRoll/${user._id}`,{
-            headers: {
-              "Authorization": 'Bearer' + localStorage.getItem['accessToken'],
-              'Content-type': 'application/json'
-            }})
-          .then(response => response.data)
-          .then(data => setUserPhotos(data))
-          .catch( error => console.log('Couldnot fetch photos CameraRoll.jsx'));
-    },[]);
+    let main = null;
 
     const [userPhotos, setUserPhotos] = useState(null);
 
-    let main = null;
-    if(userPhotos){
-        main = <Main userPhotos={userPhotos['cameraRoll']} userId={user._id} />
+    const uploadPhotosPage = '/photo/upload';
+    const homePage = () => window.location.pathname = '/';
+
+    const user = JSON.parse(localStorage.getItem('userData')).user;
+    const userToken = localStorage.getItem('accessToken');
+
+    const baseUrl = 'https://api.qasaqees.tech';
+
+    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
+
+    useEffect(() => {
+        axios.defaults.baseURL = baseUrl;
+        axios.get(`/user/cameraRoll`, {
+            headers: {
+                "Authorization": 'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            }
+        })
+            .then(response => response.data)
+            .then(data => setUserPhotos(data))
+            .catch(error => console.log('Couldnot fetch photos CameraRoll.jsx'));
+    }, []);
+
+
+
+    if (userPhotos) {
+        main = <Main userPhotos={userPhotos['cameraRoll']} userId={user._id} userToken={userToken} uploadPhotosPage={uploadPhotosPage} />
+    } else {
+        main = (
+            <div className="error-photos">
+                <h1>Error! Sorry, no data was found! </h1>
+                <div className=""><button onClick={homePage} className="no-photos-button">Go to HomePage</button></div>
+            </div>
+        );
     }
 
 
     const dataToSend = [
-        { title: "About", path: "/about", selected: false },
-        { title: "Photostream", path: "/user/photostream/" + user._id, selected: false },
-        { title: "Albums", path: "" , selected: false },
-        { title: "Faves", path: "", selected: false },
-        { title: "Galleries", path: "", selected: false },
-        { title: "Groups", path: "", selected: false },
-        { title: "Stats", path: "", selected: false },
-        { title: "Camera Roll", path: "/user/cameraRoll/" + user._id, selected: true },
+        { title: "About", path: "/people/" + user._id, selected: false },
+        { title: "Photostream", path: "/photos/" + user._id, selected: false },
+        { title: "Albums", path: "/photos/"+user._id+"/albums", selected: false },
+        { title: "Faves", path: "/photos/"+user._id+"/favorites", selected: false },
+        { title: "Camera Roll", path: "/cameraroll", selected: true },
     ];
 
     return (
         <BrowserRouter>
             <div className="CameraRoll">
-                <UserlessNavigationBar/>
-                <UserCover user={user}/>
+                <UserlessNavigationBar />
+                <UserCover userData={user} />
                 <Navbar items={dataToSend} />
                 {main}
-                <Footer/>
+                <Footer />
             </div>
         </BrowserRouter>
     );

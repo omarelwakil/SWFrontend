@@ -33,7 +33,7 @@
   margin: 10px auto;
   position: absolute;
   height: 260px;
-  top: 30%;
+  top: 22%;
   left: 40%;
   font-size: 14px;
   background-color: #fff;
@@ -63,6 +63,6 @@ select {
   .CameraRoll form {
     position: absolute;
     left: 10%;
-    top: 50%;
+    top: 52%;
   }
 }

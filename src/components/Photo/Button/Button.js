@@ -1,5 +1,4 @@
 import './Button.css';
-import {Link} from 'react-router-dom';
 
 const Button = props => {
     
@@ -13,15 +12,14 @@ const Button = props => {
         delete: 'fas fa-trash',
         fav: 'far fa-star',
         comment: 'far fa-comment',
-        remove: 'far fa-window-close'
+        remove: 'far fa-window-close',
+        create: 'fas fa-plus'
     }
 
     return (
         <button className="Button">
-            <Link to={props.url}>
                 <i className={toolsIcons[props.tool]}></i> 
                 <span className="text">{props.tool}</span>
-            </Link>
         </button>
     );
 }
