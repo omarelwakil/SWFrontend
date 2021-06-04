@@ -8,7 +8,6 @@ import "./CommentOnMedia.css"
 
 function CommentOnMedia(probs){//probs:{photoId}
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-    const [newComment,setNewComment] = useState("");
     const [comments,setComments] = useState([]);
     
     function LoadComments(event){
@@ -19,20 +18,19 @@ function CommentOnMedia(probs){//probs:{photoId}
         }
         axios.post('/photo/getComments', data, { headers: { "Content-Type": "application/json" } })
             .then((response) => {
+                console.log("response.data.comments");
                 console.log(response.data.comments);
                 setComments(response.data.comments);
             })
             .catch((error) => {
                 if (error.response.status === 404) {
+                    console.log("error.response.data.message");
                     console.log(error.response.data.message);
                 } 
             });
     }
-    console.log("comments:");
-    console.log(comments);
     function Submit(event){
         event.preventDefault();
-        setNewComment(document.getElementById("commentTextArea").value);
         document.getElementById("commentBtn").style.display = "none";
         const data = {
             photoId : probs.photoId,
@@ -43,6 +41,7 @@ function CommentOnMedia(probs){//probs:{photoId}
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.post('/photo/comment', data, { headers: { "Content-Type": "application/json" } })
             .then((response) => {
+                console.log("Add comment: response.data:");
                 console.log(response.data);
                 // add comment to the list or reload
                 comments.push(
@@ -53,13 +52,14 @@ function CommentOnMedia(probs){//probs:{photoId}
                             firstName: userData.firstName, 
                             lastName: userData.lastName,
                         },
-                        text: newComment,
+                        text: document.getElementById("commentTextArea").value,
                         createdAt: (new Date()).getDate()
                     });
                 setComments(comments);
             })
             .catch((error) => {
                 if (error.response.status === 404) {
+                    console.log("Add comment: error.response.data.message:");
                     console.log(error.response.data.message);
                     //for testing
                     comments.push(
@@ -70,13 +70,15 @@ function CommentOnMedia(probs){//probs:{photoId}
                                 firstName: userData.firstName, 
                                 lastName: userData.lastName,
                             },
-                            text: newComment,
+                            text: document.getElementById("commentTextArea").value,
                             createdAt: (new Date()).getDate()
                         });
                     setComments(comments);
                 } 
             });
     }
+    console.log("comments:");
+    console.log(comments);
     return (
     <div>
     <div class="container justify-content-center">
@@ -99,7 +101,7 @@ function CommentOnMedia(probs){//probs:{photoId}
                     <div class="p-2"><span class="round"><img src="//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03" width="32" height="32" alt="user" /></span>
                     </div>
                     <div class="comment-form-field">
-                    <textarea id="commentTextArea" class="new-comment-text emoji-flipper-set" name="comment" placeholder="Add a comment" rows="4" cols="50" data-notutorial="Add a comment" data-tutorial="press Enter to post and Shift+Enter for newline" data-action="comment"></textarea>
+                    <textarea id="commentTextArea" class="new-comment-text" name="comment" placeholder="Add a comment" rows="4" cols="50" data-notutorial="Add a comment" data-tutorial="press Enter to post and Shift+Enter for newline" data-action="comment"></textarea>
                     </div>
                 </div>
                 <button type="button" id="commentBtn" class="btn btn-primary comment-btn" onClick={Submit}>Comment</button>
