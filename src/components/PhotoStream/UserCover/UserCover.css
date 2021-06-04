@@ -6,13 +6,40 @@
   justify-content: flex-end;
 }
 
-.UserCover .container-fluid {
+#user-cover #edit-cover-photo {
+  opacity: 0;
+  right: -10px !important;
+  transition: all .3s ease-in-out;
+}
+
+#user-cover #edit-cover-icon {
+  font-size: 30px;
+  color: #fff;
+  background-color: transparent;
+  transition: all .7s ease-in-out;
+  cursor: pointer;
+}
+
+#user-cover #edit-cover-icon:hover {
+  color: rgba(73, 67, 67, 1);
+}
+
+#user-cover:hover #edit-cover-photo {
+  opacity: 1;
+  right: 0 !important;
+  margin-left: 0;
+}
+
+.UserCover .container-fluid,
+#user-cover .container-fluid {
   padding: 0;
   width: 80%;
 }
 
 @media (max-width: 991.98px) {
-  .UserCover .container-fluid {
+
+  .UserCover .container-fluid,
+  #user-cover .container-fluid {
     width: 100%;
     padding: 0 1rem;
   }

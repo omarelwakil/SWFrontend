@@ -57,9 +57,9 @@ function FavesPage() {
                 }
                 {userToUse !== null ?
                     <div>
-                        {userToUse === true ?
-                            <Navbar items={dataToSendSameUser} position={position} />
-                            : <Navbar items={dataToSend} position={position} />
+                        {user._id !== id ?
+                            <Navbar items={dataToSend} position={position} />
+                            : <Navbar items={dataToSendSameUser} position={position} />
                         }
                     </div> : null
                 }
