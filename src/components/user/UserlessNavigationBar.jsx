@@ -14,9 +14,22 @@ import UserImage from '../../images/usericon.png';
 function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
-    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [gotUserData, setGotUserData] = useState(false);
     //console.log(isLoggedIn);
+    if (gotUserData === false && isLoggedIn !== null && userData !== null) {
+        setGotUserData(true);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.get('/user/about/' + userData.user._id)
+            .then((response) => {
+                debugger;
+                setUserData(response.data);
+                localStorage.setItem("userData", JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log("Error occured while getting photostream...");
+            });
+    }
 
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
@@ -46,7 +59,6 @@ function UserlessNavigationBar(props) {
         axios.post('/register/logOut')
             .then((response) => {
                 // debugger
-                console.log(response.data.message);
                 localStorage.clear();
                 window.location.href = "/";
             })
@@ -69,7 +81,6 @@ function UserlessNavigationBar(props) {
         const { value } = event.target;
         setText(value);
     }
-    console.log(userData)
 
     return (
         <div id="global-nav">
@@ -122,7 +133,7 @@ function UserlessNavigationBar(props) {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 120) }} value={text} onChange={handleTextChange} />
+                            id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 220) }} value={text} onChange={handleTextChange} />
                         {showDropList && <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />

@@ -31,7 +31,8 @@ function ChangePassword() {
             axios.post('/register/changePassword', data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     debugger;
-                    window.location.href = "/account";
+                    localStorage.clear();
+                    window.location.href = "/login";
                 })
                 .catch((error) => {
                     debugger;

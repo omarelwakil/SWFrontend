@@ -21,6 +21,7 @@
 .PhotoMain svg {
   color: #ddd;
 }
+
 .PhotoMain .photo-desc-comments .photo-desc {
   display: flex;
   justify-content: space-between;
@@ -49,6 +50,9 @@
 }
 .PhotoMain .photo-desc-comments .photo-desc .profile-name-desc .profile-desc {
   padding: 4px 5px 0 5px;
+}
+.PhotoMain .photo-desc-comments {
+  margin-right: 30px;
 }
 .PhotoMain
   .photo-desc-comments
@@ -100,14 +104,25 @@
 /* Add comment */
 .PhotoMain .photo-desc-comments .photo-comments .add-comment {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
+.PhotoMain .photo-desc-comments .photo-comments .user-img {
+  justify-self: flex-start;
+  align-self: flex-start;
+  width: 17%;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .user-img img {
+  border-radius: 50%;
+  width: 40%;
+}
+
 .PhotoMain .photo-desc-comments textarea {
-  width: 83%;
+  width: 75%;
   height: 90px;
   resize: none;
   padding: 5px 10px;
@@ -191,12 +206,14 @@
   line-height: 1;
 }
 .PhotoMain .photo-details .albums-tags-people .tags {
+  margin-top: 2px;
   padding: 10px 0;
   display: block;
   text-align: left;
   width: 100%;
 }
 .PhotoMain .photo-details .albums-tags-people .tags .tag {
+  display: inline-table;
   position: relative;
   top: 10%;
   background-color: #999;
@@ -208,11 +225,6 @@
   margin-right: 5px;
 }
 
-.PhotoMain .photo-details .albums-tags-people .tags .tag span {
-  position: absolute;
-  right: 5px;
-  top: 3px;
-}
 .PhotoMain .hidden {
   display: none;
 }

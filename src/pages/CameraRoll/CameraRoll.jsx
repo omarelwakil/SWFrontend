@@ -15,7 +15,7 @@ const CameraRoll = () => {
 
     const [userPhotos, setUserPhotos] = useState(null);
 
-    const uploadPhotosPage = '/photo/upload';
+    const uploadPhotosPage = '/photos/upload';
     const homePage = () => window.location.pathname = '/';
 
     const user = JSON.parse(localStorage.getItem('userData')).user;
@@ -23,7 +23,7 @@ const CameraRoll = () => {
 
     const baseUrl = 'https://api.qasaqees.tech';
 
-    //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
+    //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
 
     useEffect(() => {
         axios.defaults.baseURL = baseUrl;
@@ -34,9 +34,9 @@ const CameraRoll = () => {
             }
         })
             .then(response => response.data)
-            .then(data => setUserPhotos(data))
+            .then(data => { setUserPhotos(data); console.log(data)})
             .catch(error => console.log('Couldnot fetch photos CameraRoll.jsx'));
-    }, []);
+    }, [userToken]);
 
 
 

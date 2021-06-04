@@ -20,8 +20,13 @@ import UserAboutPage from './pages/UserAboutPage';
 import PhotoPage from './pages/PhotoPage/PhotoPage';
 import PhotoStream from './pages/PhotoStream/PhotoStream';
 import CameraRoll from './pages/CameraRoll/CameraRoll';
-// import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
+import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import UploadPage from './pages/UploadPage';
+import FavesPage from './pages/FavesPage';
+import ViewFollowersPage from './pages/ViewFollowersPage';
+import ViewFollowingPage from './pages/ViewFollowingPage';
+
+import MediaProfile from './pages/Media/MediaProfile';
 
 function App() {
   return (
@@ -47,12 +52,17 @@ function App() {
         <Route exact path="/photo/getdetails/:id" component={PhotoPage} />
         <Route exact path="/photos/:id" component={PhotoStream} />
         <Route exact path="/cameraroll" component={CameraRoll} />
-        {/* <Route exact path="/photos/:id/albums" component={AlbumsPage} /> */}
+        <Route exact path="/photos/:id/albums" component={AlbumsPage} />
         <Route exact path="/photos/:userid/albums/:albumid" component={AlbumInternalPage} />
         <Route exact path="/search/photos/:searchText" component={SearchPhotosPage} />
         <Route exact path="/search/people/:searchText" component={SearchPeoplePage} />
         <Route exact path="/people/:id" component={UserAboutPage} />
+        <Route exact path="/photos/:id/favorites" component={FavesPage} />
+        <Route exact path="/people/:id/contact/rev" component={ViewFollowersPage} />
+        <Route exact path="/people/:id/contact/" component={ViewFollowingPage} />
 
+        {/* For testing */}
+        <Route exact path="/comment" component={MediaProfile} />
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>

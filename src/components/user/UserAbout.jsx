@@ -25,12 +25,13 @@ function UserAbout(props) {
     // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
-        if (queryUser !== loggedUserData.user._id) {
+        if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + queryUser)
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
+                    console.log(response)
                 })
                 .catch((error) => {
                     console.log("Error occured while getting photostream...");
@@ -41,6 +42,7 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
+    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -272,13 +274,42 @@ function UserAbout(props) {
         }
     };
 
+    const redirectToPhoto = (e) => {
+        window.location.href = "/photos/getdetails/" + e.currentTarget.getAttribute("_id");
+    }
+
+    const semiComplexEditUserAbout = (e) => {
+        const userAbout = {
+            "occupation": document.getElementById("occupation").value,
+            "homeTown": document.getElementById("home-town").value,
+            "currentCity": document.getElementById("current-city").value
+        }
+        ToggleUserInfo();
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
+        axios.patch("/user/editInfo", userAbout, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => {
+                debugger;
+                loggedUserData.user.occupation = userAbout.occupation;
+                loggedUserData.user.homeTown = userAbout.homeTown;
+                loggedUserData.user.currentCity = userAbout.currentCity;
+                localStorage.setItem("userData", JSON.stringify(loggedUserData));
+                setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+            }).catch((error) => {
+                debugger;
+                console.log(error.config);
+            });
+    }
+
     return (
         <div id="user-about">
             {userToRender != null ?
                 <UserCover userData={userToRender.user} /> : null
             }
             <div id="user-about-navbar">
-                {userToRender != null ?
+                {userToRenderId != null ?
                     <div>
                         {userToRender.sameUser === true ?
                             <Navbar items={dataToSendSameUser} position={position} />
@@ -369,9 +400,7 @@ function UserAbout(props) {
                                                 {userToRender.user.showCase.photos.map(photo => {
                                                     return (
                                                         <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
-                                                            <a href={"/photo/getdetails/" + photo._id} alt="">
-                                                                <img className="image-lodash" src={photo.url} alt="" _id={photo._id} />
-                                                            </a>
+                                                            <img className="image-lodash cursor-pointer" src={photo.url} alt="" _id={photo._id} onClick={redirectToPhoto} />
                                                             <div className="bottom-left">
                                                                 <p className="selector-title m-0">{photo.title}</p>
                                                                 <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
@@ -402,21 +431,21 @@ function UserAbout(props) {
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.occupation === "" ? " d-none" : "")} exist={userToRender.user.occupation === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.occupation}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.occupation} />
+                                            <input id="occupation" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.occupation} />
                                         </div>
                                         <div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Hometown</p>
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.homeTown}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.homeTown} />
+                                            <input id="home-town" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.homeTown} />
                                         </div>
                                         <div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Current city</p>
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.currentCity}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.currentCity} />
+                                            <input id="current-city" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.currentCity} />
                                         </div>
                                         <div className="col-md-2 col-4 d-flex align-items-center" exist={userToRender.user.email === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Email</p>
@@ -427,7 +456,7 @@ function UserAbout(props) {
                                         {userToRender.sameUser === true ?
                                             <div id="user-info-options" className="col-12 mt-2 d-none">
                                                 <button className="btn-cancel fw-bold float-end border-0 rounded" onClick={ToggleUserInfo} >Cancel</button>
-                                                <button className="btn-save fw-bold float-end me-3 border-0 rounded">Save</button>
+                                                <button className="btn-save fw-bold float-end me-3 border-0 rounded" onClick={semiComplexEditUserAbout}>Save</button>
                                             </div> : null
                                         }
                                     </div>

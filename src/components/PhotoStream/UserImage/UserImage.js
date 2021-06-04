@@ -7,7 +7,7 @@ const UserImage = (props) => {
 
     return (
         <div className="UserImage">
-            <img src={imgUrl} style={{width: props.width}}/>
+            <img src={imgUrl} className="w-75" alt="" />
         </div>
     );
 }
