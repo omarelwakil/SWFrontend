@@ -46,7 +46,6 @@ function UserlessNavigationBar(props) {
         axios.post('/register/logOut')
             .then((response) => {
                 // debugger
-                console.log(response.data.message);
                 localStorage.clear();
                 window.location.href = "/";
             })
@@ -69,7 +68,6 @@ function UserlessNavigationBar(props) {
         const { value } = event.target;
         setText(value);
     }
-    console.log(userData)
 
     return (
         <div id="global-nav">

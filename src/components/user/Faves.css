@@ -1,14 +1,25 @@
 #faves.container-fluid {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 35rem;
+    padding: 0;
+    width: 80%;
+}
 
+@media (max-width: 991.98px) {
+    #faves.container-fluid {
+        width: 100%;
+        padding: 0 1rem;
+    }
 }
 
 #faves .heading {
     text-align: center;
 
 
+}
+
+#faves .centered {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #faves .heading h1 {

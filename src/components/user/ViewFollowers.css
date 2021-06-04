@@ -19,14 +19,14 @@
     height: 50px;
 }
 
-body,
-input,
-textarea,
-select {
+#fBody body,
+#fBody input,
+#fBody textarea,
+#fBody select {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
+#fBody body {
     padding: 0;
     margin: 0;
     text-align: center;
@@ -34,63 +34,63 @@ body {
     color: #000;
 }
 
-#SubNav .Section h1 {
+#fBody #SubNav .Section h1 {
     padding: 500;
     margin: 0 0 5px 0;
     text-rendering: optimizelegibility;
 }
 
-h1 {
+#fBody h1 {
     font-size: 24px;
     margin-top: 0;
     padding-top: 25px;
 
 }
 
-h2 {
+#fBody h2 {
     display: block;
     font-size: 1.5em;
     font-weight: bold;
 }
 
-#SubNav .Section {
+#fBody #SubNav .Section {
     width: 100%;
     padding-top: 1px;
 }
 
-td {
+#fBody td {
     font-size: 12px;
     color: #000;
     display: table-cell;
     vertical-align: inherit;
 }
 
-tr {
+#fBody tr {
     display: table-row;
     vertical-align: inherit;
     border-color: inherit;
 }
 
-table {
+#fBody table {
     border-collapse: separate;
     text-indent: initial;
     border-spacing: 2px;
 }
 
-a:active {
+#fBody a:active {
     color: #fff;
     text-decoration: none;
     background-color: #0259c4;
 }
 
-div.contact-list-header {
+#fBody div.contact-list-header {
     height: 24px;
     margin-bottom: 14px;
     padding: 9px;
     font-size: 12px;
 }
 
-.person_hover_img {
+#fBody .person_hover_img {
     display: none;
     position: absolute;
     top: 0;
@@ -102,69 +102,69 @@ div.contact-list-header {
     border: 0;
 }
 
-#FollowingH {
+#fBody #FollowingH {
     font-size: 13px;
     margin-bottom: 10px;
 
 }
 
-.ThinCase {
+#fBody .ThinCase {
     width: 500px;
     margin-left: 120px;
     margin-right: 120px;
     padding-bottom: 5px;
 }
 
-h4 {
+#fBody h4 {
     font-size: 13px;
     margin-bottom: 10px;
 }
 
-p {
+#fBody p {
     font-size: 12px;
 }
 
-#SubNav .Section .LinksNewP {
+#fBody #SubNav .Section .LinksNewP {
     font-size: 12px;
     margin: 0;
     padding: 0;
     vertical-align: top;
 }
 
-#SubNav .Buddy {
+#fBody #SubNav .Buddy {
     padding-right: 10px;
     text-align: left;
     vertical-align: top;
 }
 
-#SubNav {
+#fBody #SubNav {
     width: 800px;
     margin-top: 25px;
     margin-bottom: 20px;
 }
 
-tbody {
+#fBody tbody {
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
 }
 
-#SubNav tr {
+#fBody #SubNav tr {
     vertical-align: top;
 }
 
-#SubNav .Section h1 {
+#fBody #SubNav .Section h1 {
     padding: 0;
     margin: 0 0 5px 0;
     text-rendering: optimizelegibility;
 }
 
-div.contact-list-header select {
+#fBody div.contact-list-header select {
     width: 200px;
     margin-top: 2px;
     margin-bottom: -2px;
 }
 
-div.contact-list-header span {
+#fBody div.contact-list-header span {
     margin-top: 5px;
 }
