@@ -90,9 +90,8 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             }
     function LoadPhotoStream(event){
         event.preventDefault();
-            console.log("data sent in /user/photostream/:");
-            console.log(userData.id);
-            axios.get('/user/photostream/'+userData.id)
+            console.log("data sent to /user/photostream/"+probs.userId);
+            axios.get('/user/photostream/'+probs.userId)
                 .then((response) => {
                     console.log(response.data);
                     setPhotoStream(response.data.photos);
@@ -100,9 +99,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 })
                 .catch((error) => {
                     if (error.response.status === 400) {
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }else if(error.response.status === 404){
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }
                 });
         function configureElementsCreated() {
@@ -188,7 +187,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             <div className="container-fluid">
                 <div className="row album-toolbar">
                     <div className="col-9">
-                        <a href= {`/photos/${probs.creatorId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
+                        <a href= {`/photos/${probs.userId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
                     </div>
                     <div className="col-3">
                     </div>
