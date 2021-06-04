@@ -31,7 +31,11 @@
 .comment-text:hover {
     visibility: visible
 }
-
+.delete-comment-btn{
+    float: right;
+    padding: 0px;
+    border: none;
+}
 .label {
     padding: 3px 10px;
     line-height: 13px;

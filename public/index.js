@@ -85,7 +85,7 @@ $(document).ready(function () {
     textArea.addEventListener("focus", commentFocusFunction, true);
 
     function commentFocusFunction() {
-    document.getElementById("commentBtn").style.display = "inline-block";
+    document.getElementById("commentBtn").style.display = "block";
     }
 //
 });
