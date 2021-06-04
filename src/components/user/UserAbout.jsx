@@ -31,6 +31,7 @@ function UserAbout(props) {
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
+                    console.log(response)
                 })
                 .catch((error) => {
                     console.log("Error occured while getting photostream...");
@@ -41,6 +42,7 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
+    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -307,7 +309,7 @@ function UserAbout(props) {
                 <UserCover userData={userToRender.user} /> : null
             }
             <div id="user-about-navbar">
-                {userToRender != null ?
+                {userToRenderId != null ?
                     <div>
                         {userToRender.sameUser === true ?
                             <Navbar items={dataToSendSameUser} position={position} />

@@ -9,16 +9,19 @@ import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
 import Navbar from '../components/Trending/Navbar/Navbar';
 
 function FavesPage() {
-    const user = JSON.parse(localStorage.getItem('userData')).user;
+    var user = null;
+    if (JSON.parse(localStorage.getItem('userData')) !== null)
+        user = JSON.parse(localStorage.getItem('userData')).user;
     const { id } = useParams();
     const [userToUse, setUserToUse] = useState(null);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        if (id !== user._id) {
+        if (user === null || id !== user._id) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + id)
                 .then((response) => {
+                    debugger
                     setUserData({ ...response.data.user, "sameUser": false });
                     setUserToUse(response.data.user._id);
                     console.log(response.data.user._id);
@@ -26,7 +29,7 @@ function FavesPage() {
                 .catch((error) => {
                     console.log("Error occured while getting photostream...");
                 });
-        } else {
+        } else if (user !== null) {
             setUserData({ ...user, "sameUser": true });
             setUserToUse(user._id);
         }
@@ -57,7 +60,7 @@ function FavesPage() {
                 }
                 {userToUse !== null ?
                     <div>
-                        {user._id !== id ?
+                        {user === null || user._id !== id ?
                             <Navbar items={dataToSend} position={position} />
                             : <Navbar items={dataToSendSameUser} position={position} />
                         }

@@ -1,7 +1,7 @@
 import './AlbumsPage.css';
 
-import React,{useState, useEffect} from 'react';
-import { BrowserRouter} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import UserlessNavigationBar from '../../components/user/UserlessNavigationBar';
 import UserCover from '../../components/PhotoStream/UserCover/UserCover';
 import Footer from '../../components/static/Footer';
@@ -14,36 +14,41 @@ const AlbumsPage = (props) => {
     const baseUrl = 'https://api.qasaqees.tech';
 
     const homePage = () => window.location.pathname = '/';
-    
+
     const albumCoverPhoto = "https://live.staticflickr.com/65535/51140121587_393ff56218_n.jpg";
 
-    
+
     //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
 
-    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
-    const loggedInUserId = loggedInUser._id;
+    var loggedInUser = null;
+    if (JSON.parse(localStorage.getItem('userData')) !== null)
+        loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
+
+    var loggedInUserId = null;
+    if (loggedInUser !== null)
+        loggedInUserId = loggedInUser._id;
     const userToken = localStorage.getItem('accessToken');
 
     const userId = props.match.params.id;
-    
+
     const [user, setUser] = useState(null);
 
 
-    let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null, cameraRoll = null;
+    let main = null, newAlbum = null, inputTitle, inputDesc, userCover = null, cameraRoll = null;
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.defaults.baseURL = baseUrl;
 
         axios.get(`/user/albums/${userId}`)
-        .then(response => response.data)
-        .then(data => setUserAlbums(data['albums']))
-        .catch(error => console.log('Couldnot fetch album albums.jsx'));
+            .then(response => response.data)
+            .then(data => setUserAlbums(data['albums']))
+            .catch(error => console.log('Couldnot fetch album albums.jsx'));
 
         axios.get(`/user/about/${userId}`)
-        .then(response => response.data)
-        .then(data => setUser(data['user']))
-        .catch(error => console.log('Couldnot fetch user albums.jsx'));
-    },[userId]);
+            .then(response => response.data)
+            .then(data => setUser(data['user']))
+            .catch(error => console.log('Couldnot fetch user albums.jsx'));
+    }, [userId]);
 
     const [userAlbums, setUserAlbums] = useState(null);
     const [showNewAlbum, setShowNewAlbum] = useState(false);
@@ -62,12 +67,12 @@ const AlbumsPage = (props) => {
 
         axios.delete(`/album/deleteAlbum/${albumId}`, {
             headers: {
-              "Authorization": 'Bearer ' + userToken,
-              'Content-type': 'application/json'
+                "Authorization": 'Bearer ' + userToken,
+                'Content-type': 'application/json'
             }
         })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error));
 
         e.stopPropagation();
     }
@@ -76,13 +81,13 @@ const AlbumsPage = (props) => {
         e.preventDefault();
 
         const newAlbumJson = {
-            "title":inputTitle.value,
-            "description":inputDesc.value
+            "title": inputTitle.value,
+            "description": inputDesc.value
         }
 
-        axios.post('/album/createAlbum',newAlbumJson,{
+        axios.post('/album/createAlbum', newAlbumJson, {
             headers: {
-                'Authorization':'Bearer ' + userToken,
+                'Authorization': 'Bearer ' + userToken,
                 'Content-type': 'application/json'
             },
             params: {
@@ -90,22 +95,22 @@ const AlbumsPage = (props) => {
                 description: inputDesc.value
             }
         })
-        .then(res => window.location.reload())
-        .catch(err => console.log(err));
+            .then(res => window.location.reload())
+            .catch(err => console.log(err));
 
         newAlbumHandler();
-        
+
     }
 
-    if(userAlbums){
+    if (userAlbums) {
         main = (
-            <Albums 
-                userAlbums={userAlbums} 
-                albumCover={albumCoverPhoto} 
-                deleteAlbum={deleteAlbum} 
-                newAlbumHandler={newAlbumHandler} 
+            <Albums
+                userAlbums={userAlbums}
+                albumCover={albumCoverPhoto}
+                deleteAlbum={deleteAlbum}
+                newAlbumHandler={newAlbumHandler}
                 userId={userId}
-                loggedInUserId={loggedInUserId}/>
+                loggedInUserId={loggedInUserId} />
         )
     } else {
         main = (
@@ -117,7 +122,7 @@ const AlbumsPage = (props) => {
     }
 
 
-    if(showNewAlbum && loggedInUserId === userId){
+    if (showNewAlbum && loggedInUserId === userId) {
         newAlbum = (
             <div className="new-album-div">
                 <div className="new-album-dialog text-black-50">
@@ -126,9 +131,9 @@ const AlbumsPage = (props) => {
                         <p className="close" onClick={newAlbumHandler}>x</p>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Album title" className="album-title-input" ref={el => inputTitle = el} required/>
-                        <input type="text" placeholder="Description (Album)" className="album-desc-input" ref={el => inputDesc = el} required/>
-                        <input type="submit" value="Create" className="album-create"/>     
+                        <input type="text" placeholder="Album title" className="album-title-input" ref={el => inputTitle = el} required />
+                        <input type="text" placeholder="Description (Album)" className="album-desc-input" ref={el => inputDesc = el} required />
+                        <input type="submit" value="Create" className="album-create" />
                         <button onClick={newAlbumHandler} className="album-cancel">Cancel</button>
                     </form>
                 </div>
@@ -140,39 +145,39 @@ const AlbumsPage = (props) => {
 
     let dataToSend;
 
-    if(loggedInUserId===userId){
+    if (loggedInUserId === userId) {
         dataToSend = [
-            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "About", path: "/people/" + userId, selected: false },
             { title: "Photostream", path: "/photos/" + userId, selected: false },
-            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
-            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+            { title: "Albums", path: "/photos/" + userId + "/albums", selected: true },
+            { title: "Faves", path: "/photos/" + userId + "/favorites", selected: false },
             { title: "Camera Roll", path: "/cameraroll", selected: false },
         ];
-    }else{
+    } else {
         dataToSend = [
-            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "About", path: "/people/" + userId, selected: false },
             { title: "Photostream", path: "/photos/" + userId, selected: false },
-            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
-            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+            { title: "Albums", path: "/photos/" + userId + "/albums", selected: true },
+            { title: "Faves", path: "/photos/" + userId + "/favorites", selected: false },
         ];
     }
 
 
 
-    if(user){
-        userCover = <UserCover userData={user}/>;
+    if (user) {
+        userCover = <UserCover userData={user} />;
     }
 
 
-    return(
+    return (
         <BrowserRouter>
             <div className="AlbumsPage">
-                <UserlessNavigationBar/>
+                <UserlessNavigationBar />
                 {userCover}
                 <Navbar items={dataToSend} />
                 {main}
                 {newAlbum}
-                <Footer/>
+                <Footer />
             </div>
         </BrowserRouter>
     );
