@@ -17,6 +17,10 @@
     height: 300px;
     color: white;
 }
+.album-back-link{
+    text-decoration: none;
+    color: black;
+}
 .album-back-icon{
     margin-right: 5px;
 }

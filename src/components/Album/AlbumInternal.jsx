@@ -186,7 +186,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             <div className="container-fluid">
                 <div className="row album-toolbar">
                     <div className="col-9">
-                        <a><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
+                        <a href= {`/photos/${probs.creatorId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
                     </div>
                     <div className="col-3">
                     </div>
@@ -218,6 +218,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <AlbumPhotos
                         key={photo._id}
                         url={photo.url}
+                        photoId={photo._id}
+                        albumId={probs.albumId}
+                        userId={userData.id}
                     />
                 ))}
                 </div>
