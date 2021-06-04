@@ -241,7 +241,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <PhotoStream
                         key={photo._id}
                         id={photo._id}
-                        url={photo.photoUrl}
+                        url={photo.url}
                     />
                     ))}
                     </div>
