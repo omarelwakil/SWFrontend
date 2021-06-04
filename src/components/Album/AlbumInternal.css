@@ -17,6 +17,10 @@
     height: 300px;
     color: white;
 }
+.album-back-link{
+    text-decoration: none;
+    color: black;
+}
 .album-back-icon{
     margin-right: 5px;
 }
@@ -76,4 +80,7 @@
 #album-internal .album-photo-col{
     margin-bottom: 0px;
     height: 12rem;
+}
+#loadAlbumBtn{
+    display: none;
 }

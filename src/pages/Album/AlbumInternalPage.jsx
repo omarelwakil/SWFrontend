@@ -13,7 +13,7 @@ function AboutPage() {
                 <UserlessNavigationBar />
                 <AlbumInternal 
                 albumId={albumid}
-                creatorId={userid}
+                userId={userid}
                 />
                 <Footer/>
             </div>

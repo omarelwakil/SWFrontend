@@ -41,9 +41,11 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         console.log(error.response.data.message);
                     }
                 });
-      });
+        LoadAlbumMedia();
+      },[]);
       function LoadAlbumMedia(event) {
-        document.getElementById("loadAlbumBtn").style.display = "none";    
+          if(event){event.preventDefault();}
+          //document.getElementById("loadAlbumBtn").style.display = "none";    
             axios.get('/album/'+albumId)
             .then((response) => {
                 console.log("response.data.media");
@@ -88,9 +90,8 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             }
     function LoadPhotoStream(event){
         event.preventDefault();
-            console.log("data sent in /user/photostream/:");
-            console.log(userData.id);
-            axios.get('/user/photostream/'+userData.id)
+            console.log("data sent to /user/photostream/"+probs.userId);
+            axios.get('/user/photostream/'+probs.userId)
                 .then((response) => {
                     console.log(response.data);
                     setPhotoStream(response.data.photos);
@@ -98,9 +99,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 })
                 .catch((error) => {
                     if (error.response.status === 400) {
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }else if(error.response.status === 404){
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }
                 });
         function configureElementsCreated() {
@@ -186,7 +187,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             <div className="container-fluid">
                 <div className="row album-toolbar">
                     <div className="col-9">
-                        <a><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
+                        <a href= {`/photos/${probs.userId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
                     </div>
                     <div className="col-3">
                     </div>
@@ -208,7 +209,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                             <i className="fas fa-book-open album-icons album-remove"></i>
                             <i className="fas fa-download album-icons album-remove"></i>
                             <p className="album-description">
-				                By:{userData.firstName}</p>
+				                By:{userData.user.firstName}</p>
                         </div>
                     </div>
                 </div>
@@ -218,6 +219,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <AlbumPhotos
                         key={photo._id}
                         url={photo.url}
+                        photoId={photo._id}
+                        albumId={probs.albumId}
+                        userId={userData.user.id}
                     />
                 ))}
                 </div>
