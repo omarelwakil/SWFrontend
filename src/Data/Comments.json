@@ -3,12 +3,12 @@
         {
             "_id": "60b5df64bc0b9e3c283fa482",
             "user": {
-                "_id": "60b5a1cf64664624dc23098f",
+                "_id": "60b3a326304ce00012996bba",
                 "profilePhotoUrl": "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
                 "firstName": "Abdelrhman",
                 "lastName": "Shahda",
                 "userName": "coolabdoana",
-                "id": "60b5a1cf64664624dc23098f",
+                "id": "60b3a326304ce00012996bba",
                 "numberOfFollowers": 0
             },
             "text": "This is Very Cool!",
@@ -38,13 +38,13 @@
         },
         {
             "_id": "60b5df70bc0b9e3c283fa484",
-            "creator": {
-                "_id": "60b5a1cf64664624dc23098f",
+            "user": {
+                "_id": "60b3a326304ce00012996bba",
                 "profilePhotoUrl": "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
                 "firstName": "Wael",
                 "lastName": "Ghonaim",
                 "userName": "coolabdoana",
-                "id": "60b5a1cf64664624dc23098f",
+                "id": "60b3a326304ce00012996bba",
                 "numberOfFollowers": 0
             },
             "text": "wala ana B7BK yala!",

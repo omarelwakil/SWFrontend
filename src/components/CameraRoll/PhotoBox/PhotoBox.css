@@ -20,7 +20,7 @@
   margin-top: 10px;
   padding: 5px;
   color: #fff;
-  width: 40%;
+  width: 100px;
 }
 
 .CameraRoll form {
@@ -32,8 +32,8 @@
   outline: 2px solid #128fdc;
   margin: 10px auto;
   position: absolute;
-  height: 260px;
-  top: 22%;
+  height: 290px;
+  top: 0%;
   left: 40%;
   font-size: 14px;
   background-color: #fff;
@@ -53,10 +53,27 @@ select {
   margin-left: 5px;
 }
 
+.CameraRoll form .form-btn {
+  display: inline;
+  margin-top: 5px;
+  margin-right: 10px;
+  padding: 5px;
+  width: 45%;
+  outline: none;
+  background-color: #128fdc;
+  color: #fff;
+  border: 1px thin #128fdc;
+  border-radius: 5px;
+}
+.CameraRoll form .form-btn:hover {
+  background-color: #128fc0;
+}
+.CameraRoll form div {
+  width: 100%;
+}
 .CameraRoll .delete-button {
   margin-top: 5px;
   display: block;
-  width: 100px !important;
 }
 
 @media (max-width: 1000px) and (min-width: 320px) {
