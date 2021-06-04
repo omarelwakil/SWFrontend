@@ -11,7 +11,10 @@ const Album = (props) => {
             <div className="album-details">
                 <p className="fs-5">{album.title}</p>
                 <p className="fs-6">{album.numberOfPhotos} photos</p>
-                <a className="delete-album" onClick={(e)=>props.deleteAlbum(e, album._id)}><Button tool="delete"/></a>
+                <a className="delete-album" onClick={(e)=>{
+                    e.stopPropagation();
+                    props.deleteAlbum(e, album._id);
+                }}><Button tool="delete"/></a>
             </div>
         </div>
     );

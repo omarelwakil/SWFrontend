@@ -1,6 +1,7 @@
 .main {
   margin-top: 60px; /*Change to margin!!*/
   margin-bottom: 40px;
+  min-height: 64vh;
 }
 
 .trending-now,

@@ -80,4 +80,12 @@ $(document).ready(function () {
         document.getElementsByClassName("album-remove")[index].style.display = "inline";
      }
     }
+    //Comment On Media
+    var textArea = document.getElementById("commentTextArea");
+    textArea.addEventListener("focus", commentFocusFunction, true);
+
+    function commentFocusFunction() {
+    document.getElementById("commentBtn").style.display = "inline-block";
+    }
+//
 });

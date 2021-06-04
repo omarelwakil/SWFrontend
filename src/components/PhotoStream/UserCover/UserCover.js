@@ -4,6 +4,9 @@
 
 import './UserCover.css';
 import UserImage from '../UserImage/UserImage';
+import {useState} from 'react';
+
+import axios from 'axios';
 
 const UserCover = (props) => {
 
@@ -11,6 +14,10 @@ const UserCover = (props) => {
     const userData = JSON.parse(localStorage.getItem("userData")) 
     const userID = userData.user._id
 
+    const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
+    const userToken = localStorage.getItem('accessToken');
+
+    const [followed, setFollowed] = useState(false);
 
     const coverStyling = {
         background: `linear-gradient(180deg, 
@@ -18,6 +25,53 @@ const UserCover = (props) => {
             rgba(0, 0, 0, 0.11) 21%, rgba(0, 0, 0, 0.61) 78%, 
             rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.7)), 
             url("${user.coverPhotoUrl}") no-repeat center`
+    }
+
+    const followUser = () => {
+
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/followUser',userJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+        .then(res => setFollowed(true))
+        .catch(err => console.log(err));
+
+        
+    }
+
+    const unFollowUser = () => {
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/unfollowUser',userJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+        .then(res => setFollowed(false))
+        .catch(err => console.log(err));
+
+    }
+
+    let followButton = null;
+    if(loggedInUserId!==user._id&&!followed){
+        followButton = <button onClick={followUser} className="follow-button">Follow</button>
+    }else if(loggedInUserId!==user._id&&followed){
+        followButton = <button onClick={unFollowUser} className="follow-button">Unfollow</button>
     }
 
 
@@ -29,7 +83,10 @@ const UserCover = (props) => {
                         <UserImage imgUrl={user.profilePhotoUrl} />
                     </div>
                     <div className="col-10 user-data text-white">
-                        <div className="row user-name">{user.firstName} {user.lastName}</div>
+                        <div className="row user-name">
+                            <span>{user.firstName} {user.lastName} {followButton}</span>
+                            
+                        </div>
                         <div className="row">
                             <div className="col-lg-2 p-0">{user.userName}</div>
                             <div className="col-lg-8 row">

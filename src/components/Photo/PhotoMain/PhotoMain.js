@@ -1,8 +1,7 @@
 import './PhotoMain.css';
 import { useState } from 'react';
 import React from 'react';
-import Comment from './Comment/Comment'
-import Button from '../Button/Button'
+import CommentOnMedia from '../../media/CommentOnMedia';
 //Might need to divide to further components
 
 import axios from 'axios';
@@ -10,6 +9,8 @@ import axios from 'axios';
 const PhotoMain = props => {
 
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
+
+    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
 
     const userToken = localStorage.getItem('accessToken');
 
@@ -21,6 +22,7 @@ const PhotoMain = props => {
     const [showCommentTools, setShowCommentTools] = useState(false);
     const [showDescriptionInputs, setShowDescriptionInputs] = useState(false);
     const [tags, setTags] = useState(photo.tags);
+
 
     const changeImageName = (event, photoObj) => {
         const photo = { ...photoObj };
@@ -66,7 +68,7 @@ const PhotoMain = props => {
                 <p className="desc">{photo.description}</p>
             </React.Fragment>
         );
-    } else {
+    } else if (showDescriptionInputs && loggedInUser._id === user._id) {
 
         description = (
             <React.Fragment>
@@ -78,53 +80,58 @@ const PhotoMain = props => {
     }
 
 
-    const handleRemoveTag = (e, tag) => {
-        e.stopPropagation();
+    // const handleRemoveTag = (e, tag) => {
+    //     e.stopPropagation();
 
-        let tagsArr = [...tags];
-        let tagIndex = tagsArr.findIndex(x => x == tag);
-        tagsArr.splice(tagIndex, 1);
-        setTags(tagsArr);
-        let photoCopy = { ...photo };
-        photoCopy['tags'] = tagsArr;
-        axios.patch(`/photo/${photo._id}`, photoCopy, {
-            headers: {
-              "Authorization": 'Bearer ' + userToken,
-              'Content-type': 'application/json'
-            }})
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
-    }
+    //     let tagsArr = [...tags];
+    //     let tagIndex = tagsArr.findIndex(x => x.name == tag.name);
+    //     tagsArr.splice(tagIndex, 1);
+    //     setTags(tagsArr);
+    //     let photoCopy = { ...photo };
+    //     photoCopy['tags'] = tagsArr;
+    //     axios.patch(`/photo/${photo._id}`, photoCopy, {
+    //         headers: {
+    //           "Authorization": 'Bearer ' + userToken,
+    //           'Content-type': 'application/json'
+    //         }})
+    //     .then(res => console.log(res.data))
+    //     .catch(error => console.log(error));
+    // }
 
-    const addTags = (e,inputTag) => {
+    const addTags = (e, inputTag) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
-        newTags = newTags.split(' ');
-        tagsArr = [...tagsArr,...newTags];
-        setTags(tagsArr);
-        tagsArr.forEach(tag => {
-            axios.patch(`/photo/addTags/${photo._id}`,{
-                headers: {
-                  "Authorization": 'Bearer ' + userToken,
-                  'Content-type': 'application/json'
-                },
-                params: {
+        if (newTags != '') {
+            newTags = newTags.split(' ');
+            newTags.forEach(tag => {
+                let tagObj = {
                     tag: tag
-                }
-            })
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error));
-        });
+                };
+
+                axios.patch(`/photo/addTags/${photo._id}`, tagObj, {
+                    headers: {
+                        "Authorization": 'Bearer ' + userToken,
+                        'Content-type': 'application/json'
+                    },
+                    params: {
+                        tag: tag
+                    }
+                })
+                    .then(res => window.location.reload())
+                    .catch(error => console.log(error));
+            });
+        }
+
     }
     return (
         <div className="PhotoMain">
             <div className="photo-desc-comments">
                 <div className="photo-desc">
                     <div className="profile-photo">
-                        <img src={user.photoUrl} />
+                        <img src={user.profilePhotoUrl} alt="" />
                     </div>
                     <div className="profile-name-desc">
-                        <h5 className="profile-name"><a href={"/user/photostream/" + user.id}>{user.name}</a></h5>
+                        <h5 className="profile-name"><a href={"/photos/" + user._id}>{user.firstName + ' ' + user.lastName}</a></h5>
                         <div className="profile-desc" onClick={showDescription} >
                             {description}
                         </div>
@@ -132,13 +139,10 @@ const PhotoMain = props => {
                     </div>
                 </div>
                 <div className="photo-comments">
-                    {/* TODO: comments */}
-                    {/* {
-                        user.comments.map(comment => <Comment user={user} showTools={showTools} showCommentTools={showCommentTools}/>)
-                    } */}
+                    {/* <CommentOnMedia photoId={photo._id}/> */}
                     <div className="add-comment">
                         <div className="user-img">
-                            <img src={user.photoUrl} />
+                            <img src={loggedInUser.profilePhotoUrl} alt="" />
                         </div>
                         <textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}></textarea>
                     </div>
@@ -163,7 +167,7 @@ const PhotoMain = props => {
                         </div>
                     </div>
                     <div className="details-date">
-                        <p>Taken on {photo.createdAt}</p>
+                        <p>Taken on {photo.createdAt.substring(0, 10)}</p>
                     </div>
                 </div>
                 <div className="line"></div>
@@ -173,7 +177,7 @@ const PhotoMain = props => {
                             <p>This photo is in 1 album</p>
                         </div>
                         <div>
-                            <a href="">Add to album</a>
+                            <a type="button">Add to album</a>
                         </div>
                     </div>
                     <div>
@@ -186,7 +190,7 @@ const PhotoMain = props => {
                     <div className="tags">
                         <input type="text" placeholder="add a tag" ref={el => inputTag = el} />
                         {
-                            tags.map(tag => <a onClick={e => e.stopPropagation()} className="tag">{tag} <span onClick={(e) => handleRemoveTag(e, tag)} className="remove">x</span></a>)
+                            tags.map(tag => <a href={"/photos/tags/" + tag.name} className="tag">{tag.name}</a>)
                         }
                     </div>
                 </div>

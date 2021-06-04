@@ -5,13 +5,13 @@
 }
 
 .AlbumsPage .custom-navbar {
-  top: 300px !important;
-  position: absolute;
+  top: auto;
+  position: static;
 }
 
 .AlbumsPage .error-photos {
   width: 60%;
-  height: 153px;
+  height: 352px;
   margin: 120px 0 60px 170px;
 }
 .AlbumsPage .no-photos {
