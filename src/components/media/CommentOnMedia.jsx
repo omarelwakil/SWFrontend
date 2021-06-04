@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
-import comments from "../../Data/Comments.json"
+//import comments from "../../Data/Comments.json"
 import Comment from "./Comment";
 
 import "./CommentOnMedia.css"
 
 function CommentOnMedia(probs){//probs:{photoId}
+    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [newComment,setNewComment] = useState("");
+    const [comments,setComments] = useState([]);
     
+    function LoadComments(event){
+        if(event){event.preventDefault();}
+        axios.defaults.baseURL = "https://7e738fcf-dd46-4db9-a9b1-26e54c6e3603.mock.pstmn.io";
+        const data = {
+            photoId : probs.photoId
+        }
+        axios.post('/photo/getComments', data, { headers: { "Content-Type": "application/json" } })
+            .then((response) => {
+                console.log(response.data.comments);
+                setComments(response.data.comments);
+            })
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    console.log(error.response.data.message);
+                } 
+            });
+    }
+    console.log("comments:");
     console.log(comments);
     function Submit(event){
         event.preventDefault();
@@ -16,7 +36,7 @@ function CommentOnMedia(probs){//probs:{photoId}
         document.getElementById("commentBtn").style.display = "none";
         const data = {
             photoId : probs.photoId,
-            comment : newComment
+            comment : document.getElementById("commentTextArea").value
         }
         console.log("data sent:");
         console.log(data);
@@ -25,13 +45,35 @@ function CommentOnMedia(probs){//probs:{photoId}
             .then((response) => {
                 console.log(response.data);
                 // add comment to the list or reload
-                comments.push({id: "5", author: "KOKO", img: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03", date: "1h", content: newComment});
+                comments.push(
+                    {
+                        _id: "60b5df64bc0b9e3c283fa482",
+                        user: {
+                            profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
+                            firstName: userData.firstName, 
+                            lastName: userData.lastName,
+                        },
+                        text: newComment,
+                        createdAt: (new Date()).getDate()
+                    });
+                setComments(comments);
             })
             .catch((error) => {
                 if (error.response.status === 404) {
                     console.log(error.response.data.message);
                     //for testing
-                    comments.push({id: "5", author: "KOKO", img: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03", date: "1h", content: newComment});
+                    comments.push(
+                        {
+                            _id: "60b5df64bc0b9e3c283fa482",
+                            user: {
+                                profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
+                                firstName: userData.firstName, 
+                                lastName: userData.lastName,
+                            },
+                            text: newComment,
+                            createdAt: (new Date()).getDate()
+                        });
+                    setComments(comments);
                 } 
             });
     }
@@ -41,14 +83,16 @@ function CommentOnMedia(probs){//probs:{photoId}
     <div class="row">
         <div class="col-md-12">
             <div class="card">
+                <button class="btn btn-primary" onClick={LoadComments}></button>
                 <div class="comment-widgets m-b-20">
                 {comments.map((comment) => (
                     <Comment
-                        key={comment.id}
-                        img={comment.img}
-                        author={comment.author}
-                        date={comment.date}
-                        content={comment.content}
+                        key={comment._id}
+                        date={comment.createdAt}
+                        text={comment.text}
+                        firstName={comment && comment.user ? comment.user.firstName : null}
+                        lastName={comment && comment.user ? comment.user.lastName : null}
+                        img={comment && comment.user ? comment.user.profilePhotoUrl : null}
                     />
                 ))}
                 <div id="comment-form" class="d-flex flex-row comment-row ">
