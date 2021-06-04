@@ -54,20 +54,49 @@ const PhotoBox = (props) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
         newTags = newTags.split(' ');
-        tagsArr = [...tagsArr,...newTags];
-        setTags(tagsArr);
-        let photoCopy = {...photo};
-        photoCopy['title'] = title;
-        photoCopy['description'] = Desc;
-        photoCopy['tags'] = tagsArr;
-        photoCopy['isPublic'] = privacy;
-        photoCopy['allowCommenting'] = allowCommenting;
+
+        // if(newTags!=''){
+        //     newTags = newTags.split(' ');
+        //     newTags.forEach(tag => {
+        //         let tagObj = {
+        //             tag: tag
+        //         }; 
+
+        //         axios.patch(`/photo/addTags/${photo._id}`,tagObj,{
+        //             headers: {
+        //               "Authorization": 'Bearer ' + userToken,
+        //               'Content-type': 'application/json'
+        //             },
+        //             params: {
+        //                 tag: tag
+        //             }
+        //         })
+        //         .then(res => setTags(res.data))
+        //         .catch(error => console.log(error));
+        //     });
+        // }
+
+        let photoCopy = {
+            "isPublic": privacy==='public' ? true : false,
+            "allowCommenting": allowCommenting,
+            "description": Desc,
+            "title": title,
+            "tags": newTags
+        }
         axios.patch(`/photo/${photo._id}`,photoCopy,{
             headers: {
               "Authorization": 'Bearer ' + userToken,
               'Content-type': 'application/json'
-            }})
-        .then(res => console.log(res.data))
+            },
+            params:{
+                isPublic: privacy==='public' ? true : false,
+                allowCommenting: allowCommenting,
+                description: Desc,
+                title: title,
+                tags: newTags
+            }
+        })
+        .then(res => window.location.pathname = `/photo/getdetails/${photo._id}`)
         .catch(error => console.log(error));
         editPhoto();
     }
@@ -100,7 +129,7 @@ const PhotoBox = (props) => {
                 </label>
                 <label>
                     Add tags 
-                    <input required type="text" ref={el => inputTag = el}/>
+                    <input type="text" ref={el => inputTag = el}/>
                 </label>
                 <input type="submit" value="Done"/>
             </form>

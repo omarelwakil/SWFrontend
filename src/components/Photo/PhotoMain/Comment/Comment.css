@@ -1,14 +1,4 @@
 /* Comments */
-.PhotoMain .photo-desc-comments .photo-comments .user-img {
-  justify-self: flex-end;
-  align-self: flex-start;
-  width: 17%;
-}
-
-.PhotoMain .photo-desc-comments .photo-comments .user-img img {
-  border-radius: 50%;
-  width: 40%;
-}
 
 .PhotoMain .photo-desc-comments .photo-comments .comment {
   display: flex;

@@ -16,7 +16,7 @@ const Albums = (props) => {
     if(userAlbums.length!==0&&loggedInUserId === userId){
         main = ( 
             <React.Fragment>
-                
+                <div className="new-album"><a onClick={props.newAlbumHandler}><Button tool="create"/>New Album</a></div>
                 <div className="albums">
                     {userAlbums.map(album => {
                         return <Album 
@@ -40,9 +40,10 @@ const Albums = (props) => {
             </div>
         );
     } else {
+        main=(
         <div className="no-photos row text-center">
             <div className="fs-4 mb-3 mt-3">The user has no albums.</div>
-        </div>
+        </div>);
     }
 
 

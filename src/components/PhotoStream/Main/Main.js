@@ -17,7 +17,7 @@ const Main = (props) => {
                     return <PhotoBox  
                     key={photo._id}
                     photo={photo} 
-                    height="320px" 
+                    height="240px" 
                     width="240px"/>;
                 })}
             </div>

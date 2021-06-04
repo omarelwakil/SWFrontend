@@ -30,17 +30,19 @@ const PhotoPage = props => {
 
     useEffect(() => {
         axios.defaults.baseURL = baseUrl;
-        axios.get(`/photo/getDetails`, {
+        
+        let bodyFormData = {
+            "photoId":photoId
+        }
+
+        axios.post(`/photo/getDetails`, bodyFormData, {
             headers: {
-                "Authorization": 'Bearer ' + userToken,
-                'Content-type': 'application/json'
-                },
-            params: {
-                photoId: photoId
+                "Authorization": 'Bearer ' + userToken                
             }
         })
             .then(response => response.data)
             .then(data => {
+                console.log(data);
                 setPhoto(data);
                 setUser(data.creator)
             })

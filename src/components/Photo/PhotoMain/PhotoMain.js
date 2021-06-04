@@ -23,6 +23,7 @@ const PhotoMain = props => {
     const [showDescriptionInputs, setShowDescriptionInputs] = useState(false);
     const [tags, setTags] = useState(photo.tags);
 
+
     const changeImageName = (event, photoObj) => {
         const photo = { ...photoObj };
 
@@ -79,33 +80,35 @@ const PhotoMain = props => {
     }
 
 
-    const handleRemoveTag = (e, tag) => {
-        e.stopPropagation();
+    // const handleRemoveTag = (e, tag) => {
+    //     e.stopPropagation();
 
-        let tagsArr = [...tags];
-        let tagIndex = tagsArr.findIndex(x => x == tag);
-        tagsArr.splice(tagIndex, 1);
-        setTags(tagsArr);
-        let photoCopy = { ...photo };
-        photoCopy['tags'] = tagsArr;
-        axios.patch(`/photo/${photo._id}`, photoCopy, {
-            headers: {
-              "Authorization": 'Bearer ' + userToken,
-              'Content-type': 'application/json'
-            }})
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
-    }
+    //     let tagsArr = [...tags];
+    //     let tagIndex = tagsArr.findIndex(x => x.name == tag.name);
+    //     tagsArr.splice(tagIndex, 1);
+    //     setTags(tagsArr);
+    //     let photoCopy = { ...photo };
+    //     photoCopy['tags'] = tagsArr;
+    //     axios.patch(`/photo/${photo._id}`, photoCopy, {
+    //         headers: {
+    //           "Authorization": 'Bearer ' + userToken,
+    //           'Content-type': 'application/json'
+    //         }})
+    //     .then(res => console.log(res.data))
+    //     .catch(error => console.log(error));
+    // }
 
     const addTags = (e,inputTag) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
         if(newTags!=''){
             newTags = newTags.split(' ');
-            tagsArr = [...tagsArr,...newTags];
-            setTags(tagsArr);
-            tagsArr.forEach(tag => {
-                axios.patch(`/photo/addTags/${photo._id}`,{
+            newTags.forEach(tag => {
+                let tagObj = {
+                    tag: tag
+                }; 
+
+                axios.patch(`/photo/addTags/${photo._id}`,tagObj,{
                     headers: {
                       "Authorization": 'Bearer ' + userToken,
                       'Content-type': 'application/json'
@@ -114,10 +117,11 @@ const PhotoMain = props => {
                         tag: tag
                     }
                 })
-                .then(res => console.log(res.data))
+                .then(res => window.location.reload())
                 .catch(error => console.log(error));
             });
         }
+        
     }
     return (
         <div className="PhotoMain">
@@ -135,7 +139,7 @@ const PhotoMain = props => {
                     </div>
                 </div>
                 <div className="photo-comments">
-                    <CommentOnMedia photoId={photo._id}/>
+                    {/* <CommentOnMedia photoId={photo._id}/> */}
                     <div className="add-comment">
                         <div className="user-img">
                             <img src={loggedInUser.profilePhotoUrl} />
@@ -163,7 +167,7 @@ const PhotoMain = props => {
                         </div>
                     </div>
                     <div className="details-date">
-                        <p>Taken on {photo.createdAt}</p>
+                        <p>Taken on {photo.createdAt.substring(0,10)}</p>
                     </div>
                 </div>
                 <div className="line"></div>
@@ -186,7 +190,7 @@ const PhotoMain = props => {
                     <div className="tags">
                         <input type="text" placeholder="add a tag" ref={el => inputTag = el} />
                         {
-                            tags.map(tag => <a onClick={e => e.stopPropagation()} className="tag">{tag} <span onClick={(e) => handleRemoveTag(e, tag)} className="remove">x</span></a>)
+                            tags.map(tag => <a href={"/photos/tags/"+tag.name} className="tag">{tag.name}</a>)
                         }
                     </div>
                 </div>

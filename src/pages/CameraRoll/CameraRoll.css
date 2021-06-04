@@ -8,8 +8,8 @@
 
 .CameraRoll .error-photos {
   width: 60%;
-  height: 153px;
-  margin: 120px 0 60px 170px;
+  height: 100px;
+  margin: 50px auto;
 }
 
 .CameraRoll .error-photos h1 {

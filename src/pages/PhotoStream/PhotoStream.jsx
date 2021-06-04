@@ -18,12 +18,12 @@ const PhotoStream = (props) => {
 
 
     const userId = props.match.params.id;
+    const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
 
     const homePage = () => window.location.pathname = '/';
 
     //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
     const [user, setUser] = useState(null);
-
     useEffect(()=>{
         axios.defaults.baseURL = baseUrl;
 
@@ -50,13 +50,25 @@ const PhotoStream = (props) => {
         );
     }
 
-  const dataToSend = [
-        { title: "About", path: "/people/"+userId, selected: false },
-        { title: "Photostream", path: "/photos/" + userId, selected: true },
-        { title: "Albums", path: "/photos/"+userId+"/albums", selected: false },
-        { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
-        { title: "Camera Roll", path: "/cameraroll", selected: false },
-    ];
+    let dataToSend;
+
+    if(loggedInUserId===userId){
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: true },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: false },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+            { title: "Camera Roll", path: "/cameraroll", selected: false },
+        ];
+    }else{
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: true },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: false },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+        ];
+    }
+
 
     if(user){
         userCover = <UserCover userData={user}/>;

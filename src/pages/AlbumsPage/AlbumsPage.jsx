@@ -24,13 +24,12 @@ const AlbumsPage = (props) => {
     const loggedInUserId = loggedInUser._id;
     const userToken = localStorage.getItem('accessToken');
 
-
     const userId = props.match.params.id;
     
     const [user, setUser] = useState(null);
 
 
-    let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null;
+    let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null, cameraRoll = null;
 
     useEffect(()=>{
         axios.defaults.baseURL = baseUrl;
@@ -52,6 +51,7 @@ const AlbumsPage = (props) => {
     const newAlbumHandler = () => setShowNewAlbum(!showNewAlbum);
 
     const deleteAlbum = (e, albumId) => {
+        e.preventDefault();
         const albums = [...userAlbums];
 
         let albumIndex = albums.findIndex(album => album._id === albumId);
@@ -68,23 +68,33 @@ const AlbumsPage = (props) => {
         })
         .then(res => console.log(res.data))
         .catch(error => console.log(error));
+
+        e.stopPropagation();
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/album/createAlbum',{
+        const newAlbumJson = {
+            "title":inputTitle.value,
+            "description":inputDesc.value
+        }
+
+        axios.post('/album/createAlbum',newAlbumJson,{
             headers: {
                 'Authorization':'Bearer ' + userToken,
                 'Content-type': 'application/json'
             },
             params: {
-                albumTitle: inputTitle.value,
-                albumDescription: inputDesc.value
+                title: inputTitle.value,
+                description: inputDesc.value
             }
         })
-        .then(res => console.log(res))
+        .then(res => window.location.reload())
         .catch(err => console.log(err));
+
+        newAlbumHandler();
+        
     }
 
     if(userAlbums){
@@ -128,14 +138,26 @@ const AlbumsPage = (props) => {
         newAlbum = null;
     }
 
+    let dataToSend;
 
-    const dataToSend = [
-        { title: "About", path: "/people/"+userId, selected: false },
-        { title: "Photostream", path: "/photos/" + userId, selected: false },
-        { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
-        { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
-        { title: "Camera Roll", path: "/cameraroll", selected: false },
-    ];
+    if(loggedInUserId===userId){
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: false },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+            { title: "Camera Roll", path: "/cameraroll", selected: false },
+        ];
+    }else{
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: false },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+        ];
+    }
+
+
 
     if(user){
         userCover = <UserCover userData={user}/>;

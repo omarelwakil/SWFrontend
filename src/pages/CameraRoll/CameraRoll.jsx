@@ -15,7 +15,7 @@ const CameraRoll = () => {
 
     const [userPhotos, setUserPhotos] = useState(null);
 
-    const uploadPhotosPage = '/photo/upload';
+    const uploadPhotosPage = '/photos/upload';
     const homePage = () => window.location.pathname = '/';
 
     const user = JSON.parse(localStorage.getItem('userData')).user;

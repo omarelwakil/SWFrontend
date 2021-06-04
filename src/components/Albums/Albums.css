@@ -2,7 +2,7 @@
   width: 80%;
   display: flex;
   flex-direction: column;
-  margin: 0px auto;
+  margin: 20px auto;
 }
 .AlbumsPage .Albums .new-album {
   align-self: flex-end;
@@ -28,6 +28,7 @@
 
 .AlbumsPage .Albums svg {
   height: 50%;
+  color: lightslategray;
 }
 
 .AlbumsPage .Albums .albums {
@@ -43,10 +44,6 @@
 }
 
 @media (max-width: 1000px) and (min-width: 320px) {
-  .AlbumsPage .Albums {
-    margin-top: 0px;
-  }
-
   .AlbumsPage .Albums .albums {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }

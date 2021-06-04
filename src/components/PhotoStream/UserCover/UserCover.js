@@ -4,6 +4,7 @@
 
 import './UserCover.css';
 import UserImage from '../UserImage/UserImage';
+import {useState} from 'react';
 
 import axios from 'axios';
 
@@ -13,6 +14,8 @@ const UserCover = (props) => {
 
     const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
     const userToken = localStorage.getItem('accessToken');
+
+    const [followed, setFollowed] = useState(false);
 
     const coverStyling = {
         background: `linear-gradient(180deg, 
@@ -24,7 +27,11 @@ const UserCover = (props) => {
 
     const followUser = () => {
 
-        axios.post('/user/followUser',{
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/followUser',userJson,{
             headers: {
                 'Authorization':'Bearer ' + userToken,
                 'Content-type': 'application/json'
@@ -33,15 +40,36 @@ const UserCover = (props) => {
                 userId: user._id
             }
         })
-        .then(res => console.log(res))
+        .then(res => setFollowed(true))
         .catch(err => console.log(err));
 
         
     }
 
+    const unFollowUser = () => {
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/unfollowUser',userJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+        .then(res => setFollowed(false))
+        .catch(err => console.log(err));
+
+    }
+
     let followButton = null;
-    if(loggedInUserId!==user._id){
+    if(loggedInUserId!==user._id&&!followed){
         followButton = <button onClick={followUser} className="follow-button">Follow</button>
+    }else if(loggedInUserId!==user._id&&followed){
+        followButton = <button onClick={unFollowUser} className="follow-button">Unfollow</button>
     }
 
 
@@ -54,8 +82,8 @@ const UserCover = (props) => {
                     </div>
                     <div className="col-10 user-data text-white">
                         <div className="row user-name">
-                            <span>{user.firstName} {user.lastName}</span>
-                            {followButton}
+                            <span>{user.firstName} {user.lastName} {followButton}</span>
+                            
                         </div>
                         <div className="row">
                             <div className="col-lg-2 p-0">{user.userName}</div>
