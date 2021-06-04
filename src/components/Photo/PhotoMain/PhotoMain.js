@@ -132,21 +132,21 @@ const PhotoMain = props => {
                     </div>
                     <div className="profile-name-desc">
                         <h5 className="profile-name"><a href={"/photos/" + user._id}>{user.firstName + ' ' + user.lastName}</a></h5>
-                        <div className="profile-desc" onClick={showDescription} >
+                        <div className="profile-desc" >
                             {description}
                         </div>
                         <div className="line"></div>
                     </div>
                 </div>
                 <div className="photo-comments">
-                    {/* <CommentOnMedia photoId={photo._id}/> */}
-                    <div className="add-comment">
+                    <CommentOnMedia photoId={photo._id}/>
+                    {/* <div className="add-comment">
                         <div className="user-img">
                             <img src={loggedInUser.profilePhotoUrl} alt="" />
                         </div>
                         <textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}></textarea>
                     </div>
-                    {button}
+                    {button} */}
                 </div>
             </div>
             <div className="line hidden"></div>
