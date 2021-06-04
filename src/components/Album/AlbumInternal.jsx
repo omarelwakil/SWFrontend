@@ -209,7 +209,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                             <i className="fas fa-book-open album-icons album-remove"></i>
                             <i className="fas fa-download album-icons album-remove"></i>
                             <p className="album-description">
-				                By:{userData.firstName}</p>
+				                By:{userData.user.firstName}</p>
                         </div>
                     </div>
                 </div>
@@ -221,7 +221,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         url={photo.url}
                         photoId={photo._id}
                         albumId={probs.albumId}
-                        userId={userData.id}
+                        userId={userData.user.id}
                     />
                 ))}
                 </div>
