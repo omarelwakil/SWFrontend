@@ -7,15 +7,21 @@ import Comment from "./Comment";
 import "./CommentOnMedia.css"
 
 function CommentOnMedia(probs){//probs:{photoId}
-    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [comments,setComments] = useState([]);
-    
+    if (userData && userData.user) {
+        setUserData(userData.user);
+    }
+    console.log(userData);
+    useEffect(LoadComments,[]);
     function LoadComments(event){
         if(event){event.preventDefault();}
-        axios.defaults.baseURL = "https://7e738fcf-dd46-4db9-a9b1-26e54c6e3603.mock.pstmn.io";
+        axios.defaults.baseURL = "https://4bb70d8e-cb79-498c-9738-a284874ab5d6.mock.pstmn.io";
         const data = {
             photoId : probs.photoId
         }
+        console.log("data sent to api:");
+        console.log(data);
         axios.post('/photo/getComments', data, { headers: { "Content-Type": "application/json" } })
             .then((response) => {
                 console.log("response.data.comments");
@@ -24,7 +30,7 @@ function CommentOnMedia(probs){//probs:{photoId}
             })
             .catch((error) => {
                 if (error.response.status === 404) {
-                    console.log("error.response.data.message");
+                    console.log("error.response Get Comments");
                     console.log(error.response.data.message);
                 } 
             });
@@ -46,7 +52,7 @@ function CommentOnMedia(probs){//probs:{photoId}
                 // add comment to the list or reload
                 comments.push(
                     {
-                        _id: "60b5df64bc0b9e3c283fa482",
+                        _id: "60b3a326304ce00012996bba",
                         user: {
                             profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
                             firstName: userData.firstName, 
@@ -64,8 +70,9 @@ function CommentOnMedia(probs){//probs:{photoId}
                     //for testing
                     comments.push(
                         {
-                            _id: "60b5df64bc0b9e3c283fa482",
+                            _id: "60b3a326304ce00012996bba",
                             user: {
+                                _id: userData._id,
                                 profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
                                 firstName: userData.firstName, 
                                 lastName: userData.lastName,
@@ -85,15 +92,16 @@ function CommentOnMedia(probs){//probs:{photoId}
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <button class="btn btn-primary" onClick={LoadComments}></button>
                 <div class="comment-widgets m-b-20">
                 {comments.map((comment) => (
                     <Comment
                         key={comment._id}
+                        userId={userData.id}
                         date={comment.createdAt}
                         text={comment.text}
                         firstName={comment && comment.user ? comment.user.firstName : null}
                         lastName={comment && comment.user ? comment.user.lastName : null}
+                        creatorId={comment && comment.user ? comment.user._id : null}
                         img={comment && comment.user ? comment.user.profilePhotoUrl : null}
                     />
                 ))}
