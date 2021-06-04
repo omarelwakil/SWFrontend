@@ -20,16 +20,21 @@ const Main = (props) => {
 
         photosArr.splice(photoIndex, 1);
 
-        setUserPhotos(photosArr);
+        
 
-        axios.delete(`/photo/${photoId}`, {
+        axios.delete(`/photo/delete/${photoId}`, {photoId: photoId}, {
             headers: {
                 "Authorization": 'Bearer ' + userToken,
                 'Content-type': 'application/json'
+            },
+            params: {
+                photoId: photoId
             }
         })
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error));
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error));
+
+        setUserPhotos(photosArr);
     }
 
     if (userPhotos.length !== 0) {

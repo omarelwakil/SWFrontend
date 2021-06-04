@@ -7,7 +7,7 @@ const PhotoDiv = (props) => {
     return(
         <div className="PhotoDiv">
             <div className="back-link">
-                <a href={"/user/photostream/" + props.userId}>
+                <a href={"/photos/" + props.userId}>
                     <p><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;<span>Back to photostream</span></p>
                 </a>
                 <div className="full-screen-tool">

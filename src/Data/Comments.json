@@ -1,0 +1,58 @@
+{
+    "comments": [
+        {
+            "_id": "60b5df64bc0b9e3c283fa482",
+            "user": {
+                "_id": "60b5a1cf64664624dc23098f",
+                "profilePhotoUrl": "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
+                "firstName": "Abdelrhman",
+                "lastName": "Shahda",
+                "userName": "coolabdoana",
+                "id": "60b5a1cf64664624dc23098f",
+                "numberOfFollowers": 0
+            },
+            "text": "This is Very Cool!",
+            "photo": "60b5969764664624dc230989",
+            "createdAt": "2021-06-01T07:19:00.427Z",
+            "updatedAt": "2021-06-01T07:19:00.427Z",
+            "__v": 0,
+            "id": "60b5df64bc0b9e3c283fa482"
+        },
+        {
+            "_id": "60b5df67bc0b9e3c283fa483",
+            "user": {
+                "_id": "60b5a1cf64664624dc23098f",
+                "profilePhotoUrl": "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
+                "firstName": "Elon",
+                "lastName": "Mask",
+                "userName": "coolabdoana",
+                "id": "60b5a1cf64664624dc23098f",
+                "numberOfFollowers": 0
+            },
+            "text": "Nice!",
+            "photo": "60b5969764664624dc230989",
+            "createdAt": "2021-06-01T07:19:03.937Z",
+            "updatedAt": "2021-06-01T07:19:03.937Z",
+            "__v": 0,
+            "id": "60b5df67bc0b9e3c283fa483"
+        },
+        {
+            "_id": "60b5df70bc0b9e3c283fa484",
+            "creator": {
+                "_id": "60b5a1cf64664624dc23098f",
+                "profilePhotoUrl": "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
+                "firstName": "Wael",
+                "lastName": "Ghonaim",
+                "userName": "coolabdoana",
+                "id": "60b5a1cf64664624dc23098f",
+                "numberOfFollowers": 0
+            },
+            "text": "wala ana B7BK yala!",
+            "photo": "60b5969764664624dc230989",
+            "createdAt": "2021-06-01T07:19:12.123Z",
+            "updatedAt": "2021-06-01T07:19:12.123Z",
+            "__v": 0,
+            "id": "60b5df70bc0b9e3c283fa484"
+        }
+    ]
+}

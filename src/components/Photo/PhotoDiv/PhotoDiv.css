@@ -63,6 +63,7 @@
   }
   .PhotoDiv .photo-box {
     margin: 0;
+    height: 100%;
   }
   .PhotoDiv .photo-box img {
     height: 100%;
