@@ -102,7 +102,7 @@ const UserCover = (props) => {
                             <div className="position-relative">
                                 <ul className="list-group list-group-horizontal">
                                     <li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">{user.userName}</li>
-                                    <li className="list-group-item border-0 bg-transparent px-2 py-0 text-white"><a href={"/people/" + userID + "/contact/rev"}>{user.numberOfFollowers} Followers</a> <span className="fw-bolder">.</span> <a href={"/people/" + userID + "/contact/"}>{user.numberOfFollowings} Following</a></li>
+                                    <li className="list-group-item border-0 bg-transparent px-2 py-0 text-white"><a href={"/people/" + userID + "/contact/rev"} className={loggedInUserId !== user._id ? "disabled" : ""}>{user.numberOfFollowers} Followers</a> <span className="fw-bolder">.</span> <a href={"/people/" + userID + "/contact/"}>{user.numberOfFollowings} Following</a></li>
                                 </ul>
                                 <ul className="list-group list-group-horizontal position-absolute top-0 end-0 float-end">
                                     <li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">{user.numberOfPhotos} {"photo" + (user.numberOfPhotos > 1 ? "s" : "")}</li>

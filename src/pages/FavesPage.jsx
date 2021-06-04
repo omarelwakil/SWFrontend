@@ -30,7 +30,7 @@ function FavesPage() {
             setUserData({ ...user, "sameUser": true });
             setUserToUse(user._id);
         }
-    }, [id, user]);
+    }, [id]);
 
 
     const dataToSend = [

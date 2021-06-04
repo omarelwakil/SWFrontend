@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ViewFollowers.css';
 
-function ViewFollowers() {
+function ViewFollowers(props) {
 
   const [accessToken] = useState(localStorage.getItem("accessToken"));
   if (accessToken === null) {
@@ -10,9 +10,13 @@ function ViewFollowers() {
     window.location.href = "/login";
   };
 
+
   const userData = JSON.parse(localStorage.getItem("userData"))
   const userID = userData.user._id
-  console.log(userID);
+
+  if (props.userId !== userID) {
+    window.location.href = "/people/" + props.userId;
+  }
 
   const [followers, setFollowers] = useState([]);
   const getAllFollowers = () => {
@@ -44,24 +48,10 @@ function ViewFollowers() {
             </td>
             <td className="Section">
               <h1>People you follow</h1>
-              <p id="contacts-subnav" className="LinksNewP">
-                <span className="LinksNew">
-                  <span><a href=" ">Photos from</a></span> <span><a href=" ">Photos of</a></span><span className="Here">List</span><span><a href=" ">Find Friends</a></span>										<a href="/">Send Invites</a></span>	</p>
             </td>
           </tr>
         </tbody>
       </table>
-      <div className="contact-list-header contact-list-header-rev">
-        <form>
-          <span><strong>Show: </strong></span>
-          <select name="see">
-            <option> all of your followers </option>
-          </select>
-          <span> or <a href={"/people/" + userID + "/contact/"}>See people you follow</a></span>
-        </form>
-
-
-      </div>
       {(followers.length > 0) ? followers.map((follower, index) => {
         return (<div key={index}>
           <table className="table">

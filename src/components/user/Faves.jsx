@@ -6,10 +6,10 @@ import PhotoBox from './Search/PhotoBox';
 
 function Faves(props) {
     const [accessToken] = useState(localStorage.getItem("accessToken"));
-    if (accessToken === null) {
-        localStorage.clear();
-        window.location.href = "/login";
-    };
+    // if (accessToken === null) {
+    //     localStorage.clear();
+    //     window.location.href = "/login";
+    // };
     const userData = props.userToSend;
     const userID = userData._id
 
@@ -36,7 +36,7 @@ function Faves(props) {
             <div className="row m-0 p-0">
                 {(faves.length > 0) ? (faves.map((fave, index) => {
                     return (
-                        <div className="col-4 p-3 m-2">
+                        <div className="col-4 p-3 m-2" key={index}>
                             <PhotoBox key={index} id={fave._id}
                                 url={fave.url} title={fave.title} userName={fave.creator.firstName + " " + fave.creator.lastName}
                                 favNum={fave.favouriteCount} comNum={fave.commentsNum} />
