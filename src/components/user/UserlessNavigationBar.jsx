@@ -14,9 +14,22 @@ import UserImage from '../../images/usericon.png';
 function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
-    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [gotUserData, setGotUserData] = useState(false);
     //console.log(isLoggedIn);
+    if (gotUserData === false && isLoggedIn !== null && userData !== null) {
+        setGotUserData(true);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.get('/user/about/' + userData.user._id)
+            .then((response) => {
+                debugger;
+                setUserData(response.data);
+                localStorage.setItem("userData", JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log("Error occured while getting photostream...");
+            });
+    }
 
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;

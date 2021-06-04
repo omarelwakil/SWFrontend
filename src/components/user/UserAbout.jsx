@@ -25,7 +25,7 @@ function UserAbout(props) {
     // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
-        if (queryUser !== loggedUserData.user._id) {
+        if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + queryUser)
                 .then((response) => {
