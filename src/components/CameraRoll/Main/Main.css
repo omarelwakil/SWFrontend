@@ -1,0 +1,32 @@
+.CameraRoll .Main {
+  margin: 70px 150px;
+  color: #555;
+  height: 400px;
+}
+
+.CameraRoll .Main .photos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  position: relative;
+  height: 100%;
+  gap: 5px;
+}
+
+@media (max-width: 1400px) and (min-width: 1001px) {
+  .CameraRoll .Main {
+    margin: 120px;
+  }
+  .CameraRoll .Main .photos {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .CameraRoll .Main {
+    margin: 430px 20px 150px 20px;
+  }
+  .CameraRoll .Main .photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 20px;
+  }
+}

@@ -27,8 +27,8 @@ function UserSettings() {
                                         <img src={userIcon} width="50px" height="50px" alt="user-icon" className="rounded-circle" />
                                     </div>
                                     <div className="col-md-10 col-9">
-                                        <p className="m-0 fs-7 fw-bold"><span className="fw-normal">Your real name is</span> {userData.firstName} {userData.lastName}.</p>
-                                        <p className="m-0 fs-7 fw-bold"><span className="fw-normal">Your display name is</span> {userData.userName}.</p>
+                                        <p className="m-0 fs-7 fw-bold"><span className="fw-normal">Your real name is</span> {userData.user.firstName} {userData.user.lastName}.</p>
+                                        <p className="m-0 fs-7 fw-bold"><span className="fw-normal">Your display name is</span> {userData.user.userName}.</p>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ function UserSettings() {
                                 <div className="row">
                                     <div className="col-6">
                                         <p className="m-0 fs-7 fw-bold">Login email</p>
-                                        <p className="m-0 fs-7">{userData.email}</p>
+                                        <p className="m-0 fs-7">{userData.user.email}</p>
                                         <a href="/" className="fs-7 disabled">Request email change</a>
                                     </div>
                                     <div className="col-6">
