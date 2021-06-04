@@ -47,7 +47,7 @@ const PhotoPage = props => {
                 setUser(data.creator)
             })
             .catch(error => console.log(error));
-    }, []);
+    }, [photoId, userToken]);
 
 
 

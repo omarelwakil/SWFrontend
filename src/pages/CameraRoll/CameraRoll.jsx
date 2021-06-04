@@ -34,9 +34,9 @@ const CameraRoll = () => {
             }
         })
             .then(response => response.data)
-            .then(data => setUserPhotos(data))
+            .then(data => { setUserPhotos(data); console.log(data)})
             .catch(error => console.log('Couldnot fetch photos CameraRoll.jsx'));
-    }, []);
+    }, [userToken]);
 
 
 

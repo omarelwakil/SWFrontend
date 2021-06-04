@@ -68,7 +68,7 @@ const PhotoMain = props => {
                 <p className="desc">{photo.description}</p>
             </React.Fragment>
         );
-    } else if(showDescriptionInputs && loggedInUser._id === user._id) {
+    } else if (showDescriptionInputs && loggedInUser._id === user._id) {
 
         description = (
             <React.Fragment>
@@ -98,40 +98,40 @@ const PhotoMain = props => {
     //     .catch(error => console.log(error));
     // }
 
-    const addTags = (e,inputTag) => {
+    const addTags = (e, inputTag) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
-        if(newTags!=''){
+        if (newTags != '') {
             newTags = newTags.split(' ');
             newTags.forEach(tag => {
                 let tagObj = {
                     tag: tag
-                }; 
+                };
 
-                axios.patch(`/photo/addTags/${photo._id}`,tagObj,{
+                axios.patch(`/photo/addTags/${photo._id}`, tagObj, {
                     headers: {
-                      "Authorization": 'Bearer ' + userToken,
-                      'Content-type': 'application/json'
+                        "Authorization": 'Bearer ' + userToken,
+                        'Content-type': 'application/json'
                     },
                     params: {
                         tag: tag
                     }
                 })
-                .then(res => window.location.reload())
-                .catch(error => console.log(error));
+                    .then(res => window.location.reload())
+                    .catch(error => console.log(error));
             });
         }
-        
+
     }
     return (
         <div className="PhotoMain">
             <div className="photo-desc-comments">
                 <div className="photo-desc">
                     <div className="profile-photo">
-                        <img src={user.profilePhotoUrl} />
+                        <img src={user.profilePhotoUrl} alt="" />
                     </div>
                     <div className="profile-name-desc">
-                        <h5 className="profile-name"><a href={"/photos/" + user._id}>{user.firstName+' '+user.lastName}</a></h5>
+                        <h5 className="profile-name"><a href={"/photos/" + user._id}>{user.firstName + ' ' + user.lastName}</a></h5>
                         <div className="profile-desc" onClick={showDescription} >
                             {description}
                         </div>
@@ -142,7 +142,7 @@ const PhotoMain = props => {
                     {/* <CommentOnMedia photoId={photo._id}/> */}
                     <div className="add-comment">
                         <div className="user-img">
-                            <img src={loggedInUser.profilePhotoUrl} />
+                            <img src={loggedInUser.profilePhotoUrl} alt="" />
                         </div>
                         <textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}></textarea>
                     </div>
@@ -167,7 +167,7 @@ const PhotoMain = props => {
                         </div>
                     </div>
                     <div className="details-date">
-                        <p>Taken on {photo.createdAt.substring(0,10)}</p>
+                        <p>Taken on {photo.createdAt.substring(0, 10)}</p>
                     </div>
                 </div>
                 <div className="line"></div>
@@ -177,7 +177,7 @@ const PhotoMain = props => {
                             <p>This photo is in 1 album</p>
                         </div>
                         <div>
-                            <a href="">Add to album</a>
+                            <a type="button">Add to album</a>
                         </div>
                     </div>
                     <div>
@@ -190,7 +190,7 @@ const PhotoMain = props => {
                     <div className="tags">
                         <input type="text" placeholder="add a tag" ref={el => inputTag = el} />
                         {
-                            tags.map(tag => <a href={"/photos/tags/"+tag.name} className="tag">{tag.name}</a>)
+                            tags.map(tag => <a href={"/photos/tags/" + tag.name} className="tag">{tag.name}</a>)
                         }
                     </div>
                 </div>

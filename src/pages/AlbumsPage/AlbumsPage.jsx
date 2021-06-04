@@ -43,7 +43,7 @@ const AlbumsPage = (props) => {
         .then(response => response.data)
         .then(data => setUser(data['user']))
         .catch(error => console.log('Couldnot fetch user albums.jsx'));
-    },[]);
+    },[userId]);
 
     const [userAlbums, setUserAlbums] = useState(null);
     const [showNewAlbum, setShowNewAlbum] = useState(false);
