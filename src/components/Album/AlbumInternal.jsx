@@ -41,9 +41,11 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         console.log(error.response.data.message);
                     }
                 });
-      });
+        LoadAlbumMedia();
+      },[]);
       function LoadAlbumMedia(event) {
-        document.getElementById("loadAlbumBtn").style.display = "none";    
+          if(event){event.preventDefault();}
+          //document.getElementById("loadAlbumBtn").style.display = "none";    
             axios.get('/album/'+albumId)
             .then((response) => {
                 console.log("response.data.media");
