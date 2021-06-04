@@ -14,11 +14,15 @@ const UserCover = (props) => {
     const [selectedImages, setSelectedImages] = useState(null);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
 
+    const [loggedInUserId, setLoggedInUserId] = useState(null);
+    if (JSON.parse(localStorage.getItem('userData')) !== null)
+        setLoggedInUserId(JSON.parse(localStorage.getItem('userData')).user._id);
+
+
     const user = props.userData;
     const userData = JSON.parse(localStorage.getItem("userData"))
     const userID = userData.user._id
 
-    const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
     const userToken = localStorage.getItem('accessToken');
 
     const [followed, setFollowed] = useState(null);
