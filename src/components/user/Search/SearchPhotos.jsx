@@ -19,7 +19,7 @@ function SearchPhotos(){
   //Get All Photos from the BE
   const getAllPhotos = ()=>{
       axios.defaults.baseURL = "https://qasaqees.tech/api";
-      return (axios.get('/photo/searchPhotos/'+searchWord)
+      return (axios.get('/tag/'+searchWord)
       .then((response) => {
           const allPhotos = response.data.media;
           setPhotos(allPhotos);
@@ -40,7 +40,7 @@ function SearchPhotos(){
             <p>Everyone's photos</p>
             <div className="container-fluid">
                 <div className = "row justify-content-start">
-                    {(photos.length > 0)&&(photos.map((photo,index)=>{return(<PhotoBox key={index} id={photo._id} 
+                    {(photos.length > 0)&&(photos.map((photo,index)=>{return((photo.isPublic === true)&&<PhotoBox key={index} id={photo._id} 
                      url = {photo.url} title = {photo.title} userName={photo.creator.firstName +" "+ photo.creator.lastName} 
                      favNum={photo.favouriteCount} comNum={photo.commentsNum}/>);}))}
                       {notfound&&<div className="push-footer">No Photos are found</div>}

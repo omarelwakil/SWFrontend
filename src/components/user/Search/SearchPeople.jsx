@@ -3,7 +3,6 @@ import './SearchPeople.css'
 import Navbar from '../../Trending/Navbar/Navbar';
 import MemberBox from './MemberBox';
 import axios from 'axios';
-import { PersonPin } from "@material-ui/icons";
 
 function SearchPeople(){
   const pathOfCurrent = window.location.pathname;
