@@ -275,7 +275,7 @@ function UserAbout(props) {
     };
 
     const redirectToPhoto = (e) => {
-        window.location.href = "/photos/getdetails/" + e.currentTarget.getAttribute("_id");
+        window.location.href = "/photo/getdetails/" + e.currentTarget.getAttribute("_id");
     }
 
     const semiComplexEditUserAbout = (e) => {
