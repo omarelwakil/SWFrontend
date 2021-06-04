@@ -13,6 +13,7 @@ function CommentOnMedia(probs){//probs:{photoId}
         setUserData(userData.user);
     }
     console.log(userData);
+    
     useEffect(LoadComments,[]);
     function LoadComments(event){
         if(event){event.preventDefault();}
