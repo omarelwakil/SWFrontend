@@ -12,7 +12,6 @@ import UserCover from '../PhotoStream/UserCover/UserCover';
 import './UserAbout.css';
 
 import emptyShowCase from '../../images/empty-showcase.jpg';
-import i1 from '../../images/i1.jpeg';
 
 function UserAbout(props) {
     const [loggedUserData, setLoggedUserData] = useState(JSON.parse(localStorage.getItem("userData")));
@@ -27,7 +26,6 @@ function UserAbout(props) {
 
     useEffect(() => {
         if (queryUser !== loggedUserData.user._id) {
-            console.log("not equal")
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + queryUser)
                 .then((response) => {
@@ -235,12 +233,14 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
+                debugger;
                 loggedUserData.user.description = response.data.description;
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 loggedUserData.user.showCase.photos = response.data.showCase.photos;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
+                debugger;
                 console.log(error.config);
             });
     }
@@ -271,6 +271,35 @@ function UserAbout(props) {
             window.addEventListener("resize", _.debounce(positionGridItems, 100));
         }
     };
+
+    const redirectToPhoto = (e) => {
+        window.location.href = "/photos/getdetails/" + e.currentTarget.getAttribute("_id");
+    }
+
+    const semiComplexEditUserAbout = (e) => {
+        const userAbout = {
+            "occupation": document.getElementById("occupation").value,
+            "homeTown": document.getElementById("home-town").value,
+            "currentCity": document.getElementById("current-city").value
+        }
+        ToggleUserInfo();
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
+        axios.patch("/user/editInfo", userAbout, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => {
+                debugger;
+                loggedUserData.user.occupation = userAbout.occupation;
+                loggedUserData.user.homeTown = userAbout.homeTown;
+                loggedUserData.user.currentCity = userAbout.currentCity;
+                localStorage.setItem("userData", JSON.stringify(loggedUserData));
+                setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+            }).catch((error) => {
+                debugger;
+                console.log(error.config);
+            });
+    }
 
     return (
         <div id="user-about">
@@ -366,18 +395,17 @@ function UserAbout(props) {
                                         }
                                         <div className="col-12">
                                             <div className="grid" >
-                                                {
-                                                    userToRender.user.showCase.photos.map(photo => {
-                                                        return (
-                                                            <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
-                                                                <img className="image-lodash" src={photo.photoUrl} alt="" _id={photo._id} />
-                                                                <div className="bottom-left">
-                                                                    <p className="selector-title m-0">{photo.title}</p>
-                                                                    <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
-                                                                </div>
+                                                {userToRender.user.showCase.photos.map(photo => {
+                                                    return (
+                                                        <div className="grid__item position-relative lodash-wrapper" key={photo._id}>
+                                                            <img className="image-lodash cursor-pointer" src={photo.url} alt="" _id={photo._id} onClick={redirectToPhoto} />
+                                                            <div className="bottom-left">
+                                                                <p className="selector-title m-0">{photo.title}</p>
+                                                                <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
                                                             </div>
-                                                        );
-                                                    })
+                                                        </div>
+                                                    );
+                                                })
                                                 }
                                             </div>
                                         </div>
@@ -401,21 +429,21 @@ function UserAbout(props) {
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.occupation === "" ? " d-none" : "")} exist={userToRender.user.occupation === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.occupation}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.occupation} />
+                                            <input id="occupation" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.occupation} />
                                         </div>
                                         <div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Hometown</p>
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.homeTown}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.homeTown} />
+                                            <input id="home-town" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.homeTown} />
                                         </div>
                                         <div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Current city</p>
                                         </div>
                                         <div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
                                             <p className="text-black user-info-text m-0">{userToRender.user.currentCity}</p>
-                                            <input type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.currentCity} />
+                                            <input id="current-city" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.currentCity} />
                                         </div>
                                         <div className="col-md-2 col-4 d-flex align-items-center" exist={userToRender.user.email === "" ? "false" : "true"}>
                                             <p className="text-muted m-0 text-nowrap user-info-title">Email</p>
@@ -426,7 +454,7 @@ function UserAbout(props) {
                                         {userToRender.sameUser === true ?
                                             <div id="user-info-options" className="col-12 mt-2 d-none">
                                                 <button className="btn-cancel fw-bold float-end border-0 rounded" onClick={ToggleUserInfo} >Cancel</button>
-                                                <button className="btn-save fw-bold float-end me-3 border-0 rounded">Save</button>
+                                                <button className="btn-save fw-bold float-end me-3 border-0 rounded" onClick={semiComplexEditUserAbout}>Save</button>
                                             </div> : null
                                         }
                                     </div>
@@ -448,7 +476,7 @@ function UserAbout(props) {
                                                 return (
                                                     <div className="col-md-2 d-flex justify-content-center" key={photo._id}>
                                                         <div className="position-relative">
-                                                            <img src={i1} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                            <img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
                                                             <div className="bottom-left">
                                                                 <p className="selector-title m-0">{photo.title}</p>
                                                                 <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>

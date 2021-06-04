@@ -43,6 +43,7 @@ function App() {
         <Route exact path="/help/cookies" component={CookiesPage} />
         <Route exact path="/account" component={SettingsPage} />
         <Route exact path="/photos/tags" component={TrendingPage} />
+        <Route exact path="/photos/upload" component={UploadPage} />
         <Route exact path="/photos/tags-day" component={TrendingPage} />
         <Route exact path="/photos/tags-week" component={TrendingPage} />
         <Route exact path="/change-password" component={ChangePasswordPage} />
@@ -55,11 +56,10 @@ function App() {
         <Route exact path="/search/photos/:searchText" component={SearchPhotosPage} />
         <Route exact path="/search/people/:searchText" component={SearchPeoplePage} />
         <Route exact path="/people/:id" component={UserAboutPage} />
-        <Route exact path="/photos/upload" component={UploadPage} />
-
         <Route exact path="/photos/:id/favorites" component={FavesPage} />
         <Route exact path="/people/:id/contact/rev" component={ViewFollowersPage} />
         <Route exact path="/people/:id/contact/" component={ViewFollowingPage} />
+
         {/* <Route exact path="/notfound" component={404_Errorpage} />
         <Redirect to="/notfound" /> */}
       </Switch>
