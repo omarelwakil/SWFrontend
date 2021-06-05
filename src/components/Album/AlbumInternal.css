@@ -80,6 +80,7 @@
 #album-internal .album-photo-col{
     margin-bottom: 0px;
     height: 12rem;
+    cursor: pointer;
 }
 #loadAlbumBtn{
     display: none;
