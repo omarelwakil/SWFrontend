@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import "./CommentOnMedia.css"
 
 function CommentOnMedia(probs){//probs:{photoId}
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [comments,setComments] = useState([]);
     if (userData && userData.user) {
@@ -17,7 +18,7 @@ function CommentOnMedia(probs){//probs:{photoId}
     useEffect(LoadComments,[]);
     function LoadComments(event){
         if(event){event.preventDefault();}
-        axios.defaults.baseURL = "https://4bb70d8e-cb79-498c-9738-a284874ab5d6.mock.pstmn.io";
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
         const data = {
             photoId : probs.photoId
         }
@@ -50,43 +51,54 @@ function CommentOnMedia(probs){//probs:{photoId}
             .then((response) => {
                 console.log("Add comment: response.data:");
                 console.log(response.data);
-                // add comment to the list or reload
-                comments.push(
-                    {
-                        _id: "60b3a326304ce00012996bba",
-                        user: {
-                            profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
-                            firstName: userData.firstName, 
-                            lastName: userData.lastName,
-                        },
-                        text: document.getElementById("commentTextArea").value,
-                        createdAt: (new Date()).getDate()
-                    });
-                setComments(comments);
+                //reload
+                LoadComments(event);
             })
             .catch((error) => {
                 if (error.response.status === 404) {
                     console.log("Add comment: error.response.data.message:");
                     console.log(error.response.data.message);
-                    //for testing
-                    comments.push(
-                        {
-                            _id: "60b3a326304ce00012996bba",
-                            user: {
-                                _id: userData._id,
-                                profilePhotoUrl: "//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03",
-                                firstName: userData.firstName, 
-                                lastName: userData.lastName,
-                            },
-                            text: document.getElementById("commentTextArea").value,
-                            createdAt: (new Date()).getDate()
-                        });
-                    setComments(comments);
                 } 
             });
     }
     console.log("comments:");
     console.log(comments);
+    //Delete Comment
+    function handleDelete(event, commentId){
+        console.log("Comment is being Deleted:");
+        //Reload if success
+        const data = {
+            commentId : commentId
+        }
+        console.log(`data sent to /photo/${probs.photoId}/comment:`);
+        console.log(data);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        axios.post(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
+            .then((response) => {
+                console.log("delete comment: response.data:");
+                console.log(response.data);
+                //reload
+                LoadComments(event);
+            })
+            .catch((error) => {
+                if (error.response.status === 400) {
+                    console.log("Comment Id is missing");
+                } 
+                if (error.response.status === 401) {
+                    console.log("Delete comment: error.response.data.message:");
+                    console.log(error.response.data.message);
+                } 
+                if (error.response.status === 403) {
+                    console.log("Delete comment: error.response.data.message:");
+                    console.log(error.response.data.message);
+                } 
+                if (error.response.status === 404) {
+                    console.log("Delete comment: error.response.data.message:");
+                    console.log(error.response.data.message);
+                } 
+            });
+    }
     return (
     <div>
     <div class="container justify-content-center">
@@ -97,6 +109,8 @@ function CommentOnMedia(probs){//probs:{photoId}
                 {comments.map((comment) => (
                     <Comment
                         key={comment._id}
+                        commentId={comment._id}
+                        handleDelete={handleDelete}
                         userId={userData.id}
                         date={comment.createdAt}
                         text={comment.text}
