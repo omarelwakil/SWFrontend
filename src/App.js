@@ -27,6 +27,7 @@ import ViewFollowersPage from './pages/ViewFollowersPage';
 import ViewFollowingPage from './pages/ViewFollowingPage';
 
 import MediaProfile from './pages/Media/MediaProfile';
+import InnerTrendPage from './pages/InnerTrendPage';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route exact path="/photos/:id/favorites" component={FavesPage} />
         <Route exact path="/people/:id/contact/rev" component={ViewFollowersPage} />
         <Route exact path="/people/:id/contact/" component={ViewFollowingPage} />
+        <Route exact path="/photos/tags/:tagName" component={InnerTrendPage} />
 
         {/* For testing */}
         <Route exact path="/comment" component={MediaProfile} />
