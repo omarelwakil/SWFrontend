@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import FloatingInput from './FloatingInput';
-import FloatingInputPassoword from './FloatingInputPassword';
+import FloatingInput from './SignUp/FloatingInput';
+import FloatingInputPassoword from './SignUp/FloatingInputPassword';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -31,7 +31,8 @@ function ChangePassword() {
             axios.post('/register/changePassword', data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     debugger;
-                    window.location.href = "/account";
+                    localStorage.clear();
+                    window.location.href = "/login";
                 })
                 .catch((error) => {
                     debugger;

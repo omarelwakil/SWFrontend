@@ -1,0 +1,62 @@
+#SearchPagePhotos p{
+    padding-top: 4rem;
+    padding-left: 10rem;
+    font-size: 1.2rem;
+
+}
+
+#SearchPagePhotos .container-fluid{
+    text-align: center;
+    padding-left: 10rem;
+    font-size: 1.2rem;
+    padding-bottom: 17.4rem;
+    display: flex;
+
+}
+
+#SearchPagePhotos .container-fluid .push-footer{
+    padding-bottom: 8.5rem;
+    display: flex;
+
+}
+
+
+
+@media (max-width: 1024px) {
+    #SearchPagePhotos p{
+        padding-left: 8rem;
+       
+    }
+    
+    #SearchPagePhotos .container-fluid{
+        padding-left: 8rem;
+        
+    }
+    
+}
+
+
+@media (max-width: 767.98px) {
+    #SearchPagePhotos p{
+        padding-left: 4rem;
+       
+    }
+    
+    #SearchPagePhotos .container-fluid{
+        padding-left: 4rem;
+
+    }
+}
+
+@media (max-width: 575.98px) {
+    #SearchPagePhotos p{
+        padding-left: 2rem;
+       
+    }
+    
+    #SearchPagePhotos .container-fluid{
+        text-align: center;
+
+    }
+
+}

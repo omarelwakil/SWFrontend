@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import SearchDropDown from '../user/Search/SearchDropDown';
 import axios from 'axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,11 +11,25 @@ import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
 
-function UserlessNavigationBar() {
+function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
-    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-    console.log(isLoggedIn);
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [gotUserData, setGotUserData] = useState(false);
+    //console.log(isLoggedIn);
+    if (gotUserData === false && isLoggedIn !== null && userData !== null) {
+        setGotUserData(true);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.get('/user/about/' + userData.user._id)
+            .then((response) => {
+                debugger;
+                setUserData(response.data);
+                localStorage.setItem("userData", JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log("Error occured while getting photostream...");
+            });
+    }
 
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
@@ -45,7 +59,6 @@ function UserlessNavigationBar() {
         axios.post('/register/logOut')
             .then((response) => {
                 // debugger
-                console.log(response.data.message);
                 localStorage.clear();
                 window.location.href = "/";
             })
@@ -57,6 +70,16 @@ function UserlessNavigationBar() {
                     window.location.href = "/login";
                 }
             });
+    }
+    ////Drop box for search
+    const [showDropList, setShowDropList] = useState(false);
+    const [text, setText] = useState(props.currentSearch || "");
+    const [isFocused, setIsFocused] = useState(false);
+    useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
+
+    function handleTextChange(event) {
+        const { value } = event.target;
+        setText(value);
     }
 
     return (
@@ -88,15 +111,15 @@ function UserlessNavigationBar() {
                     </div>
                     <div id="div-nav-items">
                         <nav className="nav ps-3">
-                            {isLoggedIn === null ? null :
+                            {isLoggedIn === null || userData === null ? null :
                                 <div className="dropdown">
                                     <a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You</a>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id">About</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/photos/id">Photostream</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/albums">Albums</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/favorites">Faves</a></li>
-                                        <li><a className="dropdown-item text-black fs-7" href="/people/id/galleries">Galleries</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/people/" + userData.user._id}>About</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id}>Photostream</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/albums"}>Albums</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/favorites"}>Faves</a></li>
+                                        <li><a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/galleries"}>Galleries</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/groups">Groups</a></li>
                                         <li><a className="dropdown-item text-black fs-7" href="/cameraroll">Camera Roll</a></li>
                                     </ul>
@@ -110,16 +133,19 @@ function UserlessNavigationBar() {
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                             id="search-icon" value="" />
                         <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                            id="search-box" />
+                            id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 220) }} value={text} onChange={handleTextChange} />
+                        {showDropList && <SearchDropDown search={text} />}
                         <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                             id="close-search-icon" value="" />
                         <input type="button" className="bg-transparent border-0 rounded-15"
                             id="search-icon-sm" value="" />
                     </div>
-                    <div id="div-upload" className="d-flex justify-content-center">
-                        <input type="button" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity" value="" />
-                    </div>
-                    {isLoggedIn === null ?
+                    {isLoggedIn !== null && userData !== null ?
+                        <div id="div-upload" className="d-flex justify-content-center">
+                            <a href="/photos/upload" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity"> </a>
+                        </div> : null
+                    }
+                    {isLoggedIn === null || userData === null ?
                         <a href="/login"
                             className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
                             id="log-in">
@@ -138,7 +164,7 @@ function UserlessNavigationBar() {
                             </div>
                         </div>
                     }
-                    {isLoggedIn === null ?
+                    {isLoggedIn === null || userData === null ?
                         <a href="/sign-up"
                             className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
                             id="sign-up-btn">
@@ -147,7 +173,7 @@ function UserlessNavigationBar() {
                         <div id="user-settings" className="dropdown ms-2">
                             <img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
                             <div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
-                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.userName}!</span>
+                                <span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.user.userName}!</span>
                                 <span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English</span>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-black fs-7" href="/account">Settings</a>
@@ -158,20 +184,16 @@ function UserlessNavigationBar() {
                     }
                 </div>
                 <div id="div-side-nav" className="h-100 position-fixed pt-2">
-                    {isLoggedIn === null ?
+                    {isLoggedIn === null || userData === null ?
                         <a className="d-block text-decoration-none text-white side-bar-items" href="/log-in">Log In</a> :
                         <div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid">Photostream</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id}>Photostream</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/albums">Albums</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/albums"}>Albums</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/favorites">Favorites</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/favorites"}>Favorites</a>
                             <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/photos/userid/galleries">Galleries</a>
-                            <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/groups">Groups</a>
-                            <div className="my-2"></div>
-                            <a className="d-block text-decoration-none text-white side-bar-items" href="/people/id">About</a>
+                            <a className="d-block text-decoration-none text-white side-bar-items" href={"/people/" + userData.user._id}>About</a>
                         </div>
                     }
                     <hr className="text-white" />
@@ -208,7 +230,7 @@ function UserlessNavigationBar() {
                 </div>
             </div>
             <div className="fixed-height"></div>
-        </div>
+        </div >
     );
 }
 

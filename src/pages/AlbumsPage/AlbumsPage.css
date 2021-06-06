@@ -1,0 +1,137 @@
+.AlbumsPage {
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.AlbumsPage .custom-navbar {
+  top: auto;
+  position: static;
+}
+
+.AlbumsPage .error-photos {
+  width: 60%;
+  height: 352px;
+  margin: 120px 0 60px 170px;
+}
+.AlbumsPage .no-photos {
+  margin: 100px auto;
+}
+
+.AlbumsPage .no-photos-button {
+  background-color: #008ddf;
+  text-decoration: none;
+  padding: 5px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.AlbumsPage .no-photos-button:hover {
+  background-color: #448ddf;
+}
+
+.AlbumsPage .new-album-div {
+  width: 100%;
+  height: inherit;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  z-index: 7;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog {
+  background-color: #fff;
+  height: 350px;
+  width: 600px;
+  padding: 15px;
+  margin: auto auto;
+  position: relative;
+  top: 30%;
+  z-index: 7;
+  border: 2px solid #ebebeb;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .new-album-text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .new-album-text .close:hover {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .album-title-input {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #000;
+  padding: 10px;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .album-title-input:focus,
+.AlbumsPage .new-album-div .new-album-dialog .album-desc-input:focus {
+  border: 1px solid #0086fd;
+  outline: none;
+}
+.AlbumsPage .new-album-div .new-album-dialog .album-desc-input {
+  border-radius: 5px;
+  border: 1px solid #000;
+  margin-top: 10px;
+  padding: 10px 10px 70px 10px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+.AlbumsPage .new-album-div .new-album-dialog form {
+  padding: 0 10px 10px 10px;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .album-create {
+  padding: 5px;
+  background-color: #0086df;
+  border-radius: 5px;
+  width: 75px;
+  color: #fff;
+  border: none;
+  margin-left: 10px;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .album-cancel {
+  padding: 5px;
+  background-color: lightslategray;
+  border-radius: 5px;
+  width: 75px;
+  color: #fff;
+  border: none;
+}
+
+.AlbumsPage .new-album-div .new-album-dialog .album-cancel,
+.AlbumsPage .new-album-div .new-album-dialog .album-create {
+  float: right;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .AlbumsPage .custom-container {
+    width: 100%;
+  }
+
+  .AlbumsPage .custom-navbar .custom-navbar-ul {
+    display: block;
+  }
+
+  .AlbumsPage .custom-navbar .custom-navbar-ul li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .AlbumsPage .container {
+    margin: 0 auto;
+  }
+
+  .AlbumsPage .new-album-div .new-album-dialog {
+    width: 80%;
+  }
+}

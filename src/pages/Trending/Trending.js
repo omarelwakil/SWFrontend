@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import './Trending.css';
 import Navbar from '../../components/Trending/Navbar/Navbar'
@@ -12,17 +12,22 @@ import axios from 'axios';
 
 function Trending() {
 
+  const baseUrl = 'https://api.qasaqees.tech';
+
+  //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
+
   //http requests
   useEffect(() => {
-    axios.defaults.baseURL = 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io';
+    axios.defaults.baseURL = baseUrl;
+    
     axios.get('/tag/trending')
       .then(response => response.data)
-      .then(data => setTrendingState(data))
-      .catch( error => console.log('Couldnot fetch data Trending.js'));
+      .then(data => setTrendingState(data['trendingTags']))
+      .catch( error => console.log(error));
     },[]);
 
   const [trending, setTrendingState] = useState(null);
-
+  
   //Hrefs:
   const [currentUrl, setCurrentUrl] = useState(window.location.pathname);
 
@@ -31,13 +36,24 @@ function Trending() {
     { title: "Trending", path: "/photos/tags", selected: true }
   ];
 
+  const homePage = () => window.location.pathname = '/';
+
   let main = null; 
-  if(trending !== null){
+
+  if(trending){
     main = (
-      <Main 
+      <Main
         data={trending}
-        url={currentUrl} 
-        setCurrentUrl={setCurrentUrl}/>
+        url={currentUrl}
+        setCurrentUrl={setCurrentUrl} />
+    );
+
+  } else{
+    main = (
+      <div className="error-photos">
+        <h1>Error! Sorry, no data was found! </h1>
+        <div className=""><button onClick={homePage} className="no-photos-button">Go to HomePage</button></div>
+      </div>
     );
   }
 
@@ -46,10 +62,10 @@ function Trending() {
       <title>Popular Tags on Flickr | Flickr</title>
       <div className="trending">
         {/* It doesn't render the navbar each render */}
-        <UserlessNavigationBar/>
-        <Navbar items={dataToSend}/>
+        <UserlessNavigationBar />
+        <Navbar items={dataToSend} />
         {main}
-        <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   );

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 const Main = (props) => {
 
     const mainUrl = "/photos/tags";
-    const allTrendingNowHref = "/photos/tags-day/";
-    const allTrendingWeekHref = "/photos/tags-week/";
+    //const allTrendingNowHref = "/photos/tags-day/";
+    //const allTrendingWeekHref = "/photos/tags-week/";
     const data = props.data;
 
 
@@ -19,18 +19,18 @@ const Main = (props) => {
                 <div className="trending-now">
                     <div className="trending-text view">
                         <h5>Trending Tags — Now</h5>
-                        <Link to={allTrendingNowHref}  onClick={()=>props.setCurrentUrl(allTrendingNowHref)}>View all trending now</Link>    
-                        <Link style={{display: 'none'}} to={allTrendingNowHref} onClick={()=>props.setCurrentUrl(allTrendingNowHref)}>View all</Link>    
+                        {/* <Link to={allTrendingNowHref}  onClick={()=>props.setCurrentUrl(allTrendingNowHref)}>View all trending now</Link>     */}
+                        {/* <Link style={{display: 'none'}} to={allTrendingNowHref} onClick={()=>props.setCurrentUrl(allTrendingNowHref)}>View all</Link>     */}
                     </div>
                     <div className="trending-images">
                     {
-                        data.trendingNow.slice(0,6).map((image) => {
+                        data.map((image) => {
                             return (
                                 <ImageBox 
-                                    key={image.id} 
-                                    url={image.url} 
-                                    text={image.text}
-                                    link={image.link}
+                                    key={image.photo._id} 
+                                    url={image.photo.url} 
+                                    text={image.name}
+                                    link={mainUrl+'/'+image.name}
                                     height="186px"
                                     />
                             );
@@ -38,7 +38,7 @@ const Main = (props) => {
                     }
                     </div>
                 </div>
-                <div className="trending-week">
+                {/* <div className="trending-week">
                     <div className="trending-text view">
                             <h5>Trending Tags — This Week</h5>
                             <Link to={allTrendingWeekHref} onClick={()=>props.setCurrentUrl(allTrendingWeekHref)}>View all trending this week</Link>    
@@ -79,67 +79,70 @@ const Main = (props) => {
                             })
                         }
                     </div>
-                </div>
-            </div>
-        )
-    } 
-    else if(props.url === allTrendingNowHref)
-    {
-        main=(
-            <div className="trending-now">
-                <div className="trending-text flex-start view-all">
-                    <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
-                    <span>&nbsp;--&gt;&nbsp;&nbsp;</span>
-                    <Link to="#">Trending Now</Link>
-                </div>
-                <div className="trending-images">
-                {
-                    data.trendingNow.map((image) => {
-                        return (
-                            <ImageBox 
-                                key={image.id} 
-                                url={image.url} 
-                                text={image.text}
-                                link={image.link}
-                                height="186px"
-                                />
-                        );
-                    })
-                    
-                }
-                <p></p> 
-                </div>
-            </div>
-        )
-    } 
-    else if(props.url===allTrendingWeekHref){  
-        main=(
-            <div className="trending-now">
-                <div className="trending-text flex-start view-all">
-                    <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
-                    <span>&nbsp;--&gt;&nbsp;&nbsp;</span>
-                    <Link to="#">Trending Now</Link>
-                </div>
-                <div className="trending-images">
-                {
-                    data.trendingWeek.map((image) => {
-                        return (
-                            <ImageBox 
-                                key={image.id} 
-                                url={image.url} 
-                                text={image.text}
-                                link={image.link}
-                                height="186px"
-                                />
-                            );
-                    })
-                    
-                }
-                <p></p> 
-                </div>
+                </div> */}
             </div>
         )
     }
+    // } 
+    // else if(props.url === allTrendingNowHref)
+    // {
+    //     main=(
+    //         <div className="trending-now">
+    //             <div className="trending-text flex-start view-all">
+    //                 <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
+    //                 {/* <span>&nbsp;--&gt;&nbsp;&nbsp;</span> */}
+    //                 <span className="caret"></span>
+    //                 <Link to="#">Trending Now</Link>
+    //             </div>
+    //             <div className="trending-images">
+    //             {
+    //                 data.trendingNow.map((image) => {
+    //                     return (
+    //                         <ImageBox 
+    //                             key={image.id} 
+    //                             url={image.url} 
+    //                             text={image.text}
+    //                             link={image.link}
+    //                             height="186px"
+    //                             />
+    //                     );
+    //                 })
+                    
+    //             }
+    //             <p></p> 
+    //             </div>
+    //         </div>
+    //     )
+    // } 
+    // else if(props.url===allTrendingWeekHref){  
+    //     main=(
+    //         <div className="trending-now">
+    //             <div className="trending-text flex-start view-all">
+    //                 <Link to={mainUrl} onClick={()=>props.setCurrentUrl(mainUrl)}>Tags</Link> 
+    //                 {/* <span>&nbsp;--&gt;&nbsp;&nbsp;</span> */}
+    //                 <span className="caret"></span>
+    //                 <Link to="#">Trending Now</Link>
+    //             </div>
+    //             <div className="trending-images">
+    //             {
+    //                 data.trendingWeek.map((image) => {
+    //                     return (
+    //                         <ImageBox 
+    //                             key={image.id} 
+    //                             url={image.url} 
+    //                             text={image.text}
+    //                             link={image.link}
+    //                             height="186px"
+    //                             />
+    //                         );
+    //                 })
+                    
+    //             }
+    //             <p></p> 
+    //             </div>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div className="custom-container main">

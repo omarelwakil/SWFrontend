@@ -1,0 +1,8 @@
+.UserImage {
+  width: 100%;
+  justify-self: center;
+}
+
+.UserImage img {
+  border-radius: 50%;
+}

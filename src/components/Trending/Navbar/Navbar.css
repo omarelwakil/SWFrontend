@@ -29,7 +29,7 @@
   font-size: 12pt;
 }
 
-a:not([href]):not([class]) {
+.custom-navbar a:not([href]):not([class]) {
   color: #777;
 }
 

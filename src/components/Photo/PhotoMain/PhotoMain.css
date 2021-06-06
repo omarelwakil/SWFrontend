@@ -1,0 +1,253 @@
+.PhotoMain {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 110px;
+  margin-top: 25px;
+}
+
+.PhotoMain a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #006dac;
+}
+.PhotoMain a:hover {
+  text-decoration: underline;
+}
+.PhotoMain svg {
+  color: #ddd;
+}
+
+.PhotoMain .photo-desc-comments .photo-desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.PhotoMain .photo-desc-comments .photo-desc .profile-photo {
+  width: 15%;
+  align-self: flex-start;
+  margin-right: 10px;
+}
+.PhotoMain .photo-desc-comments .photo-desc .profile-photo img {
+  border-radius: 50%;
+  width: 85%;
+  height: 85%;
+}
+
+.PhotoMain .photo-desc-comments .photo-desc .profile-name-desc {
+  width: 90%;
+  margin-right: 20px;
+}
+
+.PhotoMain .photo-desc-comments .photo-desc .profile-name-desc .profile-name a {
+  color: #000;
+}
+.PhotoMain .photo-desc-comments .photo-desc .profile-name-desc .profile-desc {
+  padding: 4px 5px 0 5px;
+}
+.PhotoMain .photo-desc-comments {
+  margin-right: 30px;
+}
+.PhotoMain
+  .photo-desc-comments
+  .photo-desc
+  .profile-name-desc
+  .profile-desc:hover {
+  background-color: #ddd;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.PhotoMain
+  .photo-desc-comments
+  .photo-desc
+  .profile-name-desc
+  .profile-name
+  a:hover {
+  color: #006dac;
+  transition: 0.3s all;
+}
+
+.PhotoMain
+  .photo-desc-comments
+  .photo-desc
+  .profile-name-desc
+  .profile-desc
+  .desc-box,
+.image-name {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.PhotoMain
+  .photo-desc-comments
+  .photo-desc
+  .profile-name-desc
+  .profile-desc
+  .desc {
+  font-size: 14px;
+  color: lightslategray;
+  margin-top: -10px;
+}
+
+.PhotoMain .line {
+  width: 100%;
+  background-color: lightgrey;
+  height: 0.2px;
+}
+
+/* Add comment */
+.PhotoMain .photo-desc-comments .photo-comments .add-comment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .user-img {
+  justify-self: flex-start;
+  align-self: flex-start;
+  width: 17%;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .user-img img {
+  border-radius: 50%;
+  width: 40%;
+}
+
+.PhotoMain .photo-desc-comments textarea {
+  width: 75%;
+  height: 90px;
+  resize: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.PhotoMain .photo-desc-comments textarea:focus,
+.PhotoMain
+  .photo-desc-comments
+  .photo-desc
+  .profile-name-desc
+  .profile-desc
+  .image-name:focus {
+  outline: 1px solid #008ddf;
+  border: none;
+}
+
+.PhotoMain
+  .photo-desc-comments
+  .photo-comments
+  .add-comment
+  textarea::placeholder {
+  font-size: 14px;
+}
+
+.PhotoMain .photo-desc-comments .button {
+  background-color: #008ddf;
+  padding: 5px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+  float: right;
+}
+
+.PhotoMain .photo-desc-comments .button:hover {
+  background-color: #448ddf;
+}
+
+/* Photo details (views, faves, ..) */
+.PhotoMain .photo-details {
+  width: 45%;
+}
+
+.PhotoMain .photo-details .details {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.PhotoMain .photo-details .details .details-reach {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 25px;
+}
+
+.PhotoMain .photo-details .details .details-reach p {
+  color: lightslategray;
+  margin-top: -4px;
+}
+
+.PhotoMain .photo-details .albums-tags-people div:first-child,
+.PhotoMain .photo-details .albums-tags-people div:nth-child(2) {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.PhotoMain .photo-details .albums-tags-people .photo-tags {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #cfd6d9;
+  padding: 0 10px 10px 10px;
+  width: 47%;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 1;
+}
+.PhotoMain .photo-details .albums-tags-people .tags {
+  margin-top: 2px;
+  padding: 10px 0;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+.PhotoMain .photo-details .albums-tags-people .tags .tag {
+  display: inline-table;
+  position: relative;
+  top: 10%;
+  background-color: #999;
+  padding: 5px 35px 5px 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #000;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.PhotoMain .hidden {
+  display: none;
+}
+
+@media (max-width: 1190px) and (min-width: 320px) {
+  .PhotoMain {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    display: block;
+    margin-top: 15px;
+  }
+
+  .PhotoMain .photo-details {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .PhotoMain .photo-details .details {
+    display: block;
+  }
+
+  .PhotoMain .hidden {
+    display: block;
+  }
+}

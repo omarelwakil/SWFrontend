@@ -1,0 +1,116 @@
+.UserCover {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#user-cover #edit-cover-photo {
+  opacity: 0;
+  right: -10px !important;
+  transition: all .3s ease-in-out;
+}
+
+#user-cover #edit-cover-icon {
+  font-size: 30px;
+  color: #fff;
+  background-color: transparent;
+  transition: all .7s ease-in-out;
+  cursor: pointer;
+}
+
+#user-cover #edit-cover-icon:hover {
+  color: rgba(73, 67, 67, 1);
+}
+
+#user-cover:hover #edit-cover-photo {
+  opacity: 1;
+  right: 0 !important;
+  margin-left: 0;
+}
+
+.UserCover .container-fluid,
+#user-cover .container-fluid {
+  padding: 0;
+  width: 80%;
+}
+
+@media (max-width: 991.98px) {
+
+  .UserCover .container-fluid,
+  #user-cover .container-fluid {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+.UserCover .user-photo {
+  text-align: right;
+}
+
+.UserCover .user-photo img {
+  width: 50%;
+}
+
+.UserCover .user-data {
+  text-align: left;
+  padding: 12px;
+}
+
+.UserCover .follow-button {
+  background-color: #fff;
+  color: #212124;
+  width: 150px;
+}
+
+.UserCover .follow-button:hover {
+  color: #fff;
+  border: 2px solid #fff;
+  background-color: transparent;
+}
+
+.UserCover .user-data .user-name {
+  font-size: 32px;
+}
+
+.UserCover a {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.UserCover a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .UserCover .container {
+    margin: 0;
+  }
+
+  .UserCover .container .row {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .UserCover .container .row .hidden {
+    display: none;
+  }
+
+  .UserCover .user-photo {
+    text-align: center;
+  }
+
+  .UserCover .user-photo img {
+    width: 100%;
+  }
+
+  .UserCover .user-data {
+    text-align: center;
+    padding: 0;
+    padding-bottom: 10px;
+  }
+}

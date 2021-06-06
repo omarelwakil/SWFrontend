@@ -1,0 +1,47 @@
+.CameraRoll {
+  overflow: hidden;
+}
+.CameraRoll .custom-navbar {
+  top: auto;
+  position: static;
+}
+
+.CameraRoll .error-photos {
+  width: 60%;
+  height: 100px;
+  margin: 50px auto;
+}
+
+.CameraRoll .error-photos h1 {
+  margin-bottom: 25px;
+}
+
+.CameraRoll .error-photos .no-photos-button {
+  background-color: #008ddf;
+  text-decoration: none;
+  padding: 5px 25px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.CameraRoll .error-photos .no-photos-button:hover {
+  background-color: #448ddf;
+}
+
+@media (max-width: 1000px) and (min-width: 320px) {
+  .CameraRoll .custom-container {
+    width: 100%;
+  }
+
+  .CameraRoll .custom-navbar .custom-navbar-ul {
+    display: block;
+  }
+
+  .CameraRoll .custom-navbar .custom-navbar-ul li {
+    width: 100%;
+    text-align: center;
+  }
+}

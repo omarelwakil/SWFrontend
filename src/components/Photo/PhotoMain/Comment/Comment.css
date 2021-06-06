@@ -1,0 +1,27 @@
+/* Comments */
+
+.PhotoMain .photo-desc-comments .photo-comments .comment {
+  display: flex;
+  margin-top: 8px;
+  padding: 10px 5px 0 0;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .comment:hover {
+  background-color: #fff;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .comment .user-comment {
+  text-align: left;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .comment .user-comment .time {
+  margin-left: 25px;
+  color: lightslategray;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments .comment .comment-tools {
+  justify-self: flex-end;
+  margin-left: auto;
+}
