@@ -25,12 +25,13 @@ function UserAbout(props) {
     // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
-        if (queryUser !== loggedUserData.user._id) {
+        if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/about/' + queryUser)
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
+                    console.log(response)
                 })
                 .catch((error) => {
                     console.log("Error occured while getting photostream...");
@@ -41,6 +42,7 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
+    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -273,7 +275,7 @@ function UserAbout(props) {
     };
 
     const redirectToPhoto = (e) => {
-        window.location.href = "/photos/getdetails/" + e.currentTarget.getAttribute("_id");
+        window.location.href = "/photo/getdetails/" + e.currentTarget.getAttribute("_id");
     }
 
     const semiComplexEditUserAbout = (e) => {
@@ -307,7 +309,7 @@ function UserAbout(props) {
                 <UserCover userData={userToRender.user} /> : null
             }
             <div id="user-about-navbar">
-                {userToRender != null ?
+                {userToRenderId != null ?
                     <div>
                         {userToRender.sameUser === true ?
                             <Navbar items={dataToSendSameUser} position={position} />

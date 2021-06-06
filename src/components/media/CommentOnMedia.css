@@ -17,7 +17,9 @@
 .comment-widgets .comment-row:hover {
     background: #ffffff;
 }
-
+.comment-widgets .comment-row:hover #deleteCommentBtn {
+    display: block;
+}
 .comment-widgets .comment-row {
     background-color: #f3f5f6;
     border-bottom: 1px solid rgba(120, 130, 140, 0.13);
@@ -32,9 +34,11 @@
     visibility: visible
 }
 .delete-comment-btn{
+    display: none;
     float: right;
     padding: 0px;
     border: none;
+    background-color: #ffffff;
 }
 .label {
     padding: 3px 10px;
@@ -110,7 +114,6 @@
 .action-icons a:hover {
     color: #1976d2
 }
-
 .mt-100 {
     margin-top: 100px
 }

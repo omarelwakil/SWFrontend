@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , location } from 'react';
 //import Modal from "react-bootstrap/Modal";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -12,13 +12,16 @@ import PhotoStream from './PhotoStream';
 function AlbumInternal(probs) {//probs {"albumId":"123"}
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
+    console.log(accessToken);
     console.log(userData);
     if (accessToken === null) {
         localStorage.clear();
         window.location.href = "/login";
     }
-    var addPhotos = [];
-    var removePhotos = [];
+    const [addPhotos , setAddPhotos] = useState([]); 
+    const [removePhotos , setRemovePhotos] = useState([]); 
+    //var addPhotos = [];
+    //var removePhotos = [];
     const [media, setMedia] = useState([]);
     const [photoStream, setPhotoStream] = useState([]);
     const [titleText, setTitleText] = useState("");
@@ -41,17 +44,18 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         console.log(error.response.data.message);
                     }
                 });
-      });
+        LoadAlbumMedia();
+      },[]);
       function LoadAlbumMedia(event) {
-        document.getElementById("loadAlbumBtn").style.display = "none";    
+          if(event){event.preventDefault();}
             axios.get('/album/'+albumId)
             .then((response) => {
                 console.log("response.data.media");
                 console.log(response.data.media);
                 setMedia(response.data.media);
-                if(media.length > 0){
+                if(response.data.media.length > 0){
                     document.getElementById('album-internal-img').style.backgroundImage =
-                    "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url("+media[0].url+")";
+                    "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url("+response.data.media[0].url+")";
             }
             })
             .catch((error) => {
@@ -88,32 +92,38 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             }
     function LoadPhotoStream(event){
         event.preventDefault();
-            console.log("data sent in /user/photostream/:");
-            console.log(userData.id);
-            axios.get('/user/photostream/'+userData.id)
+            console.log("data sent to /user/photostream/"+probs.userId);
+            axios.get('/user/photostream/'+probs.userId)
                 .then((response) => {
                     console.log(response.data);
+                    console.log("Photo Stream: response.data.photos:");
+                    console.log(response.data.photos);
                     setPhotoStream(response.data.photos);
-                    configureElementsCreated();
+                    console.log("photoStream:");
+                    console.log(photoStream);
+                    setTimeout(configureElementsCreated,10);
                 })
                 .catch((error) => {
                     if (error.response.status === 400) {
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }else if(error.response.status === 404){
-                        //console.log(error.response.data.message);
+                        console.log(error.response.data.message);
                     }
                 });
         function configureElementsCreated() {
             //find common images between album media and photo stream
-            for (let index = 0; index < media.length; index++) {
-                console.log("Media[index]._id");
-                console.log(media[index]._id);
-                console.log("photoStream[0]._id");
-                console.log(photoStream[0]._id);
-                if(photoStream.some(photo => photo._id === media[index]._id)){
-                    console.log("True");
-                    //add class selected
-                    document.getElementById(media[index]._id).classList.add("photoStreamSelected");
+            if(photoStream.length > 0){
+                for (let index = 0; index < media.length; index++) {
+                    debugger;
+                    console.log("Media[index]._id");
+                    console.log(media[index]._id);
+                    console.log("photoStream[0]._id");
+                    console.log(photoStream[0]._id);
+                    if(photoStream.some(photo => photo._id === media[index]._id)){
+                        console.log("True");
+                        //add class selected
+                        document.getElementById(media[index]._id).classList.add("photoStreamSelected");
+                    }
                 }
             }
             //Album photo stream eventListeners
@@ -129,10 +139,13 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     photoId:event.target.id,
                     albumId:probs.albumId 
                 });
+                setRemovePhotos(removePhotos);
                 // remove it from add list if exists
-                addPhotos = addPhotos.filter(function( photo ) {
-                    return photo._id !== event.target.id;
-                });
+                setAddPhotos(addPhotos.filter(function( photo ) {
+                    return photo.photoId !== event.target.id;
+                }));
+                setAddPhotos(addPhotos);
+                console.log("removePhotos:");
                 console.log(removePhotos);
             }else{
                 //then select it and add it to add list
@@ -141,19 +154,26 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     photoId:event.target.id,
                     albumId:probs.albumId 
                 });
+                setAddPhotos(addPhotos);
                 // remove it from remove list if exists
-                removePhotos = removePhotos.filter(function( photo ) {
-                    return photo._id !== event.target.id;
-                });
+                setRemovePhotos(removePhotos.filter(function( photo ) {
+                    return photo.photoId !== event.target.id;
+                }));
+                console.log("addPhotos:");
                 console.log(addPhotos);
             }
         }
     }
     function AddPhotosToAlbum(event) {
         event.preventDefault();
+        //close Modal
+        CloseModal(event);
         if(addPhotos.length > 0){
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            axios.post('/album/addPhoto', addPhotos,{ headers: { "Content-Type": "application/json" } })
+            console.log("Photos sent to Api:");
+            console.log(addPhotos[0]);
+            for (let index = 0; index < addPhotos.length; index++) {
+                axios.post('/album/addPhoto', addPhotos[index],{ headers: { "Content-Type": "application/json" } })
                     .then((response) => {
                         console.log(response.data.message);
                     })
@@ -164,11 +184,16 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                             console.log(error.response.data.message);
                         }
                     });
+            }
+            setAddPhotos([]);//reset
         }
         //Remove section
         if(removePhotos.length > 0){
+            console.log("removePhotos sent to Api:");
+            console.log(removePhotos);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            axios.post('/album/removePhoto', removePhotos,{ headers: { "Content-Type": "application/json" } })
+            for (let index = 0; index < removePhotos.length; index++) {
+                axios.delete('/album/deletePhoto', removePhotos[index],{ headers: { "Content-Type": "application/json" } })
                     .then((response) => {
                         console.log(response.data.message);
                     })
@@ -179,14 +204,23 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                             console.log(error.response.data.message);
                         }
                     });
+            }
+            setRemovePhotos([]);
         }
+        window.location.reload()
+    }
+    function CloseModal(event) {
+        document.getElementById("albumModal").style.display = "none";
+        //modal-open class is added on body so it has to be removed
+        document.getElementsByClassName('modal-backdrop')[0].remove();
+        //need to remove div with modal-backdrop class
     }
     return (
         <div id="album-internal">
             <div className="container-fluid">
                 <div className="row album-toolbar">
                     <div className="col-9">
-                        <a><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
+                        <a href= {`/photos/${probs.userId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
                     </div>
                     <div className="col-3">
                     </div>
@@ -208,7 +242,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                             <i className="fas fa-book-open album-icons album-remove"></i>
                             <i className="fas fa-download album-icons album-remove"></i>
                             <p className="album-description">
-				                By:{userData.firstName}</p>
+				                By:{userData.user.firstName}</p>
                         </div>
                     </div>
                 </div>
@@ -218,6 +252,9 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <AlbumPhotos
                         key={photo._id}
                         url={photo.url}
+                        photoId={photo._id}
+                        albumId={probs.albumId}
+                        userId={userData.user.id}
                     />
                 ))}
                 </div>
@@ -227,7 +264,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <div className="modal-content">
                     <div className="modal-header">
                     <nav data-testid="navbartest" class="custom-navbar position-static"><div class="custom-container"><ul class="custom-navbar-ul"><li><a id="navbar-item-tag" href="#" class="selected">Photo Stream</a></li></ul></div></nav>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button onClick={CloseModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -237,7 +274,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     <PhotoStream
                         key={photo._id}
                         id={photo._id}
-                        url={photo.photoUrl}
+                        url={photo.url}
                     />
                     ))}
                     </div>

@@ -1,0 +1,170 @@
+#fBody.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 35rem;
+    background-color: white;
+}
+
+#fBody {
+    width: 800px;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    min-width: 800;
+    font-size: 25;
+    height: 50px;
+}
+
+#fBody body,
+#fBody input,
+#fBody textarea,
+#fBody select {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#fBody body {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background-color: #fefefe;
+    color: #000;
+}
+
+#fBody #SubNav .Section h1 {
+    padding: 500;
+    margin: 0 0 5px 0;
+    text-rendering: optimizelegibility;
+}
+
+#fBody h1 {
+    font-size: 24px;
+    margin-top: 0;
+    padding-top: 25px;
+
+}
+
+#fBody h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#fBody #SubNav .Section {
+    width: 100%;
+    padding-top: 1px;
+}
+
+#fBody td {
+    font-size: 12px;
+    color: #000;
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+#fBody tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+#fBody table {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+#fBody a:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #0259c4;
+}
+
+#fBody div.contact-list-header {
+    height: 24px;
+    margin-bottom: 14px;
+    padding: 9px;
+    font-size: 12px;
+}
+
+#fBody .person_hover_img {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    cursor: pointer;
+    border: 0;
+}
+
+#fBody #FollowingH {
+    font-size: 13px;
+    margin-bottom: 10px;
+
+}
+
+#fBody .ThinCase {
+    width: 500px;
+    margin-left: 120px;
+    margin-right: 120px;
+    padding-bottom: 5px;
+}
+
+#fBody h4 {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+#fBody p {
+    font-size: 12px;
+}
+
+#fBody #SubNav .Section .LinksNewP {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+#fBody #SubNav .Buddy {
+    padding-right: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#fBody #SubNav {
+    width: 800px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+#fBody tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+#fBody #SubNav tr {
+    vertical-align: top;
+}
+
+#fBody #SubNav .Section h1 {
+    padding: 0;
+    margin: 0 0 5px 0;
+    text-rendering: optimizelegibility;
+}
+
+#fBody div.contact-list-header select {
+    width: 200px;
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+
+#fBody div.contact-list-header span {
+    margin-top: 5px;
+}

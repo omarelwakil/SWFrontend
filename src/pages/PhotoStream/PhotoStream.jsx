@@ -18,7 +18,9 @@ const PhotoStream = (props) => {
 
 
     const userId = props.match.params.id;
-    const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
+    var loggedInUserId = null;
+    if (JSON.parse(localStorage.getItem('userData')) !== null)
+        loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
 
     const homePage = () => window.location.pathname = '/';
 

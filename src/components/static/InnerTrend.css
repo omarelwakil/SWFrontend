@@ -1,0 +1,33 @@
+#inner-tag.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 30rem;
+  width: 80%;
+}
+#inner-tag .tag-word h1 {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 20px 0px 10px;
+}
+#inner-tag .tag-word h1 a {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+
+}
+#inner-tag .tag-word h1 a:hover {
+  color: blue;
+  background-color: transparent;
+  text-decoration: underline;
+
+}
+/* #inner-tag .tag-images {
+
+} */
