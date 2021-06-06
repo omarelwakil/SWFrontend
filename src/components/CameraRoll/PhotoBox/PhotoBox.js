@@ -83,7 +83,6 @@ const PhotoBox = (props) => {
             "title": title,
             "tags": newTags
         }
-        debugger;
         axios.patch(`/photo/${photo._id}`, photoCopy, {
             headers: {
                 "Authorization": 'Bearer ' + userToken,
@@ -132,7 +131,10 @@ const PhotoBox = (props) => {
                     Add tags
                     <input type="text" ref={el => inputTag = el} />
                 </label>
-                <input type="submit" value="Done" />
+                <div>
+                    <button className="form-btn" onClick={editPhoto}>Cancel</button>
+                    <input className="form-btn" type="submit" value="Done" />
+                </div>
             </form>
         );
     }
@@ -143,7 +145,8 @@ const PhotoBox = (props) => {
                 <img src={photo.url} onClick={showEditButton} alt="" />
                 <br></br>
                 {edit}
-                <input className="delete-button button" type="button" value="Delete Photo" onClick={props.deleteHandler} />
+                <input className="delete-button button" type="button" value="Delete" onClick={props.deleteHandler} />
+
             </div>
         </React.Fragment>
     );

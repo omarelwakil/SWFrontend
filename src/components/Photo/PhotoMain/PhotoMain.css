@@ -102,6 +102,17 @@
 }
 
 /* Add comment */
+
+.PhotoMain .photo-desc-comments .photo-comments {
+  margin-top: 30px;
+  margin-left: 30px;
+  width: 90%;
+}
+
+.PhotoMain .photo-desc-comments .photo-comments #commentBtn {
+  display: block;
+}
+
 .PhotoMain .photo-desc-comments .photo-comments .add-comment {
   display: flex;
   justify-content: flex-start;
