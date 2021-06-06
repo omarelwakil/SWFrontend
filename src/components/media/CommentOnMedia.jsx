@@ -13,6 +13,7 @@ function CommentOnMedia(probs){//probs:{photoId}
     if (userData && userData.user) {
         setUserData(userData.user);
     }
+    console.log(accessToken);
     console.log(userData);
     
     useEffect(LoadComments,[]);
@@ -41,13 +42,13 @@ function CommentOnMedia(probs){//probs:{photoId}
         event.preventDefault();
         document.getElementById("commentBtn").style.display = "none";
         const data = {
-            photoId : probs.photoId,
             comment : document.getElementById("commentTextArea").value
         }
         console.log("data sent:");
         console.log(data);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
-        axios.post('/photo/comment', data, { headers: { "Content-Type": "application/json" } })
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        axios.post(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
             .then((response) => {
                 console.log("Add comment: response.data:");
                 console.log(response.data);
@@ -56,6 +57,10 @@ function CommentOnMedia(probs){//probs:{photoId}
             })
             .catch((error) => {
                 if (error.response.status === 404) {
+                    console.log("Add comment: error.response.data.message:");
+                    console.log(error.response.data.message);
+                } 
+                if (error.response.status === 401) {
                     console.log("Add comment: error.response.data.message:");
                     console.log(error.response.data.message);
                 } 
@@ -70,11 +75,11 @@ function CommentOnMedia(probs){//probs:{photoId}
         const data = {
             commentId : commentId
         }
-        console.log(`data sent to /photo/${probs.photoId}/comment:`);
+        console.log(`data sent to /photo/${probs.photoId}/comment`);
         console.log(data);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-        axios.post(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
+        axios.delete(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
             .then((response) => {
                 console.log("delete comment: response.data:");
                 console.log(response.data);
@@ -98,6 +103,11 @@ function CommentOnMedia(probs){//probs:{photoId}
                     console.log(error.response.data.message);
                 } 
             });
+    }
+    function ShowCommentBtn(event) {
+        event.preventDefault();
+        console.log("ON Focus!!");
+        document.getElementById("commentBtn").style.display = "block";
     }
     return (
     <div>
@@ -124,7 +134,7 @@ function CommentOnMedia(probs){//probs:{photoId}
                     <div class="p-2"><span class="round"><img src="//combo.staticflickr.com/pw/images/buddyicon11_m.png#192788011@N03" width="32" height="32" alt="user" /></span>
                     </div>
                     <div class="comment-form-field">
-                    <textarea id="commentTextArea" class="new-comment-text" name="comment" placeholder="Add a comment" rows="4" cols="50" data-notutorial="Add a comment" data-tutorial="press Enter to post and Shift+Enter for newline" data-action="comment"></textarea>
+                    <textarea id="commentTextArea" class="new-comment-text" onFocus={ShowCommentBtn} name="comment" placeholder="Add a comment" rows="4" cols="50" data-notutorial="Add a comment" data-tutorial="press Enter to post and Shift+Enter for newline" data-action="comment"></textarea>
                     </div>
                 </div>
                 <button type="button" id="commentBtn" class="btn btn-primary comment-btn" onClick={Submit}>Comment</button>
