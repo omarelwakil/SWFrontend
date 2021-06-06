@@ -13,7 +13,9 @@
     flex: 1 1 auto;
     padding: 1.25rem
 }
-
+.comment-widgets{
+    text-align: justify;
+}
 .comment-widgets .comment-row:hover {
     background: #ffffff;
 }
