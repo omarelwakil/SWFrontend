@@ -15,9 +15,7 @@ const AlbumsPage = (props) => {
 
     const homePage = () => window.location.pathname = '/';
     
-    const albumCoverPhoto = "https://live.staticflickr.com/65535/51140121587_393ff56218_n.jpg";
-
-    
+        
     //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
 
     const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
@@ -27,7 +25,6 @@ const AlbumsPage = (props) => {
     const userId = props.match.params.id;
     
     const [user, setUser] = useState(null);
-
 
     let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null, cameraRoll = null;
 
@@ -43,10 +40,16 @@ const AlbumsPage = (props) => {
         .then(response => response.data)
         .then(data => setUser(data['user']))
         .catch(error => console.log('Couldnot fetch user albums.jsx'));
+
+        axios.get(`/user/photostream/${userId}`)
+        .then(response => response.data)
+        .then(data => { setAlbumCoverPhotoUrl(data['photos'][0].url); console.log(data); })
+        .catch(error => console.log('Couldnot fetch photos PhotoStream.jsx'));
     },[userId]);
 
     const [userAlbums, setUserAlbums] = useState(null);
     const [showNewAlbum, setShowNewAlbum] = useState(false);
+    const [albumCoverPhotoUrl, setAlbumCoverPhotoUrl] = useState(null);
 
     const newAlbumHandler = () => setShowNewAlbum(!showNewAlbum);
 
@@ -97,11 +100,11 @@ const AlbumsPage = (props) => {
         
     }
 
-    if(userAlbums){
+    if(userAlbums&&albumCoverPhotoUrl){
         main = (
             <Albums 
                 userAlbums={userAlbums} 
-                albumCover={albumCoverPhoto} 
+                albumCover={albumCoverPhotoUrl} 
                 deleteAlbum={deleteAlbum} 
                 newAlbumHandler={newAlbumHandler} 
                 userId={userId}
