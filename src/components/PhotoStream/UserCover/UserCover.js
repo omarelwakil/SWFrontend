@@ -258,7 +258,7 @@ const UserCover = (props) => {
                     <div className="UserCover" style={coverStyling}>
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-md-2 user-photo d-flex justify-content-center mb-2" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={getPhotoStream}>
+                                <div className="col-md-2 user-photo d-flex justify-content-center mb-2 cursor-pointer" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={getPhotoStream}>
                                     <UserImage imgUrl={user.profilePhotoUrl} />
                                 </div>
                                 <div className="col-md-10 user-data text-white p-0 ps-3 d-flex align-items-center">
