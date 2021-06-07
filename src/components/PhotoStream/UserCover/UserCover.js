@@ -6,9 +6,20 @@ import './UserCover.css';
 import UserImage from '../UserImage/UserImage';
 import EditIcon from '@material-ui/icons/Edit';
 import { useState, useEffect } from 'react';
+import PropTypes from "prop-types"
 
 import axios from 'axios';
 
+/**
+ * Component for showing details of the user.
+ *
+ * @component
+ * @example
+ * const userData = JSON.parse(localStorage.getItem("userData"))
+ * return (
+ *   <UserCover userData={userData.user} />
+ * )
+ */
 const UserCover = (props) => {
 
     const [selectedImages, setSelectedImages] = useState(null);
@@ -74,6 +85,10 @@ const UserCover = (props) => {
         }
     };
 
+    /**
+     * Adding/Removing user selected image from photostream to user cover photo
+     * @return  {null}
+     */
     const addImageSelected = (e) => {
         let imageId = e.currentTarget.getAttribute("_id");
         if (e.currentTarget.classList.contains("selected-image")) {
@@ -89,6 +104,10 @@ const UserCover = (props) => {
         }
     };
 
+    /**
+     * Hitting on BE api and changing user cover photo
+     * @return  {null}
+     */
     const updateCoverPhoto = (e) => {
         if (selectedImages !== null && userToken !== null) {
             axios.defaults.baseURL = "https://qasaqees.tech/api";
@@ -113,7 +132,15 @@ const UserCover = (props) => {
         }
     }
 
-    // eslint-disable-next-line no-extend-native
+    /**
+     * Capitalize first character of string
+     * @this {string}
+     * @example
+     * const name = 'omar tarek'
+     * name.capitalize();
+     * return 'Omar Tarek'
+     * @return  {string}
+     */
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
@@ -273,6 +300,39 @@ const UserCover = (props) => {
             }
         </div>
     );
+}
+
+UserCover.propTypes = {
+    /**
+     * User's Data
+     */
+    userData: PropTypes.object.isRequired
+}
+
+UserCover.defaultProps = {
+    userData: {
+        age: 23,
+        coverPhotoUrl: "https://api.qasaqees.tech/public/images/60b7df35f8941e0012b98eec/60b9d824e204b10012339f7a.jpg",
+        createdAt: "2021-06-02T19:42:45.388Z",
+        currentCity: "",
+        description: "Hi I'm a Developer...",
+        email: "hakar@flickr.com",
+        firstName: "omar",
+        homeTown: "",
+        id: "60b7df35f8941e0012b98eec",
+        isFollowing: false,
+        lastName: "elwakil",
+        numberOfFollowers: 1,
+        numberOfFollowings: 1,
+        numberOfPhotos: 10,
+        occupation: "",
+        profilePhotoUrl: "https://api.qasaqees.tech/public/images/default/8.jpeg",
+        showCase: { title: "Showcase", photos: [] },
+        updatedAt: "2021-06-04T20:47:03.614Z",
+        userName: "hakar",
+        __v: 1,
+        _id: "60b7df35f8941e0012b98eec"
+    }
 }
 
 export default UserCover;

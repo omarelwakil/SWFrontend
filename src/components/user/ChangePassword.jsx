@@ -8,6 +8,15 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import './ChangePassword.css'
 
+/**
+ * Component for changing user password
+ *
+ * @component
+ * @example
+ * return (
+ *   <ChangePassword />
+ * )
+ */
 function ChangePassword() {
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     if (accessToken === null) {
@@ -19,6 +28,10 @@ function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
     const [newError, setNewWordError] = useState('true');
 
+    /**
+     * Hitting change password api to change password onUserClick on button
+     * @return  {null}
+     */
     function handleChangePassword(event) {
         event.preventDefault();
         if (!newError && !passwordError) {

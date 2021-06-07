@@ -11,18 +11,26 @@ import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
 
+/**
+ * Component for user or userless navigation
+ *
+ * @component
+ * @example
+ * return(
+ *  <UserlessNavigation />
+ * )
+ */
 function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [gotUserData, setGotUserData] = useState(false);
-    //console.log(isLoggedIn);
+
     if (gotUserData === false && isLoggedIn !== null && userData !== null) {
         setGotUserData(true);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.get('/user/about/' + userData.user._id)
             .then((response) => {
-                debugger;
                 setUserData(response.data);
                 localStorage.setItem("userData", JSON.stringify(response.data));
             })
@@ -31,6 +39,10 @@ function UserlessNavigationBar(props) {
             });
     }
 
+    /**
+     * toggles side navigationbar for mobile/tablet mode
+     * @return {void}
+     */
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
         if (widthSize === "0px" || widthSize === "") {
@@ -52,6 +64,10 @@ function UserlessNavigationBar(props) {
         }
     }
 
+    /**
+     * Logging out user from website
+     * @return {void}
+     */
     const UserLogOut = () => {
         const accessToken = localStorage.getItem("accessToken");
         axios.defaults.baseURL = "https://qasaqees.tech/api";
