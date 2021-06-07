@@ -18,13 +18,13 @@ describe('MemberBox Props Render' , ()=>{
 
       test('renders Followers Number Above 1000 Passed to Props', () => {
         render(<MemberBox followersNum={100000} />);
-        const favElement = screen.getByText('100K');
+        const favElement = screen.getByText('100K', { exact: false });
         expect(favElement).toBeInTheDocument();
       });
 
       test('renders Photos Number Above 1000 Passed to Props', () => {
         render(<MemberBox photosNum={100000} />);
-        const photosElement = screen.getByText('100K');
+        const photosElement = screen.getByText('100K', { exact: false });
         expect(photosElement).toBeInTheDocument();
       });
 

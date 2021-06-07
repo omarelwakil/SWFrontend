@@ -16,10 +16,10 @@ import PropTypes from "prop-types";
  * const url = 'https://www.cnet.com/a/img/-qQkzFVyOPEoBRS7K5kKS0GFDvk=/940x0/2020/04/16/7d6d8ed2-e10c-4f91-b2dd-74fae951c6d8/bazaart-edit-app.jpg'
  * const userName = 'AK2020'
  * const name = 'Ahmed Khalad'
- * const followersNum = 100
- * const photosNum = 300
+ * const followersNum = '100'
+ * const photosNum = '300'
  * const isFollowing = false
- * const date = '2021-06-01T08:46:28.064Z'
+ * const date = 'Jan 2020"'
  * return(
  *   <MemberBox id={id} url = {url} userName ={userName} name = {name} followersNum={followersNum} 
  *         photosNum={photosNum} isFollowing={isFollowing} date ={date} />
@@ -142,10 +142,10 @@ MemberBox.defaultProps = {
   url : 'https://www.cnet.com/a/img/-qQkzFVyOPEoBRS7K5kKS0GFDvk=/940x0/2020/04/16/7d6d8ed2-e10c-4f91-b2dd-74fae951c6d8/bazaart-edit-app.jpg',
   userName : 'AK2020',
   name : 'Ahmed Khalad',
-  followersNum : 100,
-  photosNum : 300,
+  followersNum : '100',
+  photosNum : '300',
   isFollowing : false,
-  date : '2021-06-01T08:46:28.064Z',
+  date : "Jan 2020",
 }
 
 export default MemberBox;
