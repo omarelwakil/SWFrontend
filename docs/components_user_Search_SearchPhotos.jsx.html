@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/Search/SearchPhotos.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/Search/SearchPhotos.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React,{useEffect, useState} from "react";
+import './SearchPhotos.css'
+import Navbar from '../../Trending/Navbar/Navbar';
+import PhotoBox from './PhotoBox';
+import axios from 'axios';
+
+/**
+ * Component for Showing the Searched Photos in Photo Boxes in a container
+ *
+ * @component
+ * @example
+ * return(
+ *    &lt;SearchPeople />
+ * )
+ */
+
+function SearchPhotos(){
+  const pathOfCurrent = window.location.pathname;
+  const searchWord = pathOfCurrent.substr(15,pathOfCurrent.length-1);
+  console.log(searchWord);
+  const dataToSend = [
+        { title: "Photos", path: "/search/photos/"+searchWord, selected: true },
+        { title: "People", path: "/search/people/"+searchWord, selected: false },
+  ];
+  const position = "position-fixed";
+
+  const [photos,setPhotos]=useState([]);
+  const [notfound ,setNotFound]=useState(false);
+  //Get All Photos from the BE
+  /**
+  * Get All Photos from the Backend with a similar name
+  * @return {void}
+  */
+  const getAllPhotos = ()=>{
+      axios.defaults.baseURL = "https://qasaqees.tech/api";
+      return (axios.get('/tag/'+searchWord)
+      .then((response) => {
+          const allPhotos = response.data.media;
+          setPhotos(allPhotos);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+            setNotFound(true);
+            console.log(error.response.data.message);
+        }
+    }));
+  }
+  //to call API only once
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {getAllPhotos();}, []);
+    return(
+        &lt;div id= "SearchPagePhotos">
+            &lt;Navbar items={dataToSend} position={position} />
+            &lt;p>Everyone's photos&lt;/p>
+            &lt;div className="container-fluid">
+                &lt;div className = "row justify-content-start">
+                    {(photos.length > 0)&amp;&amp;(photos.map((photo,index)=>{return((photo.isPublic === true)&amp;&amp;&lt;PhotoBox key={index} id={photo._id} 
+                     url = {photo.url} title = {photo.title} userName={photo.creator.firstName +" "+ photo.creator.lastName} 
+                     favNum={photo.favouriteCount} comNum={photo.commentsNum}/>);}))}
+                      {notfound&amp;&amp;&lt;div className="push-footer">No Photos are found&lt;/div>}
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+
+
+export default SearchPhotos;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 11:21:23 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

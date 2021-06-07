@@ -2,17 +2,35 @@ import React,{useEffect, useState} from "react";
 import './SearchDropDown.css'
 import PhotoSizeSelectActualOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActualOutlined';
 import PeopleIcon from '@material-ui/icons/People';
+import PropTypes from "prop-types";
 //import { Link } from 'react-router-dom';
 
+/**
+ * Component for Search Drop Down menu in the Navigation bar
+ *
+ * @component
+ * @example
+ * const text = 'sea'
+ * return(
+ *     <SearchDropDown search={text} />
+ * )
+ */
 
 function SearchDropDown(props){
     //props.search value to search
     const [searchTextWord,setSearchTextWord] = useState('');
     useEffect(()=>{setSearchTextWord(props.search)},[props.search]);
-
+    /**
+     * Search on photos with text in the input 
+     * @return {void}
+     */
     function searchPhoto(){
         window.location.href="/search/photos/"+searchTextWord; 
     }
+    /**
+     * Search on people with text in the input 
+     * @return {void}
+     */
     function SearchPeople(){
         window.location.href="/search/people/"+searchTextWord; 
     }
@@ -27,6 +45,15 @@ function SearchDropDown(props){
     );
 }
 
-
-
+SearchDropDown.propTypes = {
+    /**
+     * search text
+     */
+    search: PropTypes.string,
+  }
+  
+SearchDropDown.defaultProps = {
+    search: "",
+  }
+  
 export default SearchDropDown;

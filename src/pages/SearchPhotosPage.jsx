@@ -5,7 +5,16 @@ import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import SearchPhotos from '../components/user/Search/SearchPhotos';
 import Footer from '../components/static/Footer';
 
-
+/**
+ * Component for rendering SearchPhotosPage
+ * Path => /search/photos/:searchText
+ *
+ * @component
+ * @example
+ * return (
+ *   <SearchPhotosPage />
+ * )
+ */
 function SearchPhotosPage() {
     const pathOfCurrent = window.location.pathname;
     const searchWord = pathOfCurrent.substr(15,pathOfCurrent.length-1);

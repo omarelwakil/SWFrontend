@@ -1,9 +1,21 @@
 import React , {useEffect, useState} from 'react';
 import {Animated} from "react-animated-css";
 import {CSSTransition} from 'react-transition-group';
-
+import PropTypes from "prop-types";
 
 import './FloatingInput.css';
+/**
+ * Component for Floating Input with animations
+ * @component
+ * @example
+ * const type = 'text'
+ * const name = 'Input Value'
+ * const value = ''
+ * const error = false
+ * const empty = false
+ * return(
+ *   <FloatingInput type ={type} name = {name} value = {value} error = {error} empty = {empty} />
+ */
 
 function FloatingInput(props){
 
@@ -23,6 +35,11 @@ function FloatingInput(props){
     const [change,setChange] = useState(false);
     
     //Keep the state of text input and indicates that first clicked happened
+    /**
+     * save the value in the input box to process it 
+     * @param   {event} event that triggered the change
+     * @return {void}
+     */
     function handleTextChange(event){
         const {value} = event.target
         setChange(true);
@@ -50,6 +67,11 @@ function FloatingInput(props){
     }
 
     //testing agaist anystring@anystring.anystring just like website
+    /**
+     * check if the email is valid or not
+     * @param   {string} email  email of the User
+     * @return {bool}       Email is valid or not
+     */
     function validateEmail(email) {
         var validTest = /\S+@\S+\.\S+/;
         return validTest.test(email);
@@ -74,6 +96,11 @@ function FloatingInput(props){
     }
     },[showError,props.emailExist]);
     //Update Error Msg and Animation if it is false
+    /**
+     * Update Error Msg and Animation if it is false
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
     function updateValiation (msg){
        if(showError) {
           setErrorAnimate(showError);
@@ -83,10 +110,18 @@ function FloatingInput(props){
     }
 
     //Update error Msg only
+     /**
+     * Update error Msg only
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
     function updateMsgOnly(msg){
        setErrorMsg(msg);
     }
-  
+     /**
+     * Check Validation of the text depending on its type On Blur
+     * @return {void}       
+     */
     function textValiation() {
         //Check Validation On Blur
         //this means the user click one time and changed the value if he just clicked we won't check for validation
@@ -205,5 +240,38 @@ function FloatingInput(props){
         </div>
     );
 }
+
+ FloatingInput.propTypes = {
+    /**
+     * FloatingInput's type
+     */
+     type : PropTypes.string.isRequired,
+    /**
+     * FloatingInput's name to show in the box
+     */
+     name: PropTypes.string.isRequired,
+     /**
+     * FloatingInput's value 
+     */
+      value: PropTypes.string,
+     /**
+     * FloatingInput's error or valid 
+     */
+      error: PropTypes.bool,
+     /**
+     * FloatingInput's empty or not
+     */
+      empty: PropTypes.bool,
+  }
+
+  FloatingInput.defaultProps = { 
+  type : 'text',
+  name : 'Input Value',
+  value : '',
+  error : false,
+  empty : false,
+
+}
+
 
 export default FloatingInput;

@@ -3,6 +3,16 @@ import './Terms.css';
 
 import Navbar from '../Trending/Navbar/Navbar';
 
+/**
+ * Component for flickr Terms.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Terms />
+ * )
+ */
+
 function Terms() {
     const dataToSend = [
         { title: "Terms", path: "/help/terms", selected: true },

@@ -11,8 +11,8 @@ describe('MemberBox Props Render' , ()=>{
       });
 
       test('renders ID Passed to Props', () => {
-        render(<MemberBox id={"123456"} />);
-        const idElement = screen.getByText('123456');
+        render(<MemberBox userName={"FlickrUser"} />);
+        const idElement = screen.getByText('FlickrUser');
         expect(idElement).toBeInTheDocument();
       });
 

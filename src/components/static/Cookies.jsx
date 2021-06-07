@@ -3,6 +3,15 @@ import './Cookies.css';
 
 import Navbar from '../Trending/Navbar/Navbar';
 
+/**
+ * Component for flickr Cookies.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Cookies />
+ * )
+ */
 
 function Cookies() {
     const dataToSend = [

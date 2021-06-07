@@ -6,7 +6,15 @@ import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 
 import './SignUp.css';
-
+/**
+ * Component for Sign Up with all required Inputs
+ *
+ * @component
+ * @example
+ * return(
+ *    <SignUp />
+ * )
+ */
 
 function SignUp(){
   //State of each text box and its error to pass it to the mock server
@@ -37,6 +45,10 @@ function SignUp(){
     }
 
   //Sign-Up facebook
+  /**
+  * Send Sign-Up facebook request to the Backend
+  * @return {void}
+  */
   const responseFacebook = (response) => {
     console.log("facbook response: ");
     console.log(response);
@@ -73,6 +85,10 @@ function SignUp(){
 
 
   //Sigu-up Normal
+  /**
+  * Send Sign-Up normally request to the Backend
+  * @return {void}
+  */
   function Submit(event){
     if(!firstNameError&&!lastNameError&&!ageError&&!emailError&&!passwordError){
       //onClick send a request to api
