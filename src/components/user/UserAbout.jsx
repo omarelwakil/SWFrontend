@@ -213,6 +213,7 @@ function UserAbout(props) {
      * @return  {null}
      */
     const getPhotoStream = (e) => {
+        setSelectedImages([]);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.get('/user/photostream/' + userToRenderId, {
             headers: {
@@ -262,6 +263,10 @@ function UserAbout(props) {
             });
     };
 
+    useEffect(() => {
+        if (userToRender !== null && userToRender.sameUser === true && userToRenderId !== null)
+            getPhotoStream();
+    }, [userToRender, userToRenderId]);
     /**
      * Hitting BE and editing user info (Description or showcase title)
      * @return  {null}
@@ -270,11 +275,9 @@ function UserAbout(props) {
         const userAbout = {
             "description": document.getElementById("user-description-textarea").value,
             "showCase": {
-                "title": document.getElementById("showcase-edit-title-input").value
-            },
-            "occupation": document.getElementById("occupation").value,
-            "homeTown": document.getElementById("home-town").value,
-            "currentCity": document.getElementById("current-city").value
+                "title": document.getElementById("showcase-edit-title-input").value,
+                "photos": selectedImages
+            }
         }
         if (e.currentTarget.parentElement.id === "edit-user-description") {
             ToggleUserDescriptionEdit();
@@ -345,10 +348,7 @@ function UserAbout(props) {
             "showCase": {
                 "title": document.getElementById("showcase-edit-title-input").value,
                 "photos": selectedImages
-            },
-            "occupation": document.getElementById("occupation").value,
-            "homeTown": document.getElementById("home-town").value,
-            "currentCity": document.getElementById("current-city").value
+            }
         }
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
@@ -446,10 +446,6 @@ function UserAbout(props) {
      */
     const semiComplexEditUserAbout = (e) => {
         const userAbout = {
-            "description": document.getElementById("user-description-textarea").value,
-            "showCase": {
-                "title": document.getElementById("showcase-edit-title-input").value
-            },
             "occupation": document.getElementById("occupation").value,
             "homeTown": document.getElementById("home-town").value,
             "currentCity": document.getElementById("current-city").value
@@ -505,7 +501,7 @@ function UserAbout(props) {
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
                     };
-                    toastr.success(error.response.data.message);
+                    toastr.error(error.response.data.message);
                 }
             });
     }
