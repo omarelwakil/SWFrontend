@@ -537,7 +537,7 @@ function UserAbout(props) {
                                                 <button id="about-yourself-text-btn" className="bg-transparent border-0 p-0" onClick={ToggleUserDescriptionEdit}>
                                                     Write a little about yourself
                                                 </button> :
-                                                <p>{userToRender.user.description}</p>
+                                                <p className="wp-prewrap">{userToRender.user.description}</p>
                                             }
                                         </div>
                                         <div className="col-md-2 order-md-1 order-0">
