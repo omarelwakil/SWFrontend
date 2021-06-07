@@ -33,7 +33,6 @@ function UserAbout(props) {
     const [userToRender, setUserToRender] = useState(null);
     const [userToRenderId, setUserToRenderId] = useState(null);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
-    // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
         if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
@@ -45,7 +44,6 @@ function UserAbout(props) {
                     console.log(response)
                 })
                 .catch((error) => {
-                    console.log("Error occured while getting photostream...");
                 });
         } else {
             setUserToRender({ ...loggedUserData, "sameUser": true });
@@ -53,7 +51,6 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
-    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -221,7 +218,7 @@ function UserAbout(props) {
                 setUserPhotostream(response.data);
             })
             .catch((error) => {
-                console.log("Error occured while getting photostream...");
+                // console.log("Error occured while getting photostream...");
             });
     };
 
@@ -255,7 +252,7 @@ function UserAbout(props) {
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
-                console.log(error.config);
+                // console.log(error.config);
             });
     };
 
@@ -288,7 +285,7 @@ function UserAbout(props) {
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
                 debugger;
-                console.log(error.config);
+                // console.log(error.config);
             });
     }
 
@@ -356,7 +353,7 @@ function UserAbout(props) {
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
                 debugger;
-                console.log(error.config);
+                // console.log(error.config);
             });
     }
 
