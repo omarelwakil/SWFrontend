@@ -69,17 +69,12 @@ function CommentOnMedia(probs){//probs:{photoId}
     console.log("comments:");
     console.log(comments);
     //Delete Comment
-    function handleDelete(event, commentId){
+    function handleDelete(event, comment_Id){
         console.log("Comment is being Deleted:");
         //Reload if success
-        const data = {
-            commentId : commentId
-        }
         console.log(`data sent to /photo/${probs.photoId}/comment`);
-        console.log(data);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-        axios.delete(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
+        axios.delete(`/photo/${probs.photoId}/comment`, {headers: {Authorization: 'Bearer ' + accessToken},data: { commentId: comment_Id}})    
             .then((response) => {
                 console.log("delete comment: response.data:");
                 console.log(response.data);
