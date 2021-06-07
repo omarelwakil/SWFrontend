@@ -195,7 +195,6 @@ function UploadMedia() {
      */
     const uploadAllPhotos = (e) => {
         for (let i = 0; i < filesToBeUploaded.length; i++) {
-            debugger
             //filesToBeUploaded[i].photoJson
             var bodyFormData = new FormData();
             bodyFormData.append("file", filesToBeUploaded[i].photoJson.photo);
@@ -216,13 +215,11 @@ function UploadMedia() {
                     window.location.href = "/cameraroll";
                 })
                 .catch((error) => {
-                    debugger;
                     if (error.response.status === 401) {
-                        console.log(error.response.data.message);
                         localStorage.clear();
                         window.location.href = "/login";
                     } else if (error.response.status === 400) {
-                        console.log(error.response.data.message);
+
                     }
                 });
         }

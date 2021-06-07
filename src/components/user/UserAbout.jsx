@@ -41,7 +41,6 @@ function UserAbout(props) {
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
-                    console.log(response)
                 })
                 .catch((error) => {
                 });
@@ -218,7 +217,8 @@ function UserAbout(props) {
                 setUserPhotostream(response.data);
             })
             .catch((error) => {
-                // console.log("Error occured while getting photostream...");
+                if (error.response.status === 401)
+                    window.location.href = "/login";
             });
     };
 
@@ -252,7 +252,8 @@ function UserAbout(props) {
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
-                // console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
             });
     };
 
@@ -277,15 +278,14 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.description = response.data.description;
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 loggedUserData.user.showCase.photos = response.data.showCase.photos;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
-                debugger;
-                // console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
             });
     }
 
@@ -345,15 +345,14 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.occupation = userAbout.occupation;
                 loggedUserData.user.homeTown = userAbout.homeTown;
                 loggedUserData.user.currentCity = userAbout.currentCity;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
             }).catch((error) => {
-                debugger;
-                // console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
             });
     }
 

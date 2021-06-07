@@ -43,12 +43,10 @@ function ChangePassword() {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             axios.post('/register/changePassword', data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
-                    debugger;
                     localStorage.clear();
                     window.location.href = "/login";
                 })
                 .catch((error) => {
-                    debugger;
                     if (error.response.status === 401) {
                         console.log(error.response.data.message);
                         localStorage.clear();
