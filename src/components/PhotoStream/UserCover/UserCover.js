@@ -22,10 +22,11 @@ import axios from 'axios';
  */
 const UserCover = (props) => {
 
-    const [selectedImages, setSelectedImages] = useState(null);
+    const [selectedImages, setSelectedImages] = useState(props.userData.coverPhotoUrl);
+    const [selectedImagesProfile, setSelectedImagesProfile] = useState(props.userData.profilePhotoUrl);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
-
     const [loggedInUserId, setLoggedInUserId] = useState(null);
+
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('userData')) !== null)
             setLoggedInUserId(JSON.parse(localStorage.getItem('userData')).user._id);
@@ -54,8 +55,13 @@ const UserCover = (props) => {
         backgroundSize: `cover`
     }
 
+    /**
+     * Getting User photostream
+     * @return  {null}
+     */
     const getPhotoStream = (e) => {
         if (loggedInUserId === user._id) {
+            debugger;
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/photostream/' + userData.user._id, {
                 headers: {
@@ -64,22 +70,16 @@ const UserCover = (props) => {
                 }
             })
                 .then((response) => {
-                    for (let i = 0; i < userData.user.showCase.photos.length; i++) {
-                        for (let j = 0; j < response.data.photos.length; j++) {
-                            if (response.data.photos[j]._id === userData.user.showCase.photos[i]._id) {
-                                response.data.photos[j].selected = true;
-                                setSelectedImages(selectedImages => [
-                                    ...selectedImages,
-                                    response.data.photos[j]._id
-                                ]);
-                            } else {
-                                response.data.photos[j].selected = false;
-                            }
-                        }
-                    }
                     setUserPhotostream(response.data);
+                    for (let i = 0; i < response.data.photos.length; i++) {
+                        if (response.data.photos[i].url === selectedImages)
+                            setSelectedImages(response.data.photos[i]._id);
+                        if (response.data.photos[i].url === selectedImagesProfile)
+                            setSelectedImagesProfile(response.data.photo[i]._id);
+                    }
                 })
                 .catch((error) => {
+                    debugger;
                     console.log("Error occured while getting photostream...");
                 });
         }
@@ -105,6 +105,25 @@ const UserCover = (props) => {
     };
 
     /**
+         * Adding/Removing user selected image from photostream to user profile photo
+         * @return  {null}
+         */
+    const addImageSelectedProfile = (e) => {
+        let imageId = e.currentTarget.getAttribute("_id");
+        if (e.currentTarget.classList.contains("selected-image")) {
+            e.currentTarget.classList.remove("selected-image");
+            setSelectedImagesProfile(null);
+        } else {
+            for (let i = 0; i < document.getElementsByClassName("image-selector").length; i++) {
+                if (document.getElementsByClassName("image-selector")[i].classList.contains("selected-image"))
+                    document.getElementsByClassName("image-selector")[i].classList.remove("selected-image");
+            }
+            e.currentTarget.classList.add("selected-image");
+            setSelectedImagesProfile(imageId);
+        }
+    };
+
+    /**
      * Hitting on BE api and changing user cover photo
      * @return  {null}
      */
@@ -122,6 +141,40 @@ const UserCover = (props) => {
                         "Content-Type": "application/json"
                     }
                 }).then(response => {
+                    let userDataLocal = JSON.parse(localStorage.getItem("userData"));
+                    userDataLocal.user.coverPhotoUrl = userPhotostream.photos.filter(photo => photo._id === selectedImages)[0].url;
+                    localStorage.setItem("userData", JSON.stringify(userDataLocal));
+                    window.location.reload();
+                }).catch(error => {
+                    if (error.response.status === 401) {
+                        localStorage.clear();
+                        window.location.href = "/login";
+                    }
+                })
+        }
+    }
+
+    /**
+     * Hitting on BE api and changing user profile photo
+     * @return  {null}
+     */
+    const updateProfilePhoto = (e) => {
+        if (selectedImagesProfile !== null && userToken !== null) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.defaults.headers["Authorization"] = "Bearer " + userToken;
+            let dataToSend = {
+                "photoId": selectedImagesProfile
+            }
+            debugger;
+            axios.patch("/user/editProfilePhoto", dataToSend,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(response => {
+                    let userDataLocal = JSON.parse(localStorage.getItem("userData"));
+                    userDataLocal.user.profilePhotoUrl = userPhotostream.photos.filter(photo => photo._id === selectedImagesProfile)[0].url;
+                    localStorage.setItem("userData", JSON.stringify(userDataLocal));
                     window.location.reload();
                 }).catch(error => {
                     if (error.response.status === 401) {
@@ -205,7 +258,7 @@ const UserCover = (props) => {
                     <div className="UserCover" style={coverStyling}>
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-md-2 user-photo d-flex justify-content-center mb-2">
+                                <div className="col-md-2 user-photo d-flex justify-content-center mb-2 cursor-pointer" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={getPhotoStream}>
                                     <UserImage imgUrl={user.profilePhotoUrl} />
                                 </div>
                                 <div className="col-md-10 user-data text-white p-0 ps-3 d-flex align-items-center">
@@ -240,7 +293,7 @@ const UserCover = (props) => {
                                                                 return (
                                                                     <div className="col-md-2 d-flex justify-content-center" key={photo._id}>
                                                                         <div className="position-relative">
-                                                                            <img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                                            <img src={photo.url} className={"image-selector " + ((photo.url === user.coverPhotoUrl) ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
                                                                             <div className="bottom-left">
                                                                                 <p className="selector-title m-0">{photo.title}</p>
                                                                                 <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
@@ -259,39 +312,39 @@ const UserCover = (props) => {
                                             </div>
                                         </div> : null
                                     }
-                                    {/* {loggedInUserId === user._id ?
-                                            <div className="modal fade p-0" id="profile-modal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-                                                <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                                                    <div className="modal-content">
-                                                        <div className="modal-header">
-                                                            <h5 className="m-0">Photostream</h5>
-                                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div className="modal-body">
-                                                            <div className="row" data-masonry='{"percentPosition": true }'>
-                                                                {userPhotostream.photos.map(photo => {
-                                                                    return (
-                                                                        <div className="col-md-2 d-flex justify-content-center" key={photo._id}>
-                                                                            <div className="position-relative">
-                                                                                <img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelectedProfile} />
-                                                                                <div className="bottom-left">
-                                                                                    <p className="selector-title m-0">{photo.title}</p>
-                                                                                    <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
-                                                                                </div>
+                                    {loggedInUserId === user._id ?
+                                        <div className="modal fade p-0" id="profile-modal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="m-0">Photostream</h5>
+                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <div className="row" data-masonry='{"percentPosition": true }'>
+                                                            {userPhotostream.photos.map(photo => {
+                                                                return (
+                                                                    <div className="col-md-2 d-flex justify-content-center" key={photo._id}>
+                                                                        <div className="position-relative">
+                                                                            <img src={photo.url} className={"image-selector" + ((photo.url === user.profilePhotoUrl) ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelectedProfile} />
+                                                                            <div className="bottom-left">
+                                                                                <p className="selector-title m-0">{photo.title}</p>
+                                                                                <p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}</p>
                                                                             </div>
                                                                         </div>
-                                                                    );
-                                                                })
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className="modal-footer">
-                                                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={updateCoverPhoto}>Select photos</button>
+                                                                    </div>
+                                                                );
+                                                            })
+                                                            }
                                                         </div>
                                                     </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={updateProfilePhoto}>Select photos</button>
+                                                    </div>
                                                 </div>
-                                            </div> : null
-                                        } */}
+                                            </div>
+                                        </div> : null
+                                    }
                                 </div>
                             </div>
                         </div>
