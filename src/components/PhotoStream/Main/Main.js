@@ -1,12 +1,29 @@
 import './Main.css'
 import PhotoBox from '../PhotoBox/PhotoBox';
 
+/**
+ * Component that renders main content of PhotoStreamPage
+ * Internal components:
+ *      PhotoBox
+ * @component 
+ * @type Component
+ * 
+ * @param {Array} userPhotos Array of user photos
+ * @param {string} userId The user's id   
+ * @returns 
+ *          <Main 
+ *                userPhotos={userPhotos.photos} 
+ *                userId={userId} />
+ */
+
 const Main = (props) => {
 
 
     const userPhotos = props.userPhotos;
-
-    const cameraRoll = () => window.location.pathname = `/cameraRoll`;
+    /**
+     * Redirects to cameraroll
+     */
+    const cameraRoll = () => window.location.pathname = `/cameraroll`;
 
     let main = null;
 
