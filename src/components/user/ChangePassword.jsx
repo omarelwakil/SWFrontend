@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
+
 import FloatingInput from './SignUp/FloatingInput';
 import FloatingInputPassoword from './SignUp/FloatingInputPassword';
 
@@ -43,8 +46,29 @@ function ChangePassword() {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             axios.post('/register/changePassword', data, { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
+                    setTimeout(() => {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+                        toastr.success("Please log in again", "Password changed successfully");
+                    }, 1000);
                     localStorage.clear();
                     window.location.href = "/login";
+
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
@@ -52,7 +76,24 @@ function ChangePassword() {
                         localStorage.clear();
                         window.location.href = "/login";
                     } else if (error.response.status === 400) {
-                        console.log(error.response.data.message);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+                        toastr.error(error.response.data.message);
                     }
                 });
         }

@@ -167,3 +167,7 @@
 #user-about .grid__item {
     grid-row-end: span var(--row-span, 23);
 }
+
+.wp-prewrap {
+    white-space: pre-wrap !important;
+}
