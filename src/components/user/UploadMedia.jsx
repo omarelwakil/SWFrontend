@@ -289,7 +289,7 @@ function UploadMedia() {
                                 </div> : null
                             }
                             <div className="position-absolute w-100 bottom-0">
-                                <button type="button" class={"w-100 btn btn-primary" + (filesToBeUploaded.length === 0 ? " disabled" : "")} onClick={uploadAllPhotos}>Upload</button>
+                                <button type="button" className={"w-100 btn btn-primary" + (filesToBeUploaded.length === 0 ? " disabled" : "")} onClick={uploadAllPhotos}>Upload</button>
                             </div>
                         </div>
                     </div>
