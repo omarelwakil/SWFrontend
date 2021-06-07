@@ -10,6 +10,7 @@ import '../static/LandingNavigationBar.css';
 import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
+import PropTypes from "prop-types";
 
 /**
  * Component for user or userless navigation
@@ -90,7 +91,11 @@ function UserlessNavigationBar(props) {
     const [text, setText] = useState(props.currentSearch || "");
     const [isFocused, setIsFocused] = useState(false);
     useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
-
+    /**
+     * set the text in the input box to the variable 
+     * @param   {event} event that triggered the change
+     * @return {void}
+     */
     function handleTextChange(event) {
         const { value } = event.target;
         setText(value);
@@ -247,5 +252,17 @@ function UserlessNavigationBar(props) {
         </div >
     );
 }
+
+UserlessNavigationBar.propTypes = {
+    /**
+     * current Search text
+     */
+     currentSearch: PropTypes.string,
+  }
+  
+UserlessNavigationBar.defaultProps = {
+    currentSearch: "",
+  }
+  
 
 export default UserlessNavigationBar;

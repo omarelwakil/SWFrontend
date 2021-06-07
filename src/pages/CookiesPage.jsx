@@ -5,6 +5,15 @@ import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import Cookies from '../components/static/Cookies';
 import Footer from '../components/static/Footer';
 
+/**
+ * Component for rendering flickr Cookies page
+ * Path => /help/cookies
+ * @component
+ * @example
+ * return (
+ *   <CookiesPage />
+ * )
+ */
 function CookiesPage() {
     return (
         <BrowserRouter>

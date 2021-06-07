@@ -2,6 +2,18 @@ import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+import PropTypes from "prop-types";
+
+/**
+ * Component for Check Box icon for password tests
+ * @component
+ * @example
+ * const checked = false
+ * className = 'icon-checkbox'
+ * return(
+ *   <CheckboxIcon checked={checked} className={"icon-checkbox"}/>
+ * )
+ */
 
 const useStyles = makeStyles({
   root: {
@@ -66,5 +78,23 @@ function CheckboxIcon(props) {
     />
   );
 }
+
+CheckboxIcon.propTypes = {
+  /**
+   * check box is checked or not 
+   */
+   checked : PropTypes.bool.isRequired,
+  /**
+   * className to the style of checkbox
+   */
+   className: PropTypes.string.isRequired,
+}
+
+CheckboxIcon.defaultProps = { 
+  checked: false,
+  className: 'icon-checkbox',
+
+}
+
 
 export default CheckboxIcon;

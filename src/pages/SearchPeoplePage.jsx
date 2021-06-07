@@ -5,7 +5,16 @@ import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import Footer from '../components/static/Footer';
 import SearchPeople from '../components/user/Search/SearchPeople';
 
-
+/**
+ * Component for rendering SearchPeoplePage
+ * Path => /search/people/:searchText
+ *
+ * @component
+ * @example
+ * return (
+ *   <SearchPeoplePage />
+ * )
+ */
 function SearchPeoplePage() {
     const pathOfCurrent = window.location.pathname;
     const searchWord = pathOfCurrent.substr(15,pathOfCurrent.length-1);

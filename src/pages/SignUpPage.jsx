@@ -5,7 +5,15 @@ import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import SignUp from '../components/user/SignUp/SignUp';
 import Footer from '../components/static/Footer';
 
-
+/**
+ * Component for rendering Sign Up Page
+ * Path => /sign-up
+ * @component
+ * @example
+ * return (
+ *   <SignUpPage />
+ * )
+ */
 function SignUpPage() {
     return (
         <BrowserRouter>

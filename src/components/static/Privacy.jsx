@@ -3,6 +3,15 @@ import './Privacy.css';
 
 import Navbar from '../Trending/Navbar/Navbar';
 
+/**
+ * Component for flickr Privacy.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Privacy />
+ * )
+ */
 function Privacy() {
       const dataToSend = [
             { title: "Terms", path: "/help/terms", selected: false },
