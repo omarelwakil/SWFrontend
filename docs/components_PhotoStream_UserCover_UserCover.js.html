@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/PhotoStream/UserCover/UserCover.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/PhotoStream/UserCover/UserCover.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//TO USE: it takes one prop {userData}
+//if you want to use this component then if userJson is like {"user":{----}}
+//This component needs the inner user {-----}
+
+import './UserCover.css';
+import UserImage from '../UserImage/UserImage';
+import EditIcon from '@material-ui/icons/Edit';
+import { useState, useEffect } from 'react';
+import PropTypes from "prop-types"
+
+import axios from 'axios';
+
+/**
+ * Component for showing details of the user.
+ *
+ * @component
+ * @example
+ * const userData = JSON.parse(localStorage.getItem("userData"))
+ * return (
+ *   &lt;UserCover userData={userData.user} />
+ * )
+ */
+const UserCover = (props) => {
+
+    const [selectedImages, setSelectedImages] = useState(null);
+    const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
+
+    const [loggedInUserId, setLoggedInUserId] = useState(null);
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem('userData')) !== null)
+            setLoggedInUserId(JSON.parse(localStorage.getItem('userData')).user._id);
+    }, [])
+
+
+    const user = props.userData;
+    const userData = JSON.parse(localStorage.getItem("userData"))
+    const userID = loggedInUserId;
+
+    const userToken = localStorage.getItem('accessToken');
+
+    const [followed, setFollowed] = useState(null);
+    useEffect(() => {
+        if (userToken !== null) {
+            setFollowed(user.isFollowing);
+        }
+    }, [user, userToken]);
+
+    const coverStyling = {
+        background: `linear-gradient(180deg, 
+            transparent 0, rgba(0, 0, 0, 0.03) 8%,
+            rgba(0, 0, 0, 0.11) 21%, rgba(0, 0, 0, 0.61) 78%, 
+            rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.7)), 
+            url("${user.coverPhotoUrl}") no-repeat center`,
+        backgroundSize: `cover`
+    }
+
+    const getPhotoStream = (e) => {
+        if (loggedInUserId === user._id) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.get('/user/photostream/' + userData.user._id, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                }
+            })
+                .then((response) => {
+                    for (let i = 0; i &lt; userData.user.showCase.photos.length; i++) {
+                        for (let j = 0; j &lt; response.data.photos.length; j++) {
+                            if (response.data.photos[j]._id === userData.user.showCase.photos[i]._id) {
+                                response.data.photos[j].selected = true;
+                                setSelectedImages(selectedImages => [
+                                    ...selectedImages,
+                                    response.data.photos[j]._id
+                                ]);
+                            } else {
+                                response.data.photos[j].selected = false;
+                            }
+                        }
+                    }
+                    setUserPhotostream(response.data);
+                })
+                .catch((error) => {
+                    console.log("Error occured while getting photostream...");
+                });
+        }
+    };
+
+    /**
+     * Adding/Removing user selected image from photostream to user cover photo
+     * @return  {null}
+     */
+    const addImageSelected = (e) => {
+        let imageId = e.currentTarget.getAttribute("_id");
+        if (e.currentTarget.classList.contains("selected-image")) {
+            e.currentTarget.classList.remove("selected-image");
+            setSelectedImages(null);
+        } else {
+            for (let i = 0; i &lt; document.getElementsByClassName("image-selector").length; i++) {
+                if (document.getElementsByClassName("image-selector")[i].classList.contains("selected-image"))
+                    document.getElementsByClassName("image-selector")[i].classList.remove("selected-image");
+            }
+            e.currentTarget.classList.add("selected-image");
+            setSelectedImages(imageId);
+        }
+    };
+
+    /**
+     * Hitting on BE api and changing user cover photo
+     * @return  {null}
+     */
+    const updateCoverPhoto = (e) => {
+        if (selectedImages !== null &amp;&amp; userToken !== null) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.defaults.headers["Authorization"] = "Bearer " + userToken;
+            let dataToSend = {
+                "photoId": selectedImages
+            }
+            debugger;
+            axios.patch("/user/editCoverPhoto", dataToSend,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(response => {
+                    window.location.reload();
+                }).catch(error => {
+                    if (error.response.status === 401) {
+                        localStorage.clear();
+                        window.location.href = "/login";
+                    }
+                })
+        }
+    }
+
+    /**
+     * Capitalize first character of string
+     * @this {string}
+     * @example
+     * const name = 'omar tarek'
+     * name.capitalize();
+     * return 'Omar Tarek'
+     * @return  {string}
+     */
+    String.prototype.capitalize = function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
+    const followUser = () => {
+
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/followUser', userJson, {
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+            .then(res => setFollowed(true))
+            .catch(err => console.log(err));
+
+
+    }
+
+    const unFollowUser = () => {
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/unfollowUser', userJson, {
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+            .then(res => setFollowed(false))
+            .catch(err => console.log(err));
+
+    }
+
+    let followButton = null;
+    if (loggedInUserId !== user._id &amp;&amp; !followed) {
+        followButton = &lt;button onClick={followUser} className="ms-4 btn follow-button fw-500 px-4 py-1">Follow&lt;/button>
+    } else if (loggedInUserId !== user._id &amp;&amp; followed) {
+        followButton = &lt;button onClick={unFollowUser} className="ms-4 btn follow-button fw-500 px-4 py-1">Unfollow&lt;/button>
+    }
+
+
+    return (
+        &lt;div>
+            {user !== null ?
+                &lt;div id="user-cover">
+                    &lt;div className="container-fluid position-relative">
+                        &lt;div id="edit-cover-photo" className="position-absolute end-0 top-0 m-3" data-bs-toggle="modal" data-bs-target="#cover-modal" onClick={getPhotoStream}>
+                            &lt;EditIcon id="edit-cover-icon" />
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="UserCover" style={coverStyling}>
+                        &lt;div className="container-fluid">
+                            &lt;div className="row">
+                                &lt;div className="col-md-2 user-photo d-flex justify-content-center mb-2">
+                                    &lt;UserImage imgUrl={user.profilePhotoUrl} />
+                                &lt;/div>
+                                &lt;div className="col-md-10 user-data text-white p-0 ps-3 d-flex align-items-center">
+                                    &lt;div className="w-100 mb-3">
+                                        &lt;div className="row user-name ps-3">
+                                            &lt;span className="d-flex align-items-center p-0">
+                                                {user.firstName.capitalize()} {user.lastName.capitalize()} {followButton}
+                                            &lt;/span>
+                                        &lt;/div>
+                                        &lt;div className="position-relative">
+                                            &lt;ul className="list-group list-group-horizontal">
+                                                &lt;li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">{user.userName}&lt;/li>
+                                                &lt;li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">&lt;a href={"/people/" + userID + "/contact/rev"} className={loggedInUserId !== user._id ? "disabled" : ""}>{user.numberOfFollowers} Followers&lt;/a> &lt;span className="fw-bolder">.&lt;/span> &lt;a href={"/people/" + userID + "/contact/"}>{user.numberOfFollowings} Following&lt;/a>&lt;/li>
+                                            &lt;/ul>
+                                            &lt;ul className="list-group list-group-horizontal position-absolute top-0 end-0 float-end">
+                                                &lt;li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">{user.numberOfPhotos} {"photo" + (user.numberOfPhotos > 1 ? "s" : "")}&lt;/li>
+                                                &lt;li className="list-group-item border-0 bg-transparent px-2 py-0 text-white">Joined {user.createdAt.slice(0, 4)}&lt;/li>
+                                            &lt;/ul>
+                                        &lt;/div>
+                                    &lt;/div>
+                                    {loggedInUserId === user._id ?
+                                        &lt;div className="modal fade p-0" id="cover-modal" tabIndex="-1" aria-labelledby="coverModalLabel" aria-hidden="true">
+                                            &lt;div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                &lt;div className="modal-content">
+                                                    &lt;div className="modal-header">
+                                                        &lt;h5 className="m-0">Photostream&lt;/h5>
+                                                        &lt;button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">&lt;/button>
+                                                    &lt;/div>
+                                                    &lt;div className="modal-body">
+                                                        &lt;div className="row" data-masonry='{"percentPosition": true }'>
+                                                            {userPhotostream.photos.map(photo => {
+                                                                return (
+                                                                    &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
+                                                                        &lt;div className="position-relative">
+                                                                            &lt;img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                                            &lt;div className="bottom-left">
+                                                                                &lt;p className="selector-title m-0">{photo.title}&lt;/p>
+                                                                                &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
+                                                                            &lt;/div>
+                                                                        &lt;/div>
+                                                                    &lt;/div>
+                                                                );
+                                                            })
+                                                            }
+                                                        &lt;/div>
+                                                    &lt;/div>
+                                                    &lt;div className="modal-footer">
+                                                        &lt;button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cover-modal" onClick={updateCoverPhoto}>Select photos&lt;/button>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div> : null
+                                    }
+                                    {/* {loggedInUserId === user._id ?
+                                            &lt;div className="modal fade p-0" id="profile-modal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                                                &lt;div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                    &lt;div className="modal-content">
+                                                        &lt;div className="modal-header">
+                                                            &lt;h5 className="m-0">Photostream&lt;/h5>
+                                                            &lt;button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">&lt;/button>
+                                                        &lt;/div>
+                                                        &lt;div className="modal-body">
+                                                            &lt;div className="row" data-masonry='{"percentPosition": true }'>
+                                                                {userPhotostream.photos.map(photo => {
+                                                                    return (
+                                                                        &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
+                                                                            &lt;div className="position-relative">
+                                                                                &lt;img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelectedProfile} />
+                                                                                &lt;div className="bottom-left">
+                                                                                    &lt;p className="selector-title m-0">{photo.title}&lt;/p>
+                                                                                    &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
+                                                                                &lt;/div>
+                                                                            &lt;/div>
+                                                                        &lt;/div>
+                                                                    );
+                                                                })
+                                                                }
+                                                            &lt;/div>
+                                                        &lt;/div>
+                                                        &lt;div className="modal-footer">
+                                                            &lt;button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={updateCoverPhoto}>Select photos&lt;/button>
+                                                        &lt;/div>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div> : null
+                                        } */}
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div> : null
+            }
+        &lt;/div>
+    );
+}
+
+UserCover.propTypes = {
+    /**
+     * User's Data
+     */
+    userData: PropTypes.object.isRequired
+}
+
+UserCover.defaultProps = {
+    userData: {
+        age: 23,
+        coverPhotoUrl: "https://api.qasaqees.tech/public/images/60b7df35f8941e0012b98eec/60b9d824e204b10012339f7a.jpg",
+        createdAt: "2021-06-02T19:42:45.388Z",
+        currentCity: "",
+        description: "Hi I'm a Developer...",
+        email: "hakar@flickr.com",
+        firstName: "omar",
+        homeTown: "",
+        id: "60b7df35f8941e0012b98eec",
+        isFollowing: false,
+        lastName: "elwakil",
+        numberOfFollowers: 1,
+        numberOfFollowings: 1,
+        numberOfPhotos: 10,
+        occupation: "",
+        profilePhotoUrl: "https://api.qasaqees.tech/public/images/default/8.jpeg",
+        showCase: { title: "Showcase", photos: [] },
+        updatedAt: "2021-06-04T20:47:03.614Z",
+        userName: "hakar",
+        __v: 1,
+        _id: "60b7df35f8941e0012b98eec"
+    }
+}
+
+export default UserCover;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 04:21:19 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

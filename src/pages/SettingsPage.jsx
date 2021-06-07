@@ -6,6 +6,16 @@ import UserSettings from '../components/user/UserSettings';
 import Footer from '../components/static/Footer';
 import Navbar from '../components/Trending/Navbar/Navbar';
 
+/**
+ * Component for rendering UserSettingsPage
+ * Path => /account
+ *
+ * @component
+ * @example
+ * return (
+ *   <SettingsPage />
+ * )
+ */
 function SettingsPage() {
     const dataToSend = [
         { title: "Personal Information", path: "/help/terms", selected: true }

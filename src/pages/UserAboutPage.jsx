@@ -5,7 +5,17 @@ import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
 import UserAbout from '../components/user/UserAbout';
 import Footer from '../components/static/Footer';
 
-function SettingsPage() {
+/**
+ * Component for rendering UserAboutPage
+ * Path => /people/:id
+ *
+ * @component
+ * @example
+ * return (
+ *   <UserAboutPage />
+ * )
+ */
+function UserAboutPage() {
     const { id } = useParams();
     return (
         <BrowserRouter>
@@ -19,4 +29,4 @@ function SettingsPage() {
     );
 }
 
-export default SettingsPage;
+export default UserAboutPage;

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/UserlessNavigationBar.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/UserlessNavigationBar.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import SearchDropDown from '../user/Search/SearchDropDown';
+import axios from 'axios';
+
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+
+import '../static/LandingNavigationBar.css';
+import './UserlessNavigationBar.css';
+
+import UserImage from '../../images/usericon.png';
+
+/**
+ * Component for user or userless navigation
+ *
+ * @component
+ * @example
+ * return(
+ *  &lt;UserlessNavigation />
+ * )
+ */
+function UserlessNavigationBar(props) {
+    const [isHamburger, setIcon] = useState(true);
+    const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [gotUserData, setGotUserData] = useState(false);
+
+    if (gotUserData === false &amp;&amp; isLoggedIn !== null &amp;&amp; userData !== null) {
+        setGotUserData(true);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.get('/user/about/' + userData.user._id)
+            .then((response) => {
+                setUserData(response.data);
+                localStorage.setItem("userData", JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log("Error occured while getting photostream...");
+            });
+    }
+
+    /**
+     * toggles side navigationbar for mobile/tablet mode
+     * @return {void}
+     */
+    function ToggleSideNavigationBar() {
+        const widthSize = document.getElementById("div-side-nav").style.width;
+        if (widthSize === "0px" || widthSize === "") {
+            setIcon(false);
+            if (window.outerWidth &lt; "540") {
+                document.getElementById("div-side-nav").style.width = "100%";
+            } else if (window.outerWidth &lt; "768") {
+                document.getElementById("div-side-nav").style.width = "60%";
+            } else {
+                document.getElementById("div-side-nav").style.width = "40%";
+            }
+            document.getElementById("white-overlay").style.opacity = "1";
+            document.getElementById("white-overlay").classList.add("w-100");
+        } else {
+            setIcon(true);
+            document.getElementById("div-side-nav").style.width = "0";
+            document.getElementById("white-overlay").style.opacity = "0";
+            document.getElementById("white-overlay").classList.remove("w-100");
+        }
+    }
+
+    /**
+     * Logging out user from website
+     * @return {void}
+     */
+    const UserLogOut = () => {
+        const accessToken = localStorage.getItem("accessToken");
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        axios.post('/register/logOut')
+            .then((response) => {
+                // debugger
+                localStorage.clear();
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                // debugger
+                if (error.response.status === 401) {
+                    console.log(error.response.data.message);
+                    localStorage.clear();
+                    window.location.href = "/login";
+                }
+            });
+    }
+    ////Drop box for search
+    const [showDropList, setShowDropList] = useState(false);
+    const [text, setText] = useState(props.currentSearch || "");
+    const [isFocused, setIsFocused] = useState(false);
+    useEffect(() => { setShowDropList(isFocused &amp;&amp; (text !== "")) }, [isFocused, text])
+
+    function handleTextChange(event) {
+        const { value } = event.target;
+        setText(value);
+    }
+
+    return (
+        &lt;div id="global-nav">
+            &lt;div id="sec-nav-userless" className="position-fixed w-100">
+                &lt;div className="container-fluid d-flex align-items-center">
+                    &lt;div id="div-side-nav-btn" className="me-4">
+                        {isHamburger === true ?
+                            &lt;MenuIcon className="text-white" onClick={ToggleSideNavigationBar} /> :
+                            &lt;CloseIcon className="text-white" onClick={ToggleSideNavigationBar} />
+                        }
+                    &lt;/div>
+                    &lt;div id="div-logo-user-less">
+                        &lt;a href="/">
+                            &lt;svg viewBox="0 0 204 45" id="icon-flickr_logo_dots">
+                                &lt;g fill="none" fillRule="evenodd">
+                                    &lt;path fill="#FF0084"
+                                        d="M35 33c5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10s-10 4.478-10 10c0 5.523 4.477 10 10 10">
+                                    &lt;/path>
+                                    &lt;path fill="#0063DC"
+                                        d="M10 33c5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10S0 17.478 0 23c0 5.523 4.477 10 10 10">
+                                    &lt;/path>
+                                    &lt;path fill="#FFF"
+                                        d="M134.725 13.31c3.121 0 5.896.53 8.264 1.691l-.754 7.67c-1.909-1.16-3.809-1.68-6.294-1.68-4.508 0-7.972 3.14-7.972 8.371 0 4.818 4.041 7.96 8.55 7.96 2.368 0 4.736-.522 6.47-1.452l.23 7.79c-2.598.87-5.718 1.34-8.494 1.34-9.933 0-17.5-5.819-17.5-15.818 0-10.06 7.567-15.872 17.5-15.872zm65.756 0c1.21 0 2.483.172 3.52.352l-.519 8.719c-1.155-.352-2.309-.352-3.523-.352-4.852 0-7.57 3.552-7.57 9.483V44.3h-10.39V14.01h9.471v5.582h.112c1.793-3.841 4.394-6.281 8.899-6.281zM157.947.692v26.05h.112l8.666-12.73h11.377l-10.45 13.898 11.316 16.39H166.38l-8.32-15h-.112v15H147.55V.691h10.398zm-59.498 0V44.3H88.051V.691h10.4zm15.49 13.32v30.288h-10.392V14.01h10.392zM78.807 0c2.254 0 3.988.35 5.314.58l-.637 7.21c-.864-.292-1.73-.47-3.293-.47-2.655 0-3.69 1.861-3.69 4.831v1.858h7.391v7.32H76.5V44.3H66.1V21.33h-6.12v-7.32h6.296v-1.858C66.276 3.142 70.491 0 78.807 0zm35.133 1.39v7.68h-10.392V1.39h10.392z">
+                                    &lt;/path>
+                                &lt;/g>
+                            &lt;/svg>
+                        &lt;/a>
+                    &lt;/div>
+                    &lt;div id="div-nav-items">
+                        &lt;nav className="nav ps-3">
+                            {isLoggedIn === null || userData === null ? null :
+                                &lt;div className="dropdown">
+                                    &lt;a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/id" data-bs-toggle="dropdown" aria-expanded="false">You&lt;/a>
+                                    &lt;ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href={"/people/" + userData.user._id}>About&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id}>Photostream&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/albums"}>Albums&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/favorites"}>Faves&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href={"/photos/" + userData.user._id + "/galleries"}>Galleries&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href="/groups">Groups&lt;/a>&lt;/li>
+                                        &lt;li>&lt;a className="dropdown-item text-black fs-7" href="/cameraroll">Camera Roll&lt;/a>&lt;/li>
+                                    &lt;/ul>
+                                &lt;/div>
+                            }
+                            &lt;a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/explore">Explore&lt;/a>
+                            &lt;a className="nav-link text-white mx-1 fw-500 on-hover-opacity" href="/photos/tags">Trending&lt;/a>
+                        &lt;/nav>
+                    &lt;/div>
+                    &lt;div id="div-user-less-search" className="position-relative">
+                        &lt;input type="button" className="position-absolute bg-transparent border-0 rounded-15"
+                            id="search-icon" value="" />
+                        &lt;input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
+                            id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 220) }} value={text} onChange={handleTextChange} />
+                        {showDropList &amp;&amp; &lt;SearchDropDown search={text} />}
+                        &lt;input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
+                            id="close-search-icon" value="" />
+                        &lt;input type="button" className="bg-transparent border-0 rounded-15"
+                            id="search-icon-sm" value="" />
+                    &lt;/div>
+                    {isLoggedIn !== null &amp;&amp; userData !== null ?
+                        &lt;div id="div-upload" className="d-flex justify-content-center">
+                            &lt;a href="/photos/upload" id="upload-icon" className="bg-transparent border-0 ms-md-2 ms-4 on-hover-opacity"> &lt;/a>
+                        &lt;/div> : null
+                    }
+                    {isLoggedIn === null || userData === null ?
+                        &lt;a href="/login"
+                            className="d-flex justify-content-center align-items-center text-decoration-none text-white ms-4 fw-500"
+                            id="log-in">
+                            Log In
+                        &lt;/a> :
+                        &lt;div className="dropdown">
+                            &lt;button id="notification-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" className="d-flex justify-content-center align-items-center text-decoration-none bg-transparent border-0 on-hover-opacity ms-md-0 ms-2">
+                                &lt;NotificationsIcon className="text-white" style={{ fontSize: 30 }} />
+                            &lt;/button>
+                            &lt;div id="user-notify-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="notification-btn">
+                                &lt;span className="notification-text fw-500">Notifications&lt;/span>
+                                &lt;div className="dropdown-divider">&lt;/div>
+                                &lt;div id="no-recent-notify" className="d-flex justify-content-center align-items-center">
+                                    &lt;h4 className="text-muted text-center px-5">When you have new notifications, they’ll appear here.&lt;/h4>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    }
+                    {isLoggedIn === null || userData === null ?
+                        &lt;a href="/sign-up"
+                            className="d-flex justify-content-center text-decoration-none btn ms-4 rounded sign-out"
+                            id="sign-up-btn">
+                            Sign Up
+                        &lt;/a> :
+                        &lt;div id="user-settings" className="dropdown ms-2">
+                            &lt;img id="settings-btn" className="rounded-circle" src={UserImage} alt="user-icon" width="32px" role="button" data-bs-toggle="dropdown" aria-expanded="false" />
+                            &lt;div id="user-settings-popup" className="dropdown-menu dropdown-menu-end" aria-labelledby="settings-btn">
+                                &lt;span id="username" className="notification-text fs-5 fw-500 pb-0">Hei, {userData.user.userName}!&lt;/span>
+                                &lt;span className="notification-text text-muted fs-7 pt-0">Now you know how to greet people in English&lt;/span>
+                                &lt;div className="dropdown-divider">&lt;/div>
+                                &lt;a className="dropdown-item text-black fs-7" href="/account">Settings&lt;/a>
+                                &lt;a className="dropdown-item text-black fs-7" href="/help">Help&lt;/a>
+                                &lt;button className="dropdown-item text-black fs-7" onClick={UserLogOut}>Log out&lt;/button>
+                            &lt;/div>
+                        &lt;/div>
+                    }
+                &lt;/div>
+                &lt;div id="div-side-nav" className="h-100 position-fixed pt-2">
+                    {isLoggedIn === null || userData === null ?
+                        &lt;a className="d-block text-decoration-none text-white side-bar-items" href="/log-in">Log In&lt;/a> :
+                        &lt;div>
+                            &lt;a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id}>Photostream&lt;/a>
+                            &lt;div className="my-2">&lt;/div>
+                            &lt;a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/albums"}>Albums&lt;/a>
+                            &lt;div className="my-2">&lt;/div>
+                            &lt;a className="d-block text-decoration-none text-white side-bar-items" href={"/photos/" + userData.user._id + "/favorites"}>Favorites&lt;/a>
+                            &lt;div className="my-2">&lt;/div>
+                            &lt;a className="d-block text-decoration-none text-white side-bar-items" href={"/people/" + userData.user._id}>About&lt;/a>
+                        &lt;/div>
+                    }
+                    &lt;hr className="text-white" />
+                    &lt;a className="d-block text-decoration-none text-white side-bar-items" href="/photos">Explore&lt;/a>
+                    &lt;div className="my-2">&lt;/div>
+                    &lt;a className="d-block text-decoration-none text-white side-bar-items" href="/photos/tags">Trending&lt;/a>
+                    &lt;hr className="text-white" />
+                    &lt;div className="row mb-2">
+                        &lt;div className="col-12">
+                            &lt;a href="/help/guidelines" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">Guidelines&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="row mb-2">
+                        &lt;div className="col-4">
+                            &lt;a href="/about" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">About&lt;/a>
+                        &lt;/div>
+                        &lt;div className="col-4">
+                            &lt;a href="/jobs" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">Jobs&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="row">
+                        &lt;div className="col-4">
+                            &lt;a href="/help/privacy" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">Privacy&lt;/a>
+                        &lt;/div>
+                        &lt;div className="col-4">
+                            &lt;a href="/help/terms" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">Terms&lt;/a>
+                        &lt;/div>
+                        &lt;div className="col-4">
+                            &lt;a href="/help/cookies" className="d-block text-decoration-none text-white-50 side-bar-items fs-8">Cookies&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div id="white-overlay" className="position-fixed h-100">
+                &lt;/div>
+            &lt;/div>
+            &lt;div className="fixed-height">&lt;/div>
+        &lt;/div >
+    );
+}
+
+export default UserlessNavigationBar;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 04:21:19 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

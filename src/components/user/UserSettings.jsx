@@ -4,6 +4,15 @@ import './UserSettings.css';
 
 import userIcon from '../../images/usericon.png'
 
+/**
+ * Component for user settings path => /account
+ *
+ * @component
+ * @example
+ * return(
+ *  <UserSettings />
+ * )
+ */
 function UserSettings() {
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));

@@ -4,6 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
 import UploadMedia from '../components/user/UploadMedia';
 
+/**
+ * Component for rendering UserAboutPage
+ * Path => /photos/upload
+ *
+ * @component
+ * @example
+ * return (
+ *   <UploadPage />
+ * )
+ */
 function UploadPage() {
     return (
         <BrowserRouter>
