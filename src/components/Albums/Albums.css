@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   margin: 20px auto;
+  height: 40%;
 }
 .AlbumsPage .Albums .new-album {
   align-self: flex-end;

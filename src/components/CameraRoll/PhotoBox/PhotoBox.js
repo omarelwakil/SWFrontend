@@ -111,7 +111,7 @@ const PhotoBox = (props) => {
                 </label>
                 <label>
                     Description
-                    <input required type="text" onChange={handleDesc} value={Desc}></input>
+                    <input type="text" onChange={handleDesc} value={Desc}></input>
                 </label>
                 <label>
                     Privacy

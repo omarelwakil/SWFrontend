@@ -16,21 +16,22 @@ function Trending() {
 
   //MockURl: https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io
 
+  const [trending, setTrendingState] = useState(null);
+
   //http requests
   useEffect(() => {
     axios.defaults.baseURL = baseUrl;
     
     axios.get('/tag/trending')
       .then(response => response.data)
-      .then(data => setTrendingState(data['trendingTags']))
+      .then(data => setTrendingState(data["trendingTags"]))
       .catch( error => console.log(error));
-    },[]);
+    },[trending]);
 
-  const [trending, setTrendingState] = useState(null);
   
-  //Hrefs:
-  const [currentUrl, setCurrentUrl] = useState(window.location.pathname);
-
+  // //Hrefs:
+  // const [currentUrl, setCurrentUrl] = useState(window.location.pathname);
+  const currentUrl = "/photos/tags";
   const dataToSend = [
     { title: "Explore", path: "/explore", selected: false },
     { title: "Trending", path: "/photos/tags", selected: true }
@@ -44,8 +45,7 @@ function Trending() {
     main = (
       <Main
         data={trending}
-        url={currentUrl}
-        setCurrentUrl={setCurrentUrl} />
+        url={currentUrl}/>
     );
 
   } else{
