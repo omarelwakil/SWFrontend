@@ -75,12 +75,10 @@ function UserlessNavigationBar(props) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         axios.post('/register/logOut')
             .then((response) => {
-                // debugger
                 localStorage.clear();
                 window.location.href = "/";
             })
             .catch((error) => {
-                // debugger
                 if (error.response.status === 401) {
                     console.log(error.response.data.message);
                     localStorage.clear();
