@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: UploadPage</title>
+    <title>JSDoc: Source: pages/ExplorePage.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,143 +17,55 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: UploadPage</h1>
+    <h1 class="page-title">Source: pages/ExplorePage.jsx</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>UploadPage<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-
-    
-    <h4 class="name" id="UploadPage"><span class="type-signature"></span>new UploadPage<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Component for rendering UserAboutPage
-Path =&gt; /photos/upload</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_UploadPage.jsx.html">pages/UploadPage.jsx</a>, <a href="pages_UploadPage.jsx.html#line17">line 17</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>return (  &lt;UploadPage />)</code></pre>
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
+import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
+import Explore from '../components/static/Explore';
+import Footer from '../components/static/Footer';
+import Navbar from '../components/Trending/Navbar/Navbar'
+
+/**
+ * Component for flickr explore page.
+ *
+ * @component
+ * @example
+ * return (
+ *   &lt;ExplorePage />
+ * )
+ */
+function ExplorePage() {
+
+    const dataToSend = [
+        { title: "Explore", path: "/explore", selected: true },
+        { title: "Trending", path: "/photos/tags", selected: false }
+    ];
+    return (
+        &lt;BrowserRouter>
+            &lt;div>
+                &lt;title>Explore | Flickr&lt;/title>
+                &lt;UserlessNaviagationBar />
+                &lt;Navbar items={dataToSend} />
+                &lt;Explore />
+                &lt;Footer />
+            &lt;/div>
+        &lt;/BrowserRouter>
+    );
+}
+
+export default ExplorePage;
+</code></pre>
+        </article>
+    </section>
 
 
 
