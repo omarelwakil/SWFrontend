@@ -10,7 +10,7 @@
 
 .CameraRoll .Main .PhotoBox img {
   height: 128px;
-  width: 128px;
+  width: 100%;
 }
 
 .CameraRoll .Main .button {
@@ -20,7 +20,7 @@
   margin-top: 10px;
   padding: 5px;
   color: #fff;
-  width: 100px;
+  width: 100%;
 }
 
 .CameraRoll form {

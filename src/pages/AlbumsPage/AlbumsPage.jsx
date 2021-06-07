@@ -109,7 +109,12 @@ const AlbumsPage = (props) => {
 
     }
 
-    if (userAlbums && albumCoverPhotoUrl) {
+    if (userAlbums) {
+
+        if(albumCoverPhotoUrl===null){
+            setAlbumCoverPhotoUrl('');
+        }
+        
         main = (
             <Albums
                 userAlbums={userAlbums}
