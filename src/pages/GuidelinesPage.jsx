@@ -5,6 +5,15 @@ import Guidelines from '../components/static/Guidelines';
 import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
 import Footer from '../components/static/Footer';
 
+/**
+ * Component for rendering flickr guidelines page
+ *
+ * @component
+ * @example
+ * return (
+ *   <GuidelinesPage />
+ * )
+ */
 function GuidelinesPage() {
     return (
         <BrowserRouter>
