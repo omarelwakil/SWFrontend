@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
+
 import AddIcon from '@material-ui/icons/Add';
 import './UploadMedia.css';
 
@@ -194,6 +197,8 @@ function UploadMedia() {
      * @return  {null}
      */
     const uploadAllPhotos = (e) => {
+        toastr.clear();
+        var uploaded = 0;
         for (let i = 0; i < filesToBeUploaded.length; i++) {
             //filesToBeUploaded[i].photoJson
             var bodyFormData = new FormData();
@@ -212,14 +217,38 @@ function UploadMedia() {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             axios.post('/photo/upload', bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
                 .then((response) => {
-                    window.location.href = "/cameraroll";
+                    // window.location.href = "/cameraroll";
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    setTimeout(() => {
+                        uploaded++;
+                        toastr.success(`Uploaded ${uploaded} photos`);
+                    }, 300);
+                    if (i === filesToBeUploaded.length - 1) {
+                        setTimeout(() => window.location.href = "/cameraroll", 2000);
+                    }
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
                         localStorage.clear();
                         window.location.href = "/login";
                     } else if (error.response.status === 400) {
-
+                        toastr.error(error.response.data.message);
                     }
                 });
         }
