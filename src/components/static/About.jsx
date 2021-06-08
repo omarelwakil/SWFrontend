@@ -2,6 +2,15 @@ import React from 'react';
 import './About.css';
 import AboutIMG from "./AboutIMG";
 
+/**
+ * Component for flickr About.
+ *
+ * @component
+ * @example
+ * return (
+ *   <About />
+ * )
+ */
 function About() {
   return (
     <div id="about-comp" className="container-fluid">

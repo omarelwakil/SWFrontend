@@ -2,13 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ViewFollowers.css';
 
+/**
+ * Component for User followers
+ *
+ * @component
+ * @example
+ * const userData = JSON.parse(localStorage.getItem("userData"))
+ * const userID = userData.user._id
+ * return (
+ *   <ViewFollowers userId={id} /> 
+ * )
+ */
 function ViewFollowers(props) {
 
   const [accessToken] = useState(localStorage.getItem("accessToken"));
   if (accessToken === null) {
     localStorage.clear();
     window.location.href = "/login";
-  };
+  }; 
 
 
   const userData = JSON.parse(localStorage.getItem("userData"))
@@ -17,8 +28,13 @@ function ViewFollowers(props) {
   if (props.userId !== userID) {
     window.location.href = "/people/" + props.userId;
   }
-
   const [followers, setFollowers] = useState([]);
+
+  //Get All Followerss from the Backend
+  /**
+  * Get the followers data of a user with a certain ID
+  * @return {void} 
+  */
   const getAllFollowers = () => {
     axios.defaults.baseURL = "https://qasaqees.tech/api";
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;

@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from 'axios'; 
 import './ViewFollowers.css';
 
+/**  
+ * Component for User following
+ *
+ * @component
+ * @example 
+ * const userData = JSON.parse(localStorage.getItem("userData"))
+ * const userID = userData.user._id
+ * return (
+ *   <ViewFollowing userId={id} /> 
+ * )
+ */ 
+ 
 function ViewFollowing(props) {
   const [accessToken] = useState(localStorage.getItem("accessToken"));
 
@@ -9,6 +21,11 @@ function ViewFollowing(props) {
   const userID = props.userId;
 
   const [following, setFollowing] = useState([]);
+  //Get All Followings from the Backend
+  /**
+  * Get the followings data of a user with a certain ID
+  * @return {void}
+  */
   const getAllFollowing = () => {
     axios.defaults.baseURL = "https://qasaqees.tech/api";
     if (userData !== null && userData.user._id === userID)

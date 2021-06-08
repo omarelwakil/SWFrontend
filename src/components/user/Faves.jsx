@@ -4,6 +4,18 @@ import axios from 'axios';
 import './Faves.css';
 import PhotoBox from './Search/PhotoBox';
 
+/**
+ * Component for favourites user Page 
+ *
+ * @component
+ * @example
+ *  const userData = props.userToSend; 
+ *  const userID = userData._id
+ * return (
+ *   <Faves userToSend={user_id}/>
+ * )
+ */
+
 function Faves(props) {
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     // if (accessToken === null) {
