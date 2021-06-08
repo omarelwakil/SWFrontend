@@ -1,7 +1,31 @@
 import React, { useState } from 'react';
 
 import "./CommentOnMedia.css"
-
+/**
+ * Component for showing each  photo comment.
+ *
+ * @component
+ * @example
+ * const creatorId = "asd15451a63s4d4d5s4"
+ * const userId = "asd15451a63s4d4d5s4"
+ * const commentId = "asd15451a63s4d4d5s4"
+ * const img = 'http://flicker.com/image.jpg'
+ * const firstName = 'Mousa'
+ * const lastName = 'Mohammed'
+ * return (
+ *   <Comment
+            commentId={comment._id}
+            handleDelete={handleDelete}
+            userId={userData.id}
+            date={comment.createdAt}
+            text={comment.text}
+            firstName={comment && comment.user ? comment.user.firstName : null}
+            lastName={comment && comment.user ? comment.user.lastName : null}
+            creatorId={comment && comment.user ? comment.user._id : null}
+            img={comment && comment.user ? comment.user.profilePhotoUrl : null}
+            />
+ * )
+ */
 function Comment(probs){//props:{id,creatorId img, firstName, lastName, date, text}
     var deleteBtn = false;
     if(probs.creatorId === probs.userId){
