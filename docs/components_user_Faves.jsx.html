@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/Faves.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/Faves.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Faves.css';
+import PhotoBox from './Search/PhotoBox';
+
+/**
+ * Component for favourites user Page 
+ *
+ * @component
+ * @example
+ *  const userData = props.userToSend; 
+ *  const userID = userData._id
+ * return (
+ *   &lt;Faves userToSend={user_id}/>
+ * )
+ */
+
+function Faves(props) {
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
+    // if (accessToken === null) {
+    //     localStorage.clear();
+    //     window.location.href = "/login";
+    // };
+    const userData = props.userToSend;
+    const userID = userData._id
+
+    const [faves, setFaves] = useState([]);
+    useEffect(() => {
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        if (accessToken !== null)
+            axios.defaults.headers['Authorization'] = "Bearer " + accessToken;
+        axios.get('/user/fav/' + userID)
+            .then((response) => {
+                const allFaves = response.data.favorites;
+                setFaves(allFaves);
+            })
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    console.log(error.response.data.message);
+
+                }
+            })
+    }, []);
+
+    return (
+        &lt;div id="faves" className="container-fluid">
+            &lt;div className="row m-0 p-0">
+                {(faves.length > 0) ? (faves.map((fave, index) => {
+                    return (
+                        &lt;div className="col-4 p-3 m-2" key={index}>
+                            &lt;PhotoBox key={index} id={fave._id}
+                                url={fave.url} title={fave.title} userName={fave.creator.firstName + " " + fave.creator.lastName}
+                                favNum={fave.favouriteCount} comNum={fave.commentsNum} />
+                        &lt;/div>
+                    );
+                })) : null
+                }
+            &lt;/div>
+            &lt;div className="row px-0 m-0">
+                &lt;div className="col-12 p-0 m-0">
+                    {userData !== null &amp;&amp; faves.length === 0 ?
+                        &lt;div className="heading position-relative">
+                            {userData.sameUser === true ?
+                                &lt;div className="position-absolute centered">
+                                    &lt;h1 className="fw-500">Start picking your faves. Just click on the star.&lt;/h1>
+                                    &lt;p className="fw-500"> Like something you see? Let the favegrapher know by clicking on the star icon. &lt;/p>
+                                    &lt;a href='/explore'>&lt;button>Start exploring flicker&lt;/button>&lt;/a>
+                                &lt;/div> :
+                                &lt;div className="position-absolute centered">
+                                    &lt;h1 className="fw-500">{userData.firstName} {userData.lastName} doesn't have any favorites yet.&lt;/h1>
+                                    &lt;p className="fw-500">Stay tuned.&lt;/p>
+                                &lt;/div>
+                            }
+                            &lt;div className="w-75 d-flex justify-content-center my-5 m-auto">
+                                &lt;img className="w-100" src="https://combo.staticflickr.com/ap/build/images/emptypages/faves3.jpg" alt="Snow" />
+                            &lt;/div>
+                        &lt;/div> : null
+                    }
+                &lt;/div>
+            &lt;/div>
+            {/*                    {&lt;div className="heading">
+        &lt;h1>Start picking your faves. Just click on the star.&lt;/h1>
+        &lt;p> Like something you see? Let the favegrapher know by clicking on the star icon. &lt;/p>
+        &lt;a href='/explore'>&lt;button>Start exploring flicker&lt;/button>&lt;/a>
+        &lt;img src="https://combo.staticflickr.com/ap/build/images/emptypages/faves3.jpg" alt="Snow"/>
+        &lt;/div>} */}
+
+
+
+
+        &lt;/div>
+
+
+
+
+
+
+    );
+
+
+
+
+
+}
+export default Faves;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 08:06:00 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
