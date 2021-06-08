@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/Login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/Login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import FloatingInput from './SignUp/FloatingInput';
+import FloatingInputPassoword from './SignUp/FloatingInputPassword';
+import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
+
+
+import "./Login.css"
+/**
+ * Component for Login with email and password or facebook
+ *
+ * @component
+ * @example
+ * return(
+ *    &lt;Login />
+ * )
+ */
+function Login() {
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
+    //State of each text box and its error
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('true');
+    const [password, setPassword] = useState('');
+    const [passwordError, setpassWordError] = useState('true');
+    const [errorMsg, setErrorMsg] = useState(null);
+    
+    if (accessToken) {
+        window.location.href = "/account";
+        return;
+    }
+/**
+ * Recieves facebook response and send accessToken to BE
+ * @param   {object} response facebook response 
+ * @return  {void}        
+ */
+    const responseFacebook = (response) => {
+        console.log("facbook response: ");
+        console.log(response);
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+            const data ={
+                loginType  : "Facebook",
+                accessToken: response.accessToken,
+            };
+            console.log("data sent: ");
+            console.log(data);
+            axios.post('/register/loginWithFacebook',data,{headers: {"Content-type": "application/json"}})
+                .then((response) => {
+                    localStorage.setItem("accessToken",response.data.accessToken);
+                    delete response.data.accessToken;
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data));
+                    //To check of 
+                    setTimeout(() => {window.location.href = "/account";}, 1000);
+                })
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((&lt;div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. &lt;/p>
+                    &lt;/div>));
+                        setTimeout(() => {setErrorMsg((&lt;div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> failed connecting to Facebook. &lt;/p>
+                    &lt;/div>));}, 5000);
+                    }
+                    if (error.response.status === 404) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((&lt;div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> Please choose account. &lt;/p>
+                    &lt;/div>));
+                        setTimeout(() => {setErrorMsg((&lt;div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> Please choose account. &lt;/p>
+                    &lt;/div>));}, 5000);
+                    }
+                });
+      }
+      const componentClicked = (data) => {
+        console.warn(data);
+      }
+      /**
+ * send login credentials to BE  
+ * @return  {void}       
+ */
+    function Submit(event) {
+        event.preventDefault();
+        if (!emailError &amp;&amp; !passwordError) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            const data ={
+              email:email,
+              password:password,
+            };
+            console.log("form data: ");
+            console.log(data);
+            axios.post('/register/logIn',data,{headers: {"Content-type": "application/json"}})
+                .then((response) => {
+                    localStorage.setItem("accessToken",response.data.accessToken);
+                    delete response.data.accessToken;
+                    console.log(response.data.user);
+                    localStorage.setItem("userData",JSON.stringify(response.data));
+                    //To check of 
+                    setTimeout(() => {window.location.href = "/account";}, 1000);                    
+                })
+                .catch((error) => {
+                    if (error.response.status === 401) {
+                        console.log(error.response.data.message);
+                        setErrorMsg((&lt;div class="animate__animated animate__fadeInUp error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. &lt;/p>
+                    &lt;/div>));
+                        setTimeout(() => {setErrorMsg((&lt;div class="animate__animated animate__fadeOutDown error-div bg-red-light pa-2 b-rad-1 mb-3">
+                        &lt;p class="text-center ma-0 f-size-3 c-black"> Invalid email or password. &lt;/p>
+                    &lt;/div>));}, 5000);
+                    }
+                });
+          }
+        else{
+            console.log("Email or password error!!");
+        }
+    }
+    return ( 
+        &lt;div className = "bg-image bg ">
+            &lt;div id = "login" className = "container-fluid" >
+                &lt;form>
+                &lt;div id = "div-logo" className = "col-lg-1 col-md-2 col-3" >
+                    &lt;svg viewBox = "0 0 204 45" id = "icon-flickr_logo_dots" >
+                        &lt;g fill = "none" fillRule = "evenodd" >
+                            &lt;path fill = "#FF0084" d = "M35 33c5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10s-10 4.478-10 10c0 5.523 4.477 10 10 10" >
+                            &lt;/path> &lt; path fill = "#0063DC" d = "M10 33c5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10S0 17.478 0 23c0 5.523 4.477 10 10 10" >
+                            &lt;/path> 
+                            &lt;path fill = "#FFF" d = "M134.725 13.31c3.121 0 5.896.53 8.264 1.691l-.754 7.67c-1.909-1.16-3.809-1.68-6.294-1.68-4.508 0-7.972 3.14-7.972 8.371 0 4.818 4.041 7.96 8.55 7.96 2.368 0 4.736-.522 6.47-1.452l.23 7.79c-2.598.87-5.718 1.34-8.494 1.34-9.933 0-17.5-5.819-17.5-15.818 0-10.06 7.567-15.872 17.5-15.872zm65.756 0c1.21 0 2.483.172 3.52.352l-.519 8.719c-1.155-.352-2.309-.352-3.523-.352-4.852 0-7.57 3.552-7.57 9.483V44.3h-10.39V14.01h9.471v5.582h.112c1.793-3.841 4.394-6.281 8.899-6.281zM157.947.692v26.05h.112l8.666-12.73h11.377l-10.45 13.898 11.316 16.39H166.38l-8.32-15h-.112v15H147.55V.691h10.398zm-59.498 0V44.3H88.051V.691h10.4zm15.49 13.32v30.288h-10.392V14.01h10.392zM78.807 0c2.254 0 3.988.35 5.314.58l-.637 7.21c-.864-.292-1.73-.47-3.293-.47-2.655 0-3.69 1.861-3.69 4.831v1.858h7.391v7.32H76.5V44.3H66.1V21.33h-6.12v-7.32h6.296v-1.858C66.276 3.142 70.491 0 78.807 0zm35.133 1.39v7.68h-10.392V1.39h10.392z" >
+                            &lt;/path> 
+                        &lt;/g> 
+                    &lt;/svg> 
+                &lt;/div> 
+                &lt;p> Login to Flickr &lt;/p> 
+                {errorMsg}
+                &lt;FloatingInput type = "email"
+                name = "Email address"
+                value = { email => setEmail(email) }
+                error = { emailError => setEmailError(emailError) }
+                /> 
+                &lt;FloatingInputPassoword 
+                type = "password"
+                name = "Password"
+                value = { password => setPassword(password) }
+                error = { passwordError => setpassWordError(passwordError) }
+                validation = {false}
+                />
+                &lt;FacebookLogin
+                    appId="322610599248518"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={componentClicked}
+                    callback={responseFacebook}
+                    textButton="Login with Facebook" 
+                /> 
+                &lt;button className = "btn-login" onClick = { Submit } > Sign in &lt;/button> 
+                &lt;p className = "login-not-memeber" > &lt; a href = "/forgot-password" > Forgot password ? &lt;/a> &lt;/p>
+                &lt;hr />
+                &lt;p className = "login-not-memeber" > Not a Flickr member ? &lt; a href = "/sign-up" > Sign Up here. &lt;/a> &lt;/p >
+                &lt;/form> 
+            &lt;/div> 
+        &lt;/div>
+        );
+    }
+
+export default Login;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Login.html">Login</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 07:13:54 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
