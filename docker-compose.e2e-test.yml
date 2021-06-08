@@ -1,6 +1,24 @@
 version: "3"
 
 services:
+  traefik:
+    image: traefik:2.4
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    networks:
+      internal:
+        aliases:
+          - qasaqees.tech
+          - api.qasaqees.tech
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   api:
     image: ghcr.io/ahmedhussiien/flickr-api:latest
     container_name: api
@@ -10,15 +28,19 @@ services:
       REDIS_URL: redis://redis
       NODE_ENV: testTeam
       HOSTNAME: http://api.qasaqees.tech/
-      PORT: 80
+      PORT: 3000
     networks:
-      databases:
-      proxy:
-        aliases:
-          - api.qasaqees.tech
+      - internal
     depends_on:
       - mongo
       - redis
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend.rule=(( Host(`qasaqees.tech`) || Host(`www.qasaqees.tech`) ) && PathPrefix(`/api`)) || Host(`api.qasaqees.tech`)
+      - traefik.http.middlewares.backendPathStrip.stripprefix.prefixes=/api
+      - traefik.http.middlewares.backendPathStrip.stripprefix.forceSlash=false
+      - traefik.http.routers.backend.middlewares=backendPathStrip@docker
+
   
   frontend:
     image: flickr-frontend
@@ -27,9 +49,10 @@ services:
     logging:
       driver: none 
     networks:
-      proxy:
-        aliases:
-          - qasaqees.tech
+      - internal
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=( Host(`qasaqees.tech`) || Host(`www.qasaqees.tech`) )
 
   test:
     image: ghcr.io/ahmedhussiien/flickr-test:0036a51e
@@ -38,7 +61,7 @@ services:
       URL: http://qasaqees.tech/
       MODE: automated
     networks:
-      - proxy
+      - internal
     depends_on:
       - api
       - frontend
@@ -48,7 +71,7 @@ services:
     container_name: mongo
     restart: unless-stopped
     networks:
-      - databases
+      - internal
     volumes:
       - dbdata:/data/db
     logging:
@@ -58,13 +81,12 @@ services:
     image: redis:6.2-alpine
     container_name: redis
     networks:
-      - databases
+      - internal
     logging:
       driver: none 
 
 networks:
-  databases:
-  proxy:
+  internal:
 
 volumes:
   dbdata:
