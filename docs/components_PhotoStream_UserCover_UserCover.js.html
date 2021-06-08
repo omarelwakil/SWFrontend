@@ -50,10 +50,11 @@ import axios from 'axios';
  */
 const UserCover = (props) => {
 
-    const [selectedImages, setSelectedImages] = useState(null);
+    const [selectedImages, setSelectedImages] = useState(props.userData.coverPhotoUrl);
+    const [selectedImagesProfile, setSelectedImagesProfile] = useState(props.userData.profilePhotoUrl);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
-
     const [loggedInUserId, setLoggedInUserId] = useState(null);
+
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('userData')) !== null)
             setLoggedInUserId(JSON.parse(localStorage.getItem('userData')).user._id);
@@ -82,8 +83,13 @@ const UserCover = (props) => {
         backgroundSize: `cover`
     }
 
+    /**
+     * Getting User photostream
+     * @return  {null}
+     */
     const getPhotoStream = (e) => {
         if (loggedInUserId === user._id) {
+            debugger;
             axios.defaults.baseURL = "https://qasaqees.tech/api";
             axios.get('/user/photostream/' + userData.user._id, {
                 headers: {
@@ -92,22 +98,16 @@ const UserCover = (props) => {
                 }
             })
                 .then((response) => {
-                    for (let i = 0; i &lt; userData.user.showCase.photos.length; i++) {
-                        for (let j = 0; j &lt; response.data.photos.length; j++) {
-                            if (response.data.photos[j]._id === userData.user.showCase.photos[i]._id) {
-                                response.data.photos[j].selected = true;
-                                setSelectedImages(selectedImages => [
-                                    ...selectedImages,
-                                    response.data.photos[j]._id
-                                ]);
-                            } else {
-                                response.data.photos[j].selected = false;
-                            }
-                        }
-                    }
                     setUserPhotostream(response.data);
+                    for (let i = 0; i &lt; response.data.photos.length; i++) {
+                        if (response.data.photos[i].url === selectedImages)
+                            setSelectedImages(response.data.photos[i]._id);
+                        if (response.data.photos[i].url === selectedImagesProfile)
+                            setSelectedImagesProfile(response.data.photo[i]._id);
+                    }
                 })
                 .catch((error) => {
+                    debugger;
                     console.log("Error occured while getting photostream...");
                 });
         }
@@ -133,6 +133,25 @@ const UserCover = (props) => {
     };
 
     /**
+         * Adding/Removing user selected image from photostream to user profile photo
+         * @return  {null}
+         */
+    const addImageSelectedProfile = (e) => {
+        let imageId = e.currentTarget.getAttribute("_id");
+        if (e.currentTarget.classList.contains("selected-image")) {
+            e.currentTarget.classList.remove("selected-image");
+            setSelectedImagesProfile(null);
+        } else {
+            for (let i = 0; i &lt; document.getElementsByClassName("image-selector").length; i++) {
+                if (document.getElementsByClassName("image-selector")[i].classList.contains("selected-image"))
+                    document.getElementsByClassName("image-selector")[i].classList.remove("selected-image");
+            }
+            e.currentTarget.classList.add("selected-image");
+            setSelectedImagesProfile(imageId);
+        }
+    };
+
+    /**
      * Hitting on BE api and changing user cover photo
      * @return  {null}
      */
@@ -150,6 +169,40 @@ const UserCover = (props) => {
                         "Content-Type": "application/json"
                     }
                 }).then(response => {
+                    let userDataLocal = JSON.parse(localStorage.getItem("userData"));
+                    userDataLocal.user.coverPhotoUrl = userPhotostream.photos.filter(photo => photo._id === selectedImages)[0].url;
+                    localStorage.setItem("userData", JSON.stringify(userDataLocal));
+                    window.location.reload();
+                }).catch(error => {
+                    if (error.response.status === 401) {
+                        localStorage.clear();
+                        window.location.href = "/login";
+                    }
+                })
+        }
+    }
+
+    /**
+     * Hitting on BE api and changing user profile photo
+     * @return  {null}
+     */
+    const updateProfilePhoto = (e) => {
+        if (selectedImagesProfile !== null &amp;&amp; userToken !== null) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.defaults.headers["Authorization"] = "Bearer " + userToken;
+            let dataToSend = {
+                "photoId": selectedImagesProfile
+            }
+            debugger;
+            axios.patch("/user/editProfilePhoto", dataToSend,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(response => {
+                    let userDataLocal = JSON.parse(localStorage.getItem("userData"));
+                    userDataLocal.user.profilePhotoUrl = userPhotostream.photos.filter(photo => photo._id === selectedImagesProfile)[0].url;
+                    localStorage.setItem("userData", JSON.stringify(userDataLocal));
                     window.location.reload();
                 }).catch(error => {
                     if (error.response.status === 401) {
@@ -233,7 +286,7 @@ const UserCover = (props) => {
                     &lt;div className="UserCover" style={coverStyling}>
                         &lt;div className="container-fluid">
                             &lt;div className="row">
-                                &lt;div className="col-md-2 user-photo d-flex justify-content-center mb-2">
+                                &lt;div className="col-md-2 user-photo d-flex justify-content-center mb-2 cursor-pointer" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={getPhotoStream}>
                                     &lt;UserImage imgUrl={user.profilePhotoUrl} />
                                 &lt;/div>
                                 &lt;div className="col-md-10 user-data text-white p-0 ps-3 d-flex align-items-center">
@@ -268,7 +321,7 @@ const UserCover = (props) => {
                                                                 return (
                                                                     &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
                                                                         &lt;div className="position-relative">
-                                                                            &lt;img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                                            &lt;img src={photo.url} className={"image-selector " + ((photo.url === user.coverPhotoUrl) ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
                                                                             &lt;div className="bottom-left">
                                                                                 &lt;p className="selector-title m-0">{photo.title}&lt;/p>
                                                                                 &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
@@ -287,39 +340,39 @@ const UserCover = (props) => {
                                             &lt;/div>
                                         &lt;/div> : null
                                     }
-                                    {/* {loggedInUserId === user._id ?
-                                            &lt;div className="modal fade p-0" id="profile-modal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-                                                &lt;div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                                                    &lt;div className="modal-content">
-                                                        &lt;div className="modal-header">
-                                                            &lt;h5 className="m-0">Photostream&lt;/h5>
-                                                            &lt;button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">&lt;/button>
-                                                        &lt;/div>
-                                                        &lt;div className="modal-body">
-                                                            &lt;div className="row" data-masonry='{"percentPosition": true }'>
-                                                                {userPhotostream.photos.map(photo => {
-                                                                    return (
-                                                                        &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
-                                                                            &lt;div className="position-relative">
-                                                                                &lt;img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelectedProfile} />
-                                                                                &lt;div className="bottom-left">
-                                                                                    &lt;p className="selector-title m-0">{photo.title}&lt;/p>
-                                                                                    &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
-                                                                                &lt;/div>
+                                    {loggedInUserId === user._id ?
+                                        &lt;div className="modal fade p-0" id="profile-modal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                                            &lt;div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                &lt;div className="modal-content">
+                                                    &lt;div className="modal-header">
+                                                        &lt;h5 className="m-0">Photostream&lt;/h5>
+                                                        &lt;button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">&lt;/button>
+                                                    &lt;/div>
+                                                    &lt;div className="modal-body">
+                                                        &lt;div className="row" data-masonry='{"percentPosition": true }'>
+                                                            {userPhotostream.photos.map(photo => {
+                                                                return (
+                                                                    &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
+                                                                        &lt;div className="position-relative">
+                                                                            &lt;img src={photo.url} className={"image-selector" + ((photo.url === user.profilePhotoUrl) ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelectedProfile} />
+                                                                            &lt;div className="bottom-left">
+                                                                                &lt;p className="selector-title m-0">{photo.title}&lt;/p>
+                                                                                &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
                                                                             &lt;/div>
                                                                         &lt;/div>
-                                                                    );
-                                                                })
-                                                                }
-                                                            &lt;/div>
-                                                        &lt;/div>
-                                                        &lt;div className="modal-footer">
-                                                            &lt;button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={updateCoverPhoto}>Select photos&lt;/button>
+                                                                    &lt;/div>
+                                                                );
+                                                            })
+                                                            }
                                                         &lt;/div>
                                                     &lt;/div>
+                                                    &lt;div className="modal-footer">
+                                                        &lt;button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-modal" onClick={updateProfilePhoto}>Select photos&lt;/button>
+                                                    &lt;/div>
                                                 &lt;/div>
-                                            &lt;/div> : null
-                                        } */}
+                                            &lt;/div>
+                                        &lt;/div> : null
+                                    }
                                 &lt;/div>
                             &lt;/div>
                         &lt;/div>
@@ -373,13 +426,13 @@ export default UserCover;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Login.html">Login</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 11:21:23 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 07:13:54 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

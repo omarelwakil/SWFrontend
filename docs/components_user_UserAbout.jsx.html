@@ -30,6 +30,8 @@
 import PropTypes from "prop-types"
 import _ from 'lodash';
 
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
 import axios from 'axios';
 
 import EditIcon from '@material-ui/icons/Edit';
@@ -61,7 +63,6 @@ function UserAbout(props) {
     const [userToRender, setUserToRender] = useState(null);
     const [userToRenderId, setUserToRenderId] = useState(null);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
-    // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
         if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
@@ -70,10 +71,26 @@ function UserAbout(props) {
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
-                    console.log(response)
                 })
                 .catch((error) => {
-                    console.log("Error occured while getting photostream...");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
                 });
         } else {
             setUserToRender({ ...loggedUserData, "sameUser": true });
@@ -81,7 +98,6 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
-    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -225,6 +241,7 @@ function UserAbout(props) {
      * @return  {null}
      */
     const getPhotoStream = (e) => {
+        setSelectedImages([]);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.get('/user/photostream/' + userToRenderId, {
             headers: {
@@ -249,10 +266,35 @@ function UserAbout(props) {
                 setUserPhotostream(response.data);
             })
             .catch((error) => {
-                console.log("Error occured while getting photostream...");
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     };
 
+    useEffect(() => {
+        if (userToRender !== null &amp;&amp; userToRender.sameUser === true &amp;&amp; userToRenderId !== null)
+            getPhotoStream();
+    }, [userToRender, userToRenderId]);
     /**
      * Hitting BE and editing user info (Description or showcase title)
      * @return  {null}
@@ -261,11 +303,9 @@ function UserAbout(props) {
         const userAbout = {
             "description": document.getElementById("user-description-textarea").value,
             "showCase": {
-                "title": document.getElementById("showcase-edit-title-input").value
-            },
-            "occupation": document.getElementById("occupation").value,
-            "homeTown": document.getElementById("home-town").value,
-            "currentCity": document.getElementById("current-city").value
+                "title": document.getElementById("showcase-edit-title-input").value,
+                "photos": selectedImages
+            }
         }
         if (e.currentTarget.parentElement.id === "edit-user-description") {
             ToggleUserDescriptionEdit();
@@ -282,8 +322,47 @@ function UserAbout(props) {
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     };
 
@@ -297,10 +376,7 @@ function UserAbout(props) {
             "showCase": {
                 "title": document.getElementById("showcase-edit-title-input").value,
                 "photos": selectedImages
-            },
-            "occupation": document.getElementById("occupation").value,
-            "homeTown": document.getElementById("home-town").value,
-            "currentCity": document.getElementById("current-city").value
+            }
         }
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
@@ -308,15 +384,52 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.description = response.data.description;
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 loggedUserData.user.showCase.photos = response.data.showCase.photos;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                debugger;
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     }
 
@@ -361,10 +474,6 @@ function UserAbout(props) {
      */
     const semiComplexEditUserAbout = (e) => {
         const userAbout = {
-            "description": document.getElementById("user-description-textarea").value,
-            "showCase": {
-                "title": document.getElementById("showcase-edit-title-input").value
-            },
             "occupation": document.getElementById("occupation").value,
             "homeTown": document.getElementById("home-town").value,
             "currentCity": document.getElementById("current-city").value
@@ -376,15 +485,52 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.occupation = userAbout.occupation;
                 loggedUserData.user.homeTown = userAbout.homeTown;
                 loggedUserData.user.currentCity = userAbout.currentCity;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                debugger;
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     }
 
@@ -415,7 +561,7 @@ function UserAbout(props) {
                                                 &lt;button id="about-yourself-text-btn" className="bg-transparent border-0 p-0" onClick={ToggleUserDescriptionEdit}>
                                                     Write a little about yourself
                                                 &lt;/button> :
-                                                &lt;p>{userToRender.user.description}&lt;/p>
+                                                &lt;p className="wp-prewrap">{userToRender.user.description}&lt;/p>
                                             }
                                         &lt;/div>
                                         &lt;div className="col-md-2 order-md-1 order-0">
@@ -609,13 +755,13 @@ export default UserAbout;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="Login.html">Login</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 11:21:23 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 07:13:54 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
