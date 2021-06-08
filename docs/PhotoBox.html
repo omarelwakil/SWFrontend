@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Component: PhotoBox</title>
+    <title>JSDoc: Class: PhotoBox</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Component: PhotoBox</h1>
+    <h1 class="page-title">Class: PhotoBox</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>PhotoBox
+        <h2><span class="attribs"><span class="type-signature"></span></span>PhotoBox<span class="signature">(photo, key, deleteHandler, userToken)</span><span class="type-signature"> &rarr; {photo}</span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="PhotoBox"><span class="type-signature"></span>new PhotoBox()
+    <h4 class="name" id="PhotoBox"><span class="type-signature"></span>new PhotoBox<span class="signature">(photo, key, deleteHandler, userToken)</span><span class="type-signature"> &rarr; {photo}</span></h4>
     
 
     
@@ -49,8 +49,7 @@
 
 
 <div class="description">
-    <p>Component that renders a photo box for each photo in CameraRollPage</p>
-    <p>
+    <p>Component that renders a photo box for each photo in CameraRollPage
 No internal components</p>
 </div>
 
@@ -62,7 +61,7 @@ No internal components</p>
 
 
 
-    <h5>PropTypes:</h5>
+    <h5>Parameters:</h5>
     
 
 <table class="params">
@@ -243,14 +242,27 @@ No internal components</p>
         
 <div class="param-desc">
     <p>&lt;PhotoBox
-                photo=
-                key={photo._id}
-                deleteHandler={(e) =&gt; deleteHandler(e, photo._id)}
-                userToken={userToken}</p>
+photo=
+key={photo._id}
+deleteHandler={(e) =&gt; deleteHandler(e, photo._id)}
+userToken={userToken}</p>
 </div>
 
 
 
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">photo</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -264,24 +276,33 @@ No internal components</p>
     
 
     
-    <br>
-    <h3 class="subsection-title">Methods</h3>
 
     
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
 
+    
 
+    
+    <h4 class="name" id="~editPhoto"><span class="type-signature">(inner) </span>editPhoto<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~editPhoto"><span class="type-signature">(inner) </span>editPhoto<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows a form for photo editing</p>
+    <p>Shows a form for photo editing</p>
 </div>
 
 
@@ -298,42 +319,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line51">line 51</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -355,21 +376,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleAllowCommenting"><span class="type-signature">(inner) </span>handleAllowCommenting<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleAllowCommenting"><span class="type-signature">(inner) </span>handleAllowCommenting<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets allowCommenting state with the user's chosen value (event target value)</p>
+    <p>Sets allowCommenting state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -380,52 +401,52 @@ No internal components</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -435,42 +456,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line69">line 69</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -492,21 +513,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleDesc"><span class="type-signature">(inner) </span>handleDesc<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleDesc"><span class="type-signature">(inner) </span>handleDesc<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets description state with the user's chosen value (event target value)</p>
+    <p>Sets description state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -517,52 +538,52 @@ No internal components</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -572,42 +593,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line85">line 85</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -629,21 +650,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handlePhotoTools"><span class="type-signature">(inner) </span>handlePhotoTools<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handlePhotoTools"><span class="type-signature">(inner) </span>handlePhotoTools<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows photo tools</p>
+    <p>Shows photo tools</p>
 </div>
 
 
@@ -660,42 +681,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line32">line 32</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -717,21 +738,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handlePrivacy"><span class="type-signature">(inner) </span>handlePrivacy<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handlePrivacy"><span class="type-signature">(inner) </span>handlePrivacy<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets privacy (isPublic) state with the user's chosen value (event target value)</p>
+    <p>Sets privacy (isPublic) state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -742,52 +763,52 @@ No internal components</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -797,42 +818,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line61">line 61</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -854,21 +875,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleSubmit"><span class="type-signature">(inner) </span>handleSubmit<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleSubmit"><span class="type-signature">(inner) </span>handleSubmit<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Submits a form for editing a photo</p>
+    <p>Submits a form for editing a photo</p>
 </div>
 
 
@@ -885,42 +906,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line87">line 87</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line92">line 92</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -942,21 +963,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleTitle"><span class="type-signature">(inner) </span>handleTitle<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleTitle"><span class="type-signature">(inner) </span>handleTitle<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets title state with the user's chosen value (event target value)</p>
+    <p>Sets title state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -967,52 +988,52 @@ No internal components</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -1022,42 +1043,42 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line77">line 77</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1079,21 +1100,21 @@ No internal components</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~showEditButton"><span class="type-signature">(inner) </span>showEditButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~showEditButton"><span class="type-signature">(inner) </span>showEditButton<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows an edit button</p>
+    <p>Shows an edit button</p>
 </div>
 
 
@@ -1110,43 +1131,66 @@ No internal components</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line43">line 43</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
     
 
     
@@ -1164,7 +1208,7 @@ No internal components</p>
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>PhotoBox
+        <h2><span class="attribs"><span class="type-signature"></span></span>PhotoBox<span class="signature">(key, photo, height, width)</span><span class="type-signature"> &rarr; {photo._id}</span></h2>
         
     
 </header>
@@ -1177,7 +1221,7 @@ No internal components</p>
     
 
     
-    <h4 class="name" id="PhotoBox"><span class="type-signature"></span>new PhotoBox()
+    <h4 class="name" id="PhotoBox"><span class="type-signature"></span>new PhotoBox<span class="signature">(key, photo, height, width)</span><span class="type-signature"> &rarr; {photo._id}</span></h4>
     
 
     
@@ -1185,10 +1229,9 @@ No internal components</p>
 
 
 <div class="description">
-    <p>Component that renders a photo box for each photo in PhotoStreamPage</p>
-    <p>
+    <p>Component that renders a photo box for each photo in PhotoStreamPage
 Internal components:
-    Photo/Button</p>
+Photo/Button</p>
 </div>
 
 
@@ -1199,7 +1242,7 @@ Internal components:
 
 
 
-    <h5>PropTypes:</h5>
+    <h5>Parameters:</h5>
     
 
 <table class="params">
@@ -1350,7 +1393,7 @@ Internal components:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line23">line 23</a>
+        <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -1386,6 +1429,20 @@ height=&quot;240px&quot;
 width=&quot;240px&quot;/&gt;</p>
 </div>
 
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">photo._id</span>
+
+
+    </dd>
+</dl>
+
     
 
 
@@ -1403,24 +1460,30 @@ width=&quot;240px&quot;/&gt;</p>
 
     
 
-    <br>    
-    <h3 class="subsection-title">Methods</h3>
+    
 
     
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
 
+    
 
+    
+    <h4 class="name" id="~editPhoto"><span class="type-signature">(inner) </span>editPhoto<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~editPhoto"><span class="type-signature">(inner) </span>editPhoto<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows a form for photo editing</p>
+    <p>Shows a form for photo editing</p>
 </div>
 
 
@@ -1437,42 +1500,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line51">line 51</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1494,21 +1557,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleAllowCommenting"><span class="type-signature">(inner) </span>handleAllowCommenting<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleAllowCommenting"><span class="type-signature">(inner) </span>handleAllowCommenting<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets allowCommenting state with the user's chosen value (event target value)</p>
+    <p>Sets allowCommenting state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -1519,52 +1582,52 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -1574,42 +1637,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line69">line 69</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1631,21 +1694,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleDesc"><span class="type-signature">(inner) </span>handleDesc<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleDesc"><span class="type-signature">(inner) </span>handleDesc<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets description state with the user's chosen value (event target value)</p>
+    <p>Sets description state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -1656,52 +1719,52 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -1711,42 +1774,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line85">line 85</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1768,21 +1831,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handlePhotoTools"><span class="type-signature">(inner) </span>handlePhotoTools<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handlePhotoTools"><span class="type-signature">(inner) </span>handlePhotoTools<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows photo tools</p>
+    <p>Shows photo tools</p>
 </div>
 
 
@@ -1799,42 +1862,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line32">line 32</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1856,21 +1919,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handlePrivacy"><span class="type-signature">(inner) </span>handlePrivacy<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handlePrivacy"><span class="type-signature">(inner) </span>handlePrivacy<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets privacy (isPublic) state with the user's chosen value (event target value)</p>
+    <p>Sets privacy (isPublic) state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -1881,52 +1944,52 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -1936,42 +1999,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line61">line 61</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -1993,21 +2056,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleSubmit"><span class="type-signature">(inner) </span>handleSubmit<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleSubmit"><span class="type-signature">(inner) </span>handleSubmit<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Submits a form for editing a photo</p>
+    <p>Submits a form for editing a photo</p>
 </div>
 
 
@@ -2024,42 +2087,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line87">line 87</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line92">line 92</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -2081,21 +2144,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~handleTitle"><span class="type-signature">(inner) </span>handleTitle<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~handleTitle"><span class="type-signature">(inner) </span>handleTitle<span class="signature">(e)</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Sets title state with the user's chosen value (event target value)</p>
+    <p>Sets title state with the user's chosen value (event target value)</p>
 </div>
 
 
@@ -2106,52 +2169,52 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-<h5>Parameters:</h5>
-
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
-<thead>
-<tr>
-    
-    <th>Name</th>
-    
-
-    <th>Type</th>
-
-    
-
-    
-
-    <th class="last">Description</th>
-</tr>
-</thead>
-
-<tbody>
-
-
+    <thead>
     <tr>
         
-            <td class="name"><code>e</code></td>
+        <th>Name</th>
         
 
-        <td class="type">
+        <th>Type</th>
+
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Event</span>
 
 
-        
-        </td>
+            
+            </td>
 
-        
+            
 
-        
+            
 
-        <td class="description last"><p>input field event object</p></td>
-    </tr>
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
 
-
-</tbody>
+    
+    </tbody>
 </table>
 
 
@@ -2161,42 +2224,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line77">line 77</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -2218,21 +2281,21 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
         
+            
 
+    
 
+    
+    <h4 class="name" id="~showEditButton"><span class="type-signature">(inner) </span>showEditButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-
-<h4 class="name" id="~showEditButton"><span class="type-signature">(inner) </span>showEditButton<span class="signature">()</span><span class="type-signature"></span></h4>
-
-
-
+    
 
 
 
 <div class="description">
-<p>Shows an edit button</p>
+    <p>Shows an edit button</p>
 </div>
 
 
@@ -2249,42 +2312,42 @@ width=&quot;240px&quot;/&gt;</p>
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy"><li>
-    <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line43">line 43</a>
-</li></ul></dd>
-
-
-
-
-
-
-
+    
 </dl>
 
 
@@ -2306,16 +2369,1047 @@ width=&quot;240px&quot;/&gt;</p>
 
 
 
-    
-
-
-
-
-
+        
     
 
     
 
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>PhotoBox<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    
+    <h4 class="name" id="PhotoBox"><span class="type-signature"></span>new PhotoBox<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Component for Showing the Photo in a box with its details in search with hover animation</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_user_Search_PhotoBox.jsx.html">components/user/Search/PhotoBox.jsx</a>, <a href="components_user_Search_PhotoBox.jsx.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const id = 123const url = 'https://www.cnet.com/a/img/-qQkzFVyOPEoBRS7K5kKS0GFDvk=/940x0/2020/04/16/7d6d8ed2-e10c-4f91-b2dd-74fae951c6d8/bazaart-edit-app.jpg'const title = 'beach'const userName = 'Ahmed Khalad'const favNum = 100const comNum = 300return( &lt;PhotoBox id={id} url = {url} title = {title} userName={userName} favNum={favNum} comNum={comNum}/>)</code></pre>
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~editPhoto"><span class="type-signature">(inner) </span>editPhoto<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Shows a form for photo editing</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handleAllowCommenting"><span class="type-signature">(inner) </span>handleAllowCommenting<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets allowCommenting state with the user's chosen value (event target value)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handleDesc"><span class="type-signature">(inner) </span>handleDesc<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets description state with the user's chosen value (event target value)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handlePhotoTools"><span class="type-signature">(inner) </span>handlePhotoTools<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Shows photo tools</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html">components/PhotoStream/PhotoBox/PhotoBox.js</a>, <a href="components_PhotoStream_PhotoBox_PhotoBox.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handlePrivacy"><span class="type-signature">(inner) </span>handlePrivacy<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets privacy (isPublic) state with the user's chosen value (event target value)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handleSubmit"><span class="type-signature">(inner) </span>handleSubmit<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Submits a form for editing a photo</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line87">line 87</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~handleTitle"><span class="type-signature">(inner) </span>handleTitle<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets title state with the user's chosen value (event target value)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>input field event object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~showEditButton"><span class="type-signature">(inner) </span>showEditButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Shows an edit button</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html">components/CameraRoll/PhotoBox/PhotoBox.js</a>, <a href="components_CameraRoll_PhotoBox_PhotoBox.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -2331,13 +3425,13 @@ width=&quot;240px&quot;/&gt;</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Components</h3><ul><li><a href="Album.html">Album</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="Main.html">Main</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="Album.html">Album</a></li><li><a href="AlbumInternal.html">AlbumInternal</a></li><li><a href="AlbumPhotos.html">AlbumPhotos</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Comment.html">Comment</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="LandingSlider.html">LandingSlider</a></li><li><a href="Login.html">Login</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Jun 05 2021 05:50:24 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 22:39:36 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

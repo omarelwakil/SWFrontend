@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/SignUp/FloatingInput.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/SignUp/FloatingInput.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React , {useEffect, useState} from 'react';
+import {Animated} from "react-animated-css";
+import {CSSTransition} from 'react-transition-group';
+import PropTypes from "prop-types";
+
+import './FloatingInput.css';
+/**
+ * Component for Floating Input with animations
+ * @component
+ * @example
+ * const type = 'text'
+ * const name = 'Input Value'
+ * const value = ''
+ * const error = false
+ * const empty = false
+ * return(
+ *   &lt;FloatingInput type ={type} name = {name} value = {value} error = {error} empty = {empty} />
+ */
+
+function FloatingInput(props){
+
+    //if not used there will be a warinng: findDOMNode
+    const nodeRef = React.useRef(null);
+    //first blur We won't check for errors so I must Keep track of it
+    const [firstBlur, setFirstBlur] = useState(false);
+    //State of the Animation  if it is Active or not
+    const [isActive, setIsActive] = useState(false);
+    //State of the Written Text 
+    const [text, setText] = useState("");
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [errorAnimate, setErrorAnimate] = useState(false);
+
+    //make a change State to indicate a change happened after Blur to keep the error Msg the same
+    const [change,setChange] = useState(false);
+    
+    //Keep the state of text input and indicates that first clicked happened
+    /**
+     * save the value in the input box to process it 
+     * @param   {event} event that triggered the change
+     * @return {void}
+     */
+    function handleTextChange(event){
+        const {value} = event.target
+        setChange(true);
+        if(value !== "") {
+            setFirstBlur(true);
+            setIsActive(true);
+        } else {
+            setIsActive(false);
+        }
+        if(props.name === "Your age")
+        {
+            const reg = /^[0-9\b]+$/;
+            if(value === '' || reg.test(value))
+            {
+                
+                setText(value.slice(0,3));
+                props.value(value.slice(0,3));
+            }
+        }else
+        {
+            setText(value);
+            props.value(value);
+            
+        }
+    }
+
+    //testing agaist anystring@anystring.anystring just like website
+    /**
+     * check if the email is valid or not
+     * @param   {string} email  email of the User
+     * @return {bool}       Email is valid or not
+     */
+    function validateEmail(email) {
+        var validTest = /\S+@\S+\.\S+/;
+        return validTest.test(email);
+    }
+    //if userPressed submit and box is empty
+    useEffect(()=>{
+        setShowError(showError || props.empty)
+        if(props.empty === true)
+        {
+            setErrorMsg("Required");
+        }
+        },[showError,props.empty]);
+
+    //to Apply this After change in second parameters first time , to make the animation and error appear for first time
+    // as set State doesn't happen immediaty 
+    useEffect(()=> {setErrorAnimate(showError)},[showError]);
+    useEffect(()=>{
+    setShowError(showError || props.emailExist)
+    if(props.emailExist === true)
+    {
+        setErrorMsg("Email exists");
+    }
+    },[showError,props.emailExist]);
+    //Update Error Msg and Animation if it is false
+    /**
+     * Update Error Msg and Animation if it is false
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
+    function updateValiation (msg){
+       if(showError) {
+          setErrorAnimate(showError);
+       }
+       setErrorMsg(msg);
+
+    }
+
+    //Update error Msg only
+     /**
+     * Update error Msg only
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
+    function updateMsgOnly(msg){
+       setErrorMsg(msg);
+    }
+     /**
+     * Check Validation of the text depending on its type On Blur
+     * @return {void}       
+     */
+    function textValiation() {
+        //Check Validation On Blur
+        //this means the user click one time and changed the value if he just clicked we won't check for validation
+        if(firstBlur === true &amp;&amp; change === true)
+        {   
+            //Email Validation
+           setChange(false);
+           if (props.type === "email") {
+                if (text === "") {
+                    if(errorMsg !== "Required"){
+                        setShowError(true);
+                        props.error(true);
+                        setErrorAnimate(false);
+                        //Wait to apply the animation then change the error msg 
+                        if(errorMsg !== "" ) {
+                         setTimeout(() => {updateValiation("Required")},1100);
+                        } else {
+                         setErrorMsg("Required");
+                        }
+                    }
+                 }
+                else if(!validateEmail(text) &amp;&amp; errorMsg !== "Invalid email") {
+                   setShowError(true);
+                   props.error(true);
+                   setErrorAnimate(false);
+                   //Wait to apply the animation then change the error msg 
+                   if(errorMsg !== "") {
+                    setTimeout(() => {updateValiation("Invalid email")},1100);
+                   } else {
+                     setErrorMsg("Invalid email");
+                   }
+                }
+                else if(validateEmail(text)) {
+                   setShowError(false);
+                   props.error(false);
+                   setErrorAnimate(showError);
+                   setTimeout(() => {updateMsgOnly("")},1100);
+
+                }
+                //Age Validing
+             } else if (props.name === "Your age") {
+                if (text === "") {
+                    if(errorMsg !== "Required"){
+                        setShowError(true);
+                        props.error(true);
+                        setErrorAnimate(false);
+                        //Wait to apply the animation then change the error msg 
+                        if(errorMsg !== "" ) {
+                         setTimeout(() => {updateValiation("Required")},1100);
+                        } else {
+                         setErrorMsg("Required");
+                        }
+                    }
+                 }
+                 else if(text > 120 &amp;&amp; errorMsg !== "Invalid age") {
+                   setShowError(true);
+                   props.error(true);
+                   setErrorAnimate(false);
+                   //Wait to apply the animation then change the error msg 
+                   if(errorMsg !== "") {
+                    setTimeout(() => {updateValiation("Invalid age")},1100);
+                   } else {
+                     setErrorMsg("Invalid age");
+                   }
+                }
+                else if(text &lt; 13 &amp;&amp; errorMsg !== "In order to use Flicker, you must be 13 or older") {
+                    setShowError(true);
+                    props.error(true);
+                    setErrorAnimate(false);
+                    //Wait to apply the animation then change the error msg 
+                    if(errorMsg !== "") {
+                     setTimeout(() => {updateValiation("In order to use Flicker, you must be 13 or older")},1100);
+                    } else {
+                      setErrorMsg("In order to use Flicker, you must be 13 or older");
+                    }
+                 } else if(text &lt;= 120 &amp;&amp; text >= 13) {
+                    setShowError(false);
+                    props.error(false);
+                    setErrorAnimate(showError);
+                    setTimeout(() => {updateMsgOnly("")},1100); 
+                 }
+            } else {
+                if (text === "" &amp;&amp; errorMsg !=="Required") {
+                    setShowError(true);
+                    props.error(true);
+                    setErrorAnimate(false);
+                    //Wait to apply the animation then change the error msg 
+                    if(errorMsg !== "" ) {
+                     setTimeout(() => {updateValiation("Required")},1100);
+                    } else {
+                     setErrorMsg("Required");
+                    }
+                  } else if (text !=="") {
+                    setShowError(false);
+                    props.error(false);
+                    setErrorAnimate(showError);
+                    setTimeout(() => {updateMsgOnly("")},1100); 
+                  }
+            }     
+        }
+    }
+
+    return (
+        &lt;div id="float-label">
+            &lt;input type={props.type} value = {text} onChange = {handleTextChange} onBlur={textValiation} className={showError ?"error-input" :""}/>
+            &lt;label className = {isActive ? (showError ? "Active error-label" : "Active") : (showError ? "error-label" : "") } htmlFor={props.type} >
+            {props.name}
+            &lt;/label> 
+            &lt;CSSTransition in = {errorAnimate} enter = {errorAnimate} timeout = {1100} unmountOnExit = {errorAnimate} classNames = "slide" nodeRef = {nodeRef}>
+                    &lt;Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={errorAnimate} animationOutDuration= {1500} >
+                        &lt;div className = {"error-msg"} ref = {nodeRef}>
+                            {errorMsg}
+                        &lt;/div>
+                    &lt;/Animated>
+            &lt;/CSSTransition>
+        &lt;/div>
+    );
+}
+
+ FloatingInput.propTypes = {
+    /**
+     * FloatingInput's type
+     */
+     type : PropTypes.string.isRequired,
+    /**
+     * FloatingInput's name to show in the box
+     */
+     name: PropTypes.string.isRequired,
+     /**
+     * FloatingInput's value 
+     */
+      value: PropTypes.string,
+     /**
+     * FloatingInput's error or valid 
+     */
+      error: PropTypes.bool,
+     /**
+     * FloatingInput's empty or not
+     */
+      empty: PropTypes.bool,
+  }
+
+  FloatingInput.defaultProps = { 
+  type : 'text',
+  name : 'Input Value',
+  value : '',
+  error : false,
+  empty : false,
+
+}
+
+
+export default FloatingInput;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="Album.html">Album</a></li><li><a href="AlbumInternal.html">AlbumInternal</a></li><li><a href="AlbumPhotos.html">AlbumPhotos</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Comment.html">Comment</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="LandingSlider.html">LandingSlider</a></li><li><a href="Login.html">Login</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 22:39:36 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import Members from "../../Data/Members"
 import './About.css';
+/**
+ * Component for About page images.
+ *
+ * @component
+ * @example
+ * return (
+ *   <AboutIMG />
+ * )
+ */
 function AboutIMG() {
       return ( 
             <div className="container-fluid" id="team-table">

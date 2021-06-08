@@ -4,10 +4,27 @@ import {CSSTransition} from 'react-transition-group';
 import PasswordMeter from './PasswordMeter';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import PropTypes from "prop-types";
 
 import './FloatingInputPassword.css';
 
 import CheckboxIcon from './CheckBoxIcon';
+
+/**
+ * Component for Floating Input for Password type with animations
+ * @component
+ * @example
+ * const type = "password"
+ * const name = "Password"
+ * const value = ""
+ * const error = false
+ * const empty = false
+ * const validation = false
+ * return(
+ *    <FloatingInputPassoword type ={type} name = {name} value = {value} error = {error}
+         validation = {validation} empty = {empty}
+            />
+ */
 
 function FloatingInputPassoword(props){
 
@@ -43,6 +60,10 @@ function FloatingInputPassoword(props){
     //Password Visiablity 
     const [visibleP,setVisibleP] = useState(false);
      //toggle on Focus
+    /**
+     * color if the box is focused
+     * @return {void}
+     */
     function onFocusPassword(){
         setPasswordFocue(true);
         setAnimatedPassword(true);
@@ -51,6 +72,10 @@ function FloatingInputPassoword(props){
     }
     
     //this function update the check box
+    /**
+     * update the check box to checked or not
+     * @return {void}
+     */
     function updateCheckBox(){
         if (!noLeadingSpace(text) && text.length > 12) {
             setFirstTest(true);
@@ -76,6 +101,11 @@ function FloatingInputPassoword(props){
         }
     }
     //Keep the state of text input and indicates that first clicked happened
+     /**
+     * Keep the state of text input and indicates that first clicked happened
+     * @param   {event} event that triggered the change
+     * @return {void}
+     */
     function handleTextChange(event){
         const {value} = event.target
         setText(value);
@@ -107,6 +137,11 @@ function FloatingInputPassoword(props){
     useEffect(()=> {setErrorAnimate(showError)},[showError]);
     
     //Update Error Msg and Animation if it is false
+    /**
+     * Update Error Msg and Animation if it is false
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
     function updateValiation (msg){
        if(showError) {
           setErrorAnimate(showError);
@@ -116,15 +151,29 @@ function FloatingInputPassoword(props){
     }
 
     //No leading Space condition in password
+    /**
+     * check if the password contain no leading spaces or not
+     * @param   {string} pass  password of the User
+     * @return {bool}       password passed the test or not
+     */
     function noLeadingSpace(pass){
         var validTest = /^[^-\s][a-zA-Z0-9_\s-]+/;
         return validTest.test(pass);
     }
 
     //Update error Msg only
+    /**
+     * Update error Msg only
+     * @param   {string} msg  error msg
+     * @return {void}       
+     */
     function updateMsgOnly(msg){
        setErrorMsg(msg);
     }
+     /**
+     * Check Validation of the text depending on its type On Blur
+     * @return {void}       
+     */
     function textValiation() {
         //Check Validation On Blur
         //this means the user click one time and changed the value if he just clicked we won't check for validation
@@ -234,6 +283,43 @@ function FloatingInputPassoword(props){
             
         </div>
     );
+}
+
+FloatingInputPassoword.propTypes = {
+    /**
+    * FloatingInputPassoword's type
+    */
+    type : PropTypes.string.isRequired,
+    /**
+    * FloatingInputPassoword's name to show in the box
+    */
+    name: PropTypes.string.isRequired,
+    /**
+    * FloatingInputPassoword's value 
+    */
+    value: PropTypes.string,
+    /**
+    * FloatingInputPassoword's error or valid 
+    */
+    error: PropTypes.bool,
+    /**
+    * FloatingInputPassoword's empty or not
+    */
+    empty: PropTypes.bool,
+    /**
+    * FloatingInputPassoword's show validation or not 
+    */
+    validation: PropTypes.bool,
+}
+
+FloatingInputPassoword.defaultProps = { 
+  type : 'text',
+  name : 'Input Value',
+  value : '',
+  error : false,
+  empty : false,
+  validation: false,
+
 }
 
 export default FloatingInputPassoword;

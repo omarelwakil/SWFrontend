@@ -5,6 +5,15 @@ import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
 import Privacy from '../components/static/Privacy';
 import Footer from '../components/static/Footer';
 
+/**
+ * Component for rendering flickr Privacy page
+ * Path => /help/privacy
+ * @component
+ * @example
+ * return (
+ *   <PrivacyPage />
+ * )
+ */
 function PrivacyPage() {
     return (
         <BrowserRouter>

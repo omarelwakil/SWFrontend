@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  api:
+    image: ghcr.io/ahmedhussiien/flickr-api:latest
+    container_name: api
+    restart: unless-stopped
+    environment:
+      MONGODB_URL: mongodb://mongo
+      REDIS_URL: redis://redis
+      NODE_ENV: testTeam
+      HOSTNAME: http://api.qasaqees.tech/
+      PORT: 80
+    networks:
+      databases:
+      proxy:
+        aliases:
+          - api.qasaqees.tech
+    depends_on:
+      - mongo
+      - redis
+  
+  frontend:
+    image: flickr-frontend
+    container_name: frontend
+    restart: unless-stopped
+    logging:
+      driver: none 
+    networks:
+      proxy:
+        aliases:
+          - qasaqees.tech
+
+  test:
+    image: ghcr.io/ahmedhussiien/flickr-test:0036a51e
+    container_name: test
+    environment:
+      URL: http://qasaqees.tech/
+      MODE: automated
+    networks:
+      - proxy
+    depends_on:
+      - api
+      - frontend
+
+  mongo:
+    image: mongo:4.1.8-xenial
+    container_name: mongo
+    restart: unless-stopped
+    networks:
+      - databases
+    volumes:
+      - dbdata:/data/db
+    logging:
+      driver: none 
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    networks:
+      - databases
+    logging:
+      driver: none 
+
+networks:
+  databases:
+  proxy:
+
+volumes:
+  dbdata:

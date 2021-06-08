@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
+
 import AddIcon from '@material-ui/icons/Add';
 import './UploadMedia.css';
 
+/**
+ * Component for uploading user photos
+ *
+ * @component
+ * @example
+ *   <UploadMedia />
+ * )
+ */
 function UploadMedia() {
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [filesToBeUploaded, setFilesToBeUploaded] = useState([]);
@@ -12,6 +23,10 @@ function UploadMedia() {
     if (accessToken === null)
         window.location.href = "/login";
 
+    /**
+     * Toggles edit title of photo(s)
+     * @return  {null}
+     */
     const TogglePhotoTitle = (e) => {
         if (document.getElementById("photo-title-input").classList.contains("d-none")) {
             document.getElementById("photo-title-input").classList.remove("d-none");
@@ -39,6 +54,10 @@ function UploadMedia() {
         }
     }
 
+    /**
+     * Toggles edit description of photo(s)
+     * @return  {null}
+     */
     const TogglePhotoDescription = (e) => {
         if (document.getElementById("photo-description-input").classList.contains("d-none")) {
             document.getElementById("photo-description-input").classList.remove("d-none");
@@ -65,6 +84,10 @@ function UploadMedia() {
         }
     }
 
+    /**
+     * Toggles edit tags of photo(s)
+     * @return  {null}
+     */
     const TogglePhotoTags = (e) => {
         if (document.getElementById("photo-tags-input").classList.contains("d-none")) {
             document.getElementById("photo-tags-input").classList.remove("d-none");
@@ -88,6 +111,10 @@ function UploadMedia() {
         }
     }
 
+    /**
+     * Toggles edit privacy of photo(s)
+     * @return  {null}
+     */
     const TogglePhotoPrivacy = (e) => {
         for (let i = 0; i < selectedFiles.length; i++) {
             for (let j = 0; j < filesToBeUploaded.length; j++) {
@@ -101,10 +128,18 @@ function UploadMedia() {
         console.log(filesToBeUploaded);
     }
 
+    /**
+     * Opens upload tab for photos due to input is hidden
+     * @return  {null}
+     */
     const openUploadFile = (e) => {
         document.getElementById("upload-div-input").click();
     };
 
+    /**
+     * Setting selected images from user device into variable to identify them
+     * @return  {null}
+     */
     const fileInputOnChange = (e) => {
         if (e.target.files.length > 0) {
             for (let i = 0; i < e.target.files.length; i++) {
@@ -132,6 +167,10 @@ function UploadMedia() {
         }
     }
 
+    /**
+     * Toggle selected images for editing
+     * @return  {null}
+     */
     const toggleSelectedFiles = (e) => {
         let photoKey = e.currentTarget.getAttribute("_id");
         if (e.currentTarget.classList.contains("selected-image")) {
@@ -153,9 +192,14 @@ function UploadMedia() {
         }
     };
 
+    /**
+     * Upload all photos
+     * @return  {null}
+     */
     const uploadAllPhotos = (e) => {
+        toastr.clear();
+        var uploaded = 0;
         for (let i = 0; i < filesToBeUploaded.length; i++) {
-            debugger
             //filesToBeUploaded[i].photoJson
             var bodyFormData = new FormData();
             bodyFormData.append("file", filesToBeUploaded[i].photoJson.photo);
@@ -173,16 +217,55 @@ function UploadMedia() {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             axios.post('/photo/upload', bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
                 .then((response) => {
-                    window.location.href = "/cameraroll";
+                    // window.location.href = "/cameraroll";
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    setTimeout(() => {
+                        uploaded++;
+                        toastr.success(`Uploaded ${uploaded} photos`);
+                    }, 300);
+                    if (i === filesToBeUploaded.length - 1) {
+                        setTimeout(() => window.location.href = "/cameraroll", 2000);
+                    }
                 })
                 .catch((error) => {
-                    debugger;
                     if (error.response.status === 401) {
-                        console.log(error.response.data.message);
                         localStorage.clear();
                         window.location.href = "/login";
                     } else if (error.response.status === 400) {
-                        console.log(error.response.data.message);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+                        toastr.error(error.response.data.message);
                     }
                 });
         }
@@ -249,7 +332,7 @@ function UploadMedia() {
                                 </div> : null
                             }
                             <div className="position-absolute w-100 bottom-0">
-                                <button type="button" class={"w-100 btn btn-primary" + (filesToBeUploaded.length === 0 ? " disabled" : "")} onClick={uploadAllPhotos}>Upload</button>
+                                <button type="button" className={"w-100 btn btn-primary" + (filesToBeUploaded.length === 0 ? " disabled" : "")} onClick={uploadAllPhotos}>Upload</button>
                             </div>
                         </div>
                     </div>

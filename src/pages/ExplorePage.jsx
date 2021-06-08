@@ -6,6 +6,15 @@ import Explore from '../components/static/Explore';
 import Footer from '../components/static/Footer';
 import Navbar from '../components/Trending/Navbar/Navbar'
 
+/**
+ * Component for flickr explore page.
+ *
+ * @component
+ * @example
+ * return (
+ *   <ExplorePage />
+ * )
+ */
 function ExplorePage() {
 
     const dataToSend = [

@@ -4,6 +4,15 @@ import './Guidelines.css';
 
 import Navbar from '../Trending/Navbar/Navbar';
 
+/**
+ * Component for flickr guidelines.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Guidelines />
+ * )
+ */
 class Guidelines extends Component {
   render() {
     const dataToSend = [
@@ -76,21 +85,21 @@ class Guidelines extends Component {
                         <p className="section-message">If you see photos or videos that you've created in another member's photostream, don't panic. This is probably just a misunderstanding and not malicious. A good first step is to contact them via FlickrMail
                         and
                             politely ask them to remove it. If that doesn’t work, you can file a Notice with Flickr's Designated Copyright Agent.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don't forget to moderate your content</p>
-                          <p className="section-message">Set the appropriate content filters for your images and videos. In general, anything containing mature content (e.g. nudity, gore) needs to be moderated appropriately. This includes your buddy icon and
-                            cover
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don't forget to moderate your content</p>
+                        <p className="section-message">Set the appropriate content filters for your images and videos. In general, anything containing mature content (e.g. nudity, gore) needs to be moderated appropriately. This includes your buddy icon and
+                        cover
                             photo. Also, sexually explicit videos (e.g. pornography) are not permitted. Videos of artistic nature or educational purpose that contain nudity may be allowed under the moderate safety setting. For additional details check <a href="https://help.flickr.com/en_us/set-the-safety-levels-of-your-flickr-content-or-account-BJlsk6mjym">here</a>.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don’t forget to set the appropriate content type</p>
-                          <p className="section-message">Set the appropriate content type for your images. In general, anything that is not a photo or video should be classified as a Screenshot or Art/Illustration. For additional details check <a href="https://flickr.kustomer.help/en_us/set-the-content-type-of-your-flickr-content-rkVAvyD1E">here</a>.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don’t harm children</p>
-                          <p className="section-message">To say that Flickr has a zero tolerance policy towards harmful content involving minors would be an understatement. In protecting children from criminal predators, particularly in crimes involving child
-                            sexual
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don’t forget to set the appropriate content type</p>
+                        <p className="section-message">Set the appropriate content type for your images. In general, anything that is not a photo or video should be classified as a Screenshot or Art/Illustration. For additional details check <a href="https://flickr.kustomer.help/en_us/set-the-content-type-of-your-flickr-content-rkVAvyD1E">here</a>.</p>
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don’t harm children</p>
+                        <p className="section-message">To say that Flickr has a zero tolerance policy towards harmful content involving minors would be an understatement. In protecting children from criminal predators, particularly in crimes involving child
+                        sexual
                             abuse, we will aggressively report and cooperate with law enforcement with the goal of prosecuting to the full extent of the law. This includes, but is not limited to, images, video, comments, faves, and other communications.</p>
                       </li>
                       <li>
@@ -101,18 +110,18 @@ class Guidelines extends Component {
                         <p className="section-message fw-bold">Don't upload content that is illegal or prohibited.</p>
                         <p className="section-message">This includes but is not limited to drug use, bestiality, and terrorism. If we find you doing it, your account will be deleted and we'll take appropriate action, which may include reporting you to law
                             enforcement.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don’t harass other users</p>
-                          <p className="section-message">Flickr is not a venue for you to harass, abuse, spam, impersonate, or intimidate others. So, be polite and respectful in your interactions with other users.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don’t violate users’ privacy.</p>
-                          <p className="section-message">Flickr has a zero tolerance policy towards distributing sexually graphic images of another person without that person’s consent (Non-Consensual Pornography). If you’re a victim, please go <a href="https://www.cybercivilrights.org/ccri-crisis-helpline/">here</a> for 24-hour support, and <a href="https://badassarmy.org/gethelp/">here</a> to meet the Badass Army.</p>
-                        </li>
-                        <li>
-                          <p className="section-message fw-bold">Don’t use hate speech.</p>
-                          <p className="section-message">Flickr has a zero-tolerance policy towards attacking a person or group based on, but is not limited to, race, ethnicity, national origin, religion, disability, disease, age, sexual orientation, gender, or
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don’t harass other users</p>
+                        <p className="section-message">Flickr is not a venue for you to harass, abuse, spam, impersonate, or intimidate others. So, be polite and respectful in your interactions with other users.</p>
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don’t violate users’ privacy.</p>
+                        <p className="section-message">Flickr has a zero tolerance policy towards distributing sexually graphic images of another person without that person’s consent (Non-Consensual Pornography). If you’re a victim, please go <a href="https://www.cybercivilrights.org/ccri-crisis-helpline/">here</a> for 24-hour support, and <a href="https://badassarmy.org/gethelp/">here</a> to meet the Badass Army.</p>
+                      </li>
+                      <li>
+                        <p className="section-message fw-bold">Don’t use hate speech.</p>
+                        <p className="section-message">Flickr has a zero-tolerance policy towards attacking a person or group based on, but is not limited to, race, ethnicity, national origin, religion, disability, disease, age, sexual orientation, gender, or
                             gender identity.</p>
                       </li>
                       <li>
@@ -139,11 +148,11 @@ class Guidelines extends Component {
                     <p className="section-message">If you don't feel that you can abide by our Community Guidelines as outlined above, maybe Flickr isn't for you. We've crafted these guidelines to ensure that everyone within the Flickr community
                     has
                         a good time.</p>
-                      <p className="section-message">You may also want to check out our <a href="http://help.flickr.com">Help Center</a> and <a href="https://www.smugmug.com/about/privacy-flickr">Privacy Policy</a>. If you ever have any questions or comments,
+                    <p className="section-message">You may also want to check out our <a href="http://help.flickr.com">Help Center</a> and <a href="https://www.smugmug.com/about/privacy-flickr">Privacy Policy</a>. If you ever have any questions or comments,
                         we'd
                         love to hear from you. Please feel free to drop us a line via our <a href="https://help.flickr.com/contact">webform</a>.</p>
-                      <p className="section-message fw-bold">The Flickreenos, Dec 17, 2018</p>
-                    </section>
+                    <p className="section-message fw-bold">The Flickreenos, Dec 17, 2018</p>
+                  </section>
                 </section>
               </div>
             </div>

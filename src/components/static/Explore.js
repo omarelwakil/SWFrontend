@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import './Explore.css';
+
+/**
+ * Component for flickr explore.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Explore />
+ * )
+ */
 class Explore extends Component {
 
   state = {
@@ -9,7 +19,7 @@ class Explore extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.baseURL = 'https://5ef8aca7-aab5-4b26-97c0-8b913e9ef7ec.mock.pstmn.io';
+    axios.defaults.baseURL = 'https://qasaqees.tech/api';
     axios.get('/photo/explore')
       .then(response => {
         const updatedPictures = response.data.photos.map(picture => {

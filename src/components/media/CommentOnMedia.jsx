@@ -5,7 +5,16 @@ import axios from 'axios';
 import Comment from "./Comment";
 
 import "./CommentOnMedia.css"
-
+/**
+ * Component for showing comments section.
+ *
+ * @component
+ * @example
+ * const photoId = '60baasjncdas52asd'
+ * return (
+ *   <CommentOnMedia photoId={photoId} />
+ * )
+ */
 function CommentOnMedia(probs){//probs:{photoId}
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
@@ -38,6 +47,10 @@ function CommentOnMedia(probs){//probs:{photoId}
                 } 
             });
     }
+/**
+ * Sends comment added to BE 
+ * @return  {void}
+ */
     function Submit(event){
         event.preventDefault();
         document.getElementById("commentBtn").style.display = "none";
@@ -69,17 +82,16 @@ function CommentOnMedia(probs){//probs:{photoId}
     console.log("comments:");
     console.log(comments);
     //Delete Comment
-    function handleDelete(event, commentId){
+/**
+ * sends comment id to BE and delete comment  
+ * @return  {void}
+ */
+    function handleDelete(event, comment_Id){
         console.log("Comment is being Deleted:");
         //Reload if success
-        const data = {
-            commentId : commentId
-        }
         console.log(`data sent to /photo/${probs.photoId}/comment`);
-        console.log(data);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-        axios.delete(`/photo/${probs.photoId}/comment`, data, { headers: { "Content-Type": "application/json" } })
+        axios.delete(`/photo/${probs.photoId}/comment`, {headers: {Authorization: 'Bearer ' + accessToken},data: { commentId: comment_Id}})    
             .then((response) => {
                 console.log("delete comment: response.data:");
                 console.log(response.data);
@@ -104,6 +116,10 @@ function CommentOnMedia(probs){//probs:{photoId}
                 } 
             });
     }
+/**
+ * show comment button when user clicks on the text area 
+ * @return  {void}
+ */
     function ShowCommentBtn(event) {
         event.preventDefault();
         console.log("ON Focus!!");

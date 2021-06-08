@@ -10,19 +10,28 @@ import '../static/LandingNavigationBar.css';
 import './UserlessNavigationBar.css';
 
 import UserImage from '../../images/usericon.png';
+import PropTypes from "prop-types";
 
+/**
+ * Component for user or userless navigation
+ *
+ * @component
+ * @example
+ * return(
+ *  <UserlessNavigation />
+ * )
+ */
 function UserlessNavigationBar(props) {
     const [isHamburger, setIcon] = useState(true);
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [gotUserData, setGotUserData] = useState(false);
-    //console.log(isLoggedIn);
+
     if (gotUserData === false && isLoggedIn !== null && userData !== null) {
         setGotUserData(true);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.get('/user/about/' + userData.user._id)
             .then((response) => {
-                debugger;
                 setUserData(response.data);
                 localStorage.setItem("userData", JSON.stringify(response.data));
             })
@@ -31,6 +40,10 @@ function UserlessNavigationBar(props) {
             });
     }
 
+    /**
+     * toggles side navigationbar for mobile/tablet mode
+     * @return {void}
+     */
     function ToggleSideNavigationBar() {
         const widthSize = document.getElementById("div-side-nav").style.width;
         if (widthSize === "0px" || widthSize === "") {
@@ -52,18 +65,20 @@ function UserlessNavigationBar(props) {
         }
     }
 
+    /**
+     * Logging out user from website
+     * @return {void}
+     */
     const UserLogOut = () => {
         const accessToken = localStorage.getItem("accessToken");
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         axios.post('/register/logOut')
             .then((response) => {
-                // debugger
                 localStorage.clear();
                 window.location.href = "/";
             })
             .catch((error) => {
-                // debugger
                 if (error.response.status === 401) {
                     console.log(error.response.data.message);
                     localStorage.clear();
@@ -76,7 +91,11 @@ function UserlessNavigationBar(props) {
     const [text, setText] = useState(props.currentSearch || "");
     const [isFocused, setIsFocused] = useState(false);
     useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
-
+    /**
+     * set the text in the input box to the variable 
+     * @param   {event} event that triggered the change
+     * @return {void}
+     */
     function handleTextChange(event) {
         const { value } = event.target;
         setText(value);
@@ -233,5 +252,17 @@ function UserlessNavigationBar(props) {
         </div >
     );
 }
+
+UserlessNavigationBar.propTypes = {
+    /**
+     * current Search text
+     */
+     currentSearch: PropTypes.string,
+  }
+  
+UserlessNavigationBar.defaultProps = {
+    currentSearch: "",
+  }
+  
 
 export default UserlessNavigationBar;

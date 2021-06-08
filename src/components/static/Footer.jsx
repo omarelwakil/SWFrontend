@@ -2,7 +2,15 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 
 import './Footer.css';
-
+/**
+ * Component for showing the main footer.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Footer />
+ * )
+ */
 function Footer() {
     return ( 
     <footer id="footer" >

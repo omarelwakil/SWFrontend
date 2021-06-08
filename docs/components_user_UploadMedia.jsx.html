@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/UploadMedia.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/UploadMedia.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import axios from 'axios';
+
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
+
+import AddIcon from '@material-ui/icons/Add';
+import './UploadMedia.css';
+
+/**
+ * Component for uploading user photos
+ *
+ * @component
+ * @example
+ *   &lt;UploadMedia />
+ * )
+ */
+function UploadMedia() {
+    const [accessToken] = useState(localStorage.getItem("accessToken"));
+    const [filesToBeUploaded, setFilesToBeUploaded] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    if (accessToken === null)
+        window.location.href = "/login";
+
+    /**
+     * Toggles edit title of photo(s)
+     * @return  {null}
+     */
+    const TogglePhotoTitle = (e) => {
+        if (document.getElementById("photo-title-input").classList.contains("d-none")) {
+            document.getElementById("photo-title-input").classList.remove("d-none");
+            document.getElementById("photo-title-text").classList.add("d-none");
+            document.getElementById("photo-title-input").focus();
+        } else {
+            document.getElementById("photo-title-input").classList.add("d-none");
+            document.getElementById("photo-title-text").classList.remove("d-none");
+            document.getElementById("photo-title-text").innerText = document.getElementById("photo-title-input").value;
+
+            if (document.getElementById("photo-title-input").value === "")
+                document.getElementById("photo-title-text").innerText = "Add a title";
+            else {
+                for (let i = 0; i &lt; selectedFiles.length; i++) {
+                    for (let j = 0; j &lt; filesToBeUploaded.length; j++) {
+                        if (filesToBeUploaded[j].key === selectedFiles[i].key) {
+                            filesToBeUploaded[j].photoJson.title = document.getElementById("photo-title-input").value;
+                            selectedFiles[i].photo.photoJson.title = document.getElementById("photo-title-input").value;
+                            break;
+                        }
+                    }
+                }
+                console.log(filesToBeUploaded);
+            }
+        }
+    }
+
+    /**
+     * Toggles edit description of photo(s)
+     * @return  {null}
+     */
+    const TogglePhotoDescription = (e) => {
+        if (document.getElementById("photo-description-input").classList.contains("d-none")) {
+            document.getElementById("photo-description-input").classList.remove("d-none");
+            document.getElementById("photo-description-text").classList.add("d-none");
+            document.getElementById("photo-description-input").focus();
+        } else {
+            document.getElementById("photo-description-input").classList.add("d-none");
+            document.getElementById("photo-description-text").classList.remove("d-none");
+            document.getElementById("photo-description-text").innerText = document.getElementById("photo-description-input").value;
+            if (document.getElementById("photo-description-input").value === "")
+                document.getElementById("photo-description-text").innerText = "Add a description";
+            else {
+                for (let i = 0; i &lt; selectedFiles.length; i++) {
+                    for (let j = 0; j &lt; filesToBeUploaded.length; j++) {
+                        if (filesToBeUploaded[j].key === selectedFiles[i].key) {
+                            filesToBeUploaded[j].photoJson.description = document.getElementById("photo-description-input").value;
+                            selectedFiles[i].photo.photoJson.description = document.getElementById("photo-description-input").value;
+                            break;
+                        }
+                    }
+                }
+                console.log(filesToBeUploaded);
+            }
+        }
+    }
+
+    /**
+     * Toggles edit tags of photo(s)
+     * @return  {null}
+     */
+    const TogglePhotoTags = (e) => {
+        if (document.getElementById("photo-tags-input").classList.contains("d-none")) {
+            document.getElementById("photo-tags-input").classList.remove("d-none");
+            document.getElementById("photo-tags-text").classList.add("d-none");
+            document.getElementById("photo-tags-input").focus();
+        } else {
+            document.getElementById("photo-tags-input").classList.add("d-none");
+            document.getElementById("photo-tags-text").classList.remove("d-none");
+            if (document.getElementById("photo-tags-input").value !== "") {
+                for (let i = 0; i &lt; selectedFiles.length; i++) {
+                    for (let j = 0; j &lt; filesToBeUploaded.length; j++) {
+                        if (filesToBeUploaded[j].key === selectedFiles[i].key) {
+                            filesToBeUploaded[j].tags = document.getElementById("photo-tags-input").value.split(' ');
+                            selectedFiles[i].photo.tags = document.getElementById("photo-tags-input").value.split(' ');
+                            break;
+                        }
+                    }
+                }
+                console.log(filesToBeUploaded);
+            }
+        }
+    }
+
+    /**
+     * Toggles edit privacy of photo(s)
+     * @return  {null}
+     */
+    const TogglePhotoPrivacy = (e) => {
+        for (let i = 0; i &lt; selectedFiles.length; i++) {
+            for (let j = 0; j &lt; filesToBeUploaded.length; j++) {
+                if (filesToBeUploaded[j].key === selectedFiles[i].key) {
+                    filesToBeUploaded[j].photoJson.isPublic = (e.currentTarget.value === "true");
+                    selectedFiles[i].photo.photoJson.isPublic = (e.currentTarget.value === "true");
+                    break;
+                }
+            }
+        }
+        console.log(filesToBeUploaded);
+    }
+
+    /**
+     * Opens upload tab for photos due to input is hidden
+     * @return  {null}
+     */
+    const openUploadFile = (e) => {
+        document.getElementById("upload-div-input").click();
+    };
+
+    /**
+     * Setting selected images from user device into variable to identify them
+     * @return  {null}
+     */
+    const fileInputOnChange = (e) => {
+        if (e.target.files.length > 0) {
+            for (let i = 0; i &lt; e.target.files.length; i++) {
+
+                let photoTitle = e.target.files[i].name;
+                if (photoTitle.split(".").length > 0)
+                    photoTitle = photoTitle.split(".")[0];
+
+                let jsonPhoto = {
+                    "photoJson": {
+                        "photo": e.target.files[i],
+                        "isPublic": true,
+                        "title": photoTitle,
+                        "allowCommenting": true,
+                        "description": ""
+                    },
+                    "key": photoTitle + i.toString(),
+                    "tags": []
+                }
+                setFilesToBeUploaded(filesToBeUploaded => [
+                    ...filesToBeUploaded,
+                    jsonPhoto
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Toggle selected images for editing
+     * @return  {null}
+     */
+    const toggleSelectedFiles = (e) => {
+        let photoKey = e.currentTarget.getAttribute("_id");
+        if (e.currentTarget.classList.contains("selected-image")) {
+            //Removing image
+            e.currentTarget.classList.remove("selected-image");
+            setSelectedFiles(selectedFiles.filter(item => !(item.key === photoKey)));
+            console.log(selectedFiles);
+        } else {
+            //adding image
+            e.currentTarget.classList.add("selected-image");
+            setSelectedFiles(selectedImages => [
+                ...selectedImages,
+                {
+                    "key": photoKey,
+                    "photo": filesToBeUploaded.filter(item => item.key === photoKey)[0]
+                }
+            ]);
+            console.log(selectedFiles);
+        }
+    };
+
+    /**
+     * Upload all photos
+     * @return  {null}
+     */
+    const uploadAllPhotos = (e) => {
+        toastr.clear();
+        var uploaded = 0;
+        for (let i = 0; i &lt; filesToBeUploaded.length; i++) {
+            //filesToBeUploaded[i].photoJson
+            var bodyFormData = new FormData();
+            bodyFormData.append("file", filesToBeUploaded[i].photoJson.photo);
+            bodyFormData.append("isPublic", filesToBeUploaded[i].photoJson.isPublic);
+            bodyFormData.append("title", filesToBeUploaded[i].photoJson.title);
+            bodyFormData.append("allowCommenting", filesToBeUploaded[i].photoJson.allowCommenting);
+            bodyFormData.append("description", filesToBeUploaded[i].photoJson.description);
+            let tags = "";
+            for (let j = 0; j &lt; filesToBeUploaded[i].tags.length; j++) {
+                tags += filesToBeUploaded[i].tags[j] + ",";
+            }
+            tags = tags.substring(0, tags.length - 1);
+            bodyFormData.append("tags", tags);
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+            axios.post('/photo/upload', bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
+                .then((response) => {
+                    // window.location.href = "/cameraroll";
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    setTimeout(() => {
+                        uploaded++;
+                        toastr.success(`Uploaded ${uploaded} photos`);
+                    }, 300);
+                    if (i === filesToBeUploaded.length - 1) {
+                        setTimeout(() => window.location.href = "/cameraroll", 2000);
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status === 401) {
+                        localStorage.clear();
+                        window.location.href = "/login";
+                    } else if (error.response.status === 400) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+                        toastr.error(error.response.data.message);
+                    }
+                });
+        }
+    }
+
+    return (
+        &lt;div id="upload-photos">
+            &lt;div className="container-fluid">
+                &lt;div className="row">
+                    &lt;div className="col-md-3 my-3 px-0">
+                        &lt;div className="rounded edit-photo-details mx-3 position-relative">
+                            &lt;div className="row px-3 my-3">
+                                &lt;div className="col-12">
+                                    {selectedFiles.length > 0 ?
+                                        &lt;h5 className="text-muted mb-0">Editing {selectedFiles.length} photo(s):&lt;/h5> :
+                                        &lt;h5 className="text-muted mb-0">Select photos to edit...&lt;/h5>
+                                    }
+                                &lt;/div>
+                            &lt;/div>
+                            {selectedFiles.length > 0 ?
+                                &lt;div>
+                                    &lt;hr className="m-0" />
+                                    &lt;div className="row px-3 my-3">
+                                        &lt;div className="col-12">
+                                            &lt;h5 id="photo-title-text" className="text-white fw-bold opacity-4 cursor-pointer" onClick={TogglePhotoTitle}>{selectedFiles[0].photo.photoJson.title}&lt;/h5>
+                                            &lt;input id="photo-title-input" type="text" className="form-control d-none" defaultValue={selectedFiles[0].photo.photoJson.title} onBlur={TogglePhotoTitle} />
+                                            &lt;p id="photo-description-text" className="text-muted fs-7 mb-0 cursor-pointer" onClick={TogglePhotoDescription}>{selectedFiles[0].photo.photoJson.description === "" ? "Add a description" : selectedFiles[0].photo.photoJson.description}&lt;/p>
+                                            &lt;input id="photo-description-input" type="text" className="form-control d-none fs-7" placeholder="Add a description" onBlur={TogglePhotoDescription} defaultValue={selectedFiles[0].photo.photoJson.description === "" ? null : selectedFiles[0].photo.photoJson.description} />
+                                        &lt;/div>
+                                    &lt;/div>
+                                    &lt;hr className="m-0" />
+                                    &lt;div className="row px-3 my-3">
+                                        &lt;div className="col-12">
+                                            &lt;h5 id="photo-tags-text" className="text-white fs-6 opacity-4 cursor-pointer mb-0" onClick={TogglePhotoTags}>Add tags&lt;/h5>
+                                            &lt;input id="photo-tags-input" type="text" className="form-control fs-6 d-none" placeholder="Add tags space separated" onBlur={TogglePhotoTags} />
+                                            {selectedFiles[0].photo.tags.length > 0 ?
+                                                &lt;div className="mt-2">
+                                                    {selectedFiles[0].photo.tags.map(tag => {
+                                                        return (&lt;span className="text-light border rounded p-1 mx-1">{tag}&lt;/span>)
+                                                    })}
+                                                &lt;/div> : null
+                                            }
+                                        &lt;/div>
+                                    &lt;/div>
+                                    &lt;hr />
+                                    &lt;div className="row px-3 my-3">
+                                        &lt;div className="col-12">
+                                            &lt;h5 id="photo-privacy-text" className="text-white fs-6 opacity-4 mb-1">Privacy&lt;/h5>
+                                            &lt;div className="form-check">
+                                                &lt;input className="form-check-input text-muted" type="radio" name="privacy" id="photo-privacy" value="true" defaultChecked onClick={TogglePhotoPrivacy} />
+                                                &lt;label className="form-check-label text-muted" htmlFor="photo-privacy">
+                                                    Public
+                                    &lt;/label>
+                                            &lt;/div>
+                                            &lt;div className="form-check">
+                                                &lt;input className="form-check-input text-muted" type="radio" name="privacy" id="photo-privacy" value="false" onClick={TogglePhotoPrivacy} />
+                                                &lt;label className="form-check-label text-muted" htmlFor="photo-privacy">
+                                                    Private
+                                    &lt;/label>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/div>
+                                    &lt;hr className="m-0" />
+                                &lt;/div> : null
+                            }
+                            &lt;div className="position-absolute w-100 bottom-0">
+                                &lt;button type="button" className={"w-100 btn btn-primary" + (filesToBeUploaded.length === 0 ? " disabled" : "")} onClick={uploadAllPhotos}>Upload&lt;/button>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="col-md-9 my-3 px-0">
+                        &lt;div className="mx-3">
+                            &lt;div className="upload-image-div d-flex justify-content-center mb-2">
+                                &lt;AddIcon id="upload-div-icon" onClick={openUploadFile} />
+                                &lt;input id="upload-div-input" className="d-none" type="file" accept="image/*" multiple onChange={fileInputOnChange} />
+                            &lt;/div>
+                            &lt;p className="w-100 text-center text-light mb-3">You can upload multiple of images...&lt;/p>
+                            &lt;hr id="files-divider" className="m-0" />
+                            &lt;div className="row px-3 py-2">
+                                {filesToBeUploaded.length > 0 ?
+                                    filesToBeUploaded.map((photo, index) => {
+                                        const path = URL.createObjectURL(photo.photoJson.photo);
+                                        return (
+                                            &lt;div className="col-md-3 my-1" key={index} >
+                                                &lt;img src={path} alt="" className="image-selector" onClick={toggleSelectedFiles} _id={photo.key} />
+                                            &lt;/div>
+                                        )
+                                    }) : null
+                                }
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default UploadMedia;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="Album.html">Album</a></li><li><a href="AlbumInternal.html">AlbumInternal</a></li><li><a href="AlbumPhotos.html">AlbumPhotos</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Comment.html">Comment</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="LandingSlider.html">LandingSlider</a></li><li><a href="Login.html">Login</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 22:39:36 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

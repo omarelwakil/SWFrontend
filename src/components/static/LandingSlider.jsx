@@ -2,7 +2,15 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 
 import './LandingSlider.css';
-
+/**
+ * Component for showing the slider at the landing page.
+ *
+ * @component
+ * @example
+ * return (
+ *   <LandingSlider />
+ * )
+ */
 function LandingSlider(){
     return (
         <div className="landing-carousel">

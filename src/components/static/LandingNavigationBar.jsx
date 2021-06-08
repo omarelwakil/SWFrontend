@@ -1,15 +1,23 @@
-import React, { useState,useEffect } from 'react';
-// import ReactDOM from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import SearchDropDown from '../user/Search/SearchDropDown';
 import './LandingNavigationBar.css';
 
+/**
+ * Component for Landing navigation bar
+ *
+ * @component
+ * @example
+ * return (
+ *   <LandingNavigationBar />
+ * )
+ */
 function LandingNavigationBar() {
-    const [showDropList,setShowDropList] = useState(false);
-    const [text , setText] = useState('');
+    const [showDropList, setShowDropList] = useState(false);
+    const [text, setText] = useState('');
     const [isFocused, setIsFocused] = useState(false);
-    useEffect(()=>{setShowDropList(isFocused && (text !==""))},[isFocused,text])
-    function handleTextChange(event){
-        const {value} = event.target;
+    useEffect(() => { setShowDropList(isFocused && (text !== "")) }, [isFocused, text])
+    function handleTextChange(event) {
+        const { value } = event.target;
         setText(value);
     }
 
@@ -36,12 +44,12 @@ function LandingNavigationBar() {
                     </div>
                     <div id="div-search" className="col-lg-9 col-md-6 col-7 pe-md-0 pe-2">
                         <div className="position-relative inner-div-search">
-                           
+
                             <input type="button" className="position-absolute bg-transparent border-0 rounded-15"
                                 id="search-icon" value="" />
                             <input type="text" className="w-100 rounded-15 border-0" placeholder="Photos, people, or groups"
-                                id="search-box" autoComplete="off" onFocus={() => {setIsFocused(true)}} onBlur ={() => {setTimeout(()=>{setIsFocused(false)},220)}} value={text} onChange ={handleTextChange}/>
-                            {showDropList&& <SearchDropDown search={text} />}
+                                id="search-box" autoComplete="off" onFocus={() => { setIsFocused(true) }} onBlur={() => { setTimeout(() => { setIsFocused(false) }, 220) }} value={text} onChange={handleTextChange} />
+                            {showDropList && <SearchDropDown search={text} />}
                             <input type="button" className="position-absolute bg-transparent border-0 rounded-15 d-none"
                                 id="close-search-icon" value="" />
                             <input type="button" className="bg-transparent border-0 rounded-15"

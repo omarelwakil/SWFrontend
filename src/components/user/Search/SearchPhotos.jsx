@@ -4,6 +4,16 @@ import Navbar from '../../Trending/Navbar/Navbar';
 import PhotoBox from './PhotoBox';
 import axios from 'axios';
 
+/**
+ * Component for Showing the Searched Photos in Photo Boxes in a container
+ *
+ * @component
+ * @example
+ * return(
+ *    <SearchPeople />
+ * )
+ */
+
 function SearchPhotos(){
   const pathOfCurrent = window.location.pathname;
   const searchWord = pathOfCurrent.substr(15,pathOfCurrent.length-1);
@@ -17,6 +27,10 @@ function SearchPhotos(){
   const [photos,setPhotos]=useState([]);
   const [notfound ,setNotFound]=useState(false);
   //Get All Photos from the BE
+  /**
+  * Get All Photos from the Backend with a similar name
+  * @return {void}
+  */
   const getAllPhotos = ()=>{
       axios.defaults.baseURL = "https://qasaqees.tech/api";
       return (axios.get('/tag/'+searchWord)

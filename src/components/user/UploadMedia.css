@@ -88,3 +88,8 @@
 .cursor-pointer {
     cursor: pointer !important;
 }
+
+#toast-container {
+    z-index: 9999999 !important;
+    margin-top: 50px !important;
+}

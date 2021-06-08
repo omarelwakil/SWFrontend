@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from "prop-types"
 import _ from 'lodash';
 
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
 import axios from 'axios';
 
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,6 +16,16 @@ import './UserAbout.css';
 
 import emptyShowCase from '../../images/empty-showcase.jpg';
 
+/**
+ * Component for User About (description,showcase,user info)
+ *
+ * @component
+ * @example
+ * const id = 60b7df35f8941e0012b98eec
+ * return (
+ *   <User userInfo={id} />
+ * )
+ */
 function UserAbout(props) {
     const [loggedUserData, setLoggedUserData] = useState(JSON.parse(localStorage.getItem("userData")));
     const [queryUser] = useState(props.userInfo);
@@ -22,7 +35,6 @@ function UserAbout(props) {
     const [userToRender, setUserToRender] = useState(null);
     const [userToRenderId, setUserToRenderId] = useState(null);
     const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
-    // const [dataToSend, setDataToSend] = useState(null);
 
     useEffect(() => {
         if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
@@ -31,10 +43,26 @@ function UserAbout(props) {
                 .then((response) => {
                     setUserToRender({ ...response.data, "sameUser": false });
                     setUserToRenderId(response.data.user._id);
-                    console.log(response)
                 })
                 .catch((error) => {
-                    console.log("Error occured while getting photostream...");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
                 });
         } else {
             setUserToRender({ ...loggedUserData, "sameUser": true });
@@ -42,7 +70,6 @@ function UserAbout(props) {
         }
     }, [loggedUserData, queryUser]);
 
-    console.log(userToRenderId);
     const dataToSend = [
         { title: "About", path: "/people/" + userToRenderId, selected: true },
         { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
@@ -58,6 +85,10 @@ function UserAbout(props) {
     ];
     const position = "position-static";
 
+    /**
+     * Toggles user descriptions from read state to edit state or vice versa
+     * @return  {null}
+     */
     const ToggleUserDescriptionEdit = () => {
         if (userDescriptionEdit) {
             if (document.getElementById("edit-user-description"))
@@ -78,6 +109,10 @@ function UserAbout(props) {
         }
     };
 
+    /**
+     * Toggles user info from read state to edit state or vice versa
+     * @return  {null}
+     */
     const ToggleUserInfo = () => {
         if (userInfoEdit) {
             if (document.getElementById("edit-info"))
@@ -126,6 +161,10 @@ function UserAbout(props) {
         }
     };
 
+    /**
+     * Toggles user showcase from read state to edit state or vice versa
+     * @return  {null}
+     */
     const editUserShowCase = (e) => {
         if (document.getElementById("showcase-edit-text").classList.contains("d-none")) {
             //enable edit
@@ -149,6 +188,10 @@ function UserAbout(props) {
         }
     };
 
+    /**
+     * Adding/Removing user selected images from photostream to user showcase
+     * @return  {null}
+     */
     const addImageSelected = (e) => {
         let imageId = e.currentTarget.getAttribute("_id");
         if (e.currentTarget.classList.contains("selected-image")) {
@@ -165,7 +208,12 @@ function UserAbout(props) {
         }
     };
 
+    /**
+     * Getting user photostream
+     * @return  {null}
+     */
     const getPhotoStream = (e) => {
+        setSelectedImages([]);
         axios.defaults.baseURL = "https://qasaqees.tech/api";
         axios.get('/user/photostream/' + userToRenderId, {
             headers: {
@@ -190,15 +238,45 @@ function UserAbout(props) {
                 setUserPhotostream(response.data);
             })
             .catch((error) => {
-                console.log("Error occured while getting photostream...");
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     };
 
+    useEffect(() => {
+        if (userToRender !== null && userToRender.sameUser === true && userToRenderId !== null)
+            getPhotoStream();
+    }, [userToRender, userToRenderId]);
+    /**
+     * Hitting BE and editing user info (Description or showcase title)
+     * @return  {null}
+     */
     const simpleEditUserAbout = (e) => {
         const userAbout = {
             "description": document.getElementById("user-description-textarea").value,
             "showCase": {
-                "title": document.getElementById("showcase-edit-title-input").value
+                "title": document.getElementById("showcase-edit-title-input").value,
+                "photos": selectedImages
             }
         }
         if (e.currentTarget.parentElement.id === "edit-user-description") {
@@ -216,11 +294,54 @@ function UserAbout(props) {
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     };
 
+    /**
+     * Hitting BE and editing user data (Description or showcase title or user info or showcase photos)
+     * @return  {null}
+     */
     const complexEditUserAbout = (e) => {
         const userAbout = {
             "description": document.getElementById("user-description-textarea").value,
@@ -235,15 +356,52 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.description = response.data.description;
                 loggedUserData.user.showCase.title = response.data.showCase.title;
                 loggedUserData.user.showCase.photos = response.data.showCase.photos;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                debugger;
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     }
 
@@ -274,10 +432,18 @@ function UserAbout(props) {
         }
     };
 
+    /**
+     * Redirecting visitor to view this photo onClick
+     * @return  {null}
+     */
     const redirectToPhoto = (e) => {
         window.location.href = "/photo/getdetails/" + e.currentTarget.getAttribute("_id");
     }
 
+    /**
+     * Hitting BE and editing user data (Description or showcase title or user info or showcase photos)
+     * @return  {null}
+     */
     const semiComplexEditUserAbout = (e) => {
         const userAbout = {
             "occupation": document.getElementById("occupation").value,
@@ -291,15 +457,52 @@ function UserAbout(props) {
             headers: { "Content-Type": "application/json" }
         })
             .then((response) => {
-                debugger;
                 loggedUserData.user.occupation = userAbout.occupation;
                 loggedUserData.user.homeTown = userAbout.homeTown;
                 loggedUserData.user.currentCity = userAbout.currentCity;
                 localStorage.setItem("userData", JSON.stringify(loggedUserData));
                 setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.success("Updated your details successfully");
             }).catch((error) => {
-                debugger;
-                console.log(error.config);
+                if (error.response.status === 401)
+                    window.location.href = "/login";
+                else if (error.response.status === 400) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error(error.response.data.message);
+                }
             });
     }
 
@@ -330,7 +533,7 @@ function UserAbout(props) {
                                                 <button id="about-yourself-text-btn" className="bg-transparent border-0 p-0" onClick={ToggleUserDescriptionEdit}>
                                                     Write a little about yourself
                                                 </button> :
-                                                <p>{userToRender.user.description}</p>
+                                                <p className="wp-prewrap">{userToRender.user.description}</p>
                                             }
                                         </div>
                                         <div className="col-md-2 order-md-1 order-0">
@@ -501,6 +704,17 @@ function UserAbout(props) {
             }
         </div >
     );
+}
+
+UserAbout.propTypes = {
+    /**
+     * User's id
+     */
+    userInfo: PropTypes.string.isRequired
+}
+
+UserAbout.defaultProps = {
+    userInfo: "60b7df35f8941e0012b98eec"
 }
 
 export default UserAbout;

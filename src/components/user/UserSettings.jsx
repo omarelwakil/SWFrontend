@@ -4,10 +4,19 @@ import './UserSettings.css';
 
 import userIcon from '../../images/usericon.png'
 
+/**
+ * Component for user settings path => /account
+ *
+ * @component
+ * @example
+ * return(
+ *  <UserSettings />
+ * )
+ */
 function UserSettings() {
     const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
-    console.log(userData);
+
     if (isLoggedIn === null) {
         localStorage.clear();
         window.location.href = "/login";
@@ -66,7 +75,7 @@ function UserSettings() {
                                 <div className="row">
                                     <div className="col-6">
                                         <p className="m-0 fs-7 fw-bold">Login email</p>
-                                        <p className="m-0 fs-7">{userData.user.email}</p>
+                                        <p id="user-email" className="m-0 fs-7">{userData.user.email}</p>
                                         <a href="/" className="fs-7 disabled">Request email change</a>
                                     </div>
                                     <div className="col-6">

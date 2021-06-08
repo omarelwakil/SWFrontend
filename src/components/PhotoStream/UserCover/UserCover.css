@@ -114,3 +114,46 @@
     padding-bottom: 10px;
   }
 }
+
+.UserCover .image-selector {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.UserCover .bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  cursor: pointer;
+}
+
+.UserCover .selector-title {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  min-height: 17px;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.UserCover .selector-creator {
+  color: hsla(0, 0%, 100%, .7);
+  font-size: 11px;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.UserCover .image-selector:hover~.bottom-left,
+.UserCover .image-selector~.bottom-left:hover {
+  opacity: 1;
+}
+
+.UserCover .selected-image {
+  border: 3px solid #0091dc;
+  border-radius: 5px;
+}
+
+.UserCover .modal-body {
+  min-height: 60vh;
+}

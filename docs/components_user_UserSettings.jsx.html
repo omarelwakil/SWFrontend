@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/user/UserSettings.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/user/UserSettings.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+
+import './UserSettings.css';
+
+import userIcon from '../../images/usericon.png'
+
+/**
+ * Component for user settings path => /account
+ *
+ * @component
+ * @example
+ * return(
+ *  &lt;UserSettings />
+ * )
+ */
+function UserSettings() {
+    const [isLoggedIn] = useState(localStorage.getItem("accessToken"));
+    const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
+
+    if (isLoggedIn === null) {
+        localStorage.clear();
+        window.location.href = "/login";
+    }
+    return (
+        &lt;div id="account-settings">
+            &lt;div className="container-fluid">
+                &lt;div className="row my-4">
+                    &lt;div className="col-lg-6 my-lg-3 my-3">
+                        &lt;div className="card">
+                            &lt;div className="card-header bg-white p-3">
+                                &lt;p className="fs-5-6 fw-500 m-0">Profile&lt;/p>
+                            &lt;/div>
+                            &lt;div className="card-body p-3">
+                                &lt;div className="row d-flex justify-content-center align-items-center">
+                                    &lt;div className="col-md-2 col-3 d-flex justify-content-center">
+                                        &lt;img src={userIcon} width="50px" height="50px" alt="user-icon" className="rounded-circle" />
+                                    &lt;/div>
+                                    &lt;div className="col-md-10 col-9">
+                                        &lt;p className="m-0 fs-7 fw-bold">&lt;span className="fw-normal">Your real name is&lt;/span> {userData.user.firstName} {userData.user.lastName}.&lt;/p>
+                                        &lt;p className="m-0 fs-7 fw-bold">&lt;span className="fw-normal">Your display name is&lt;/span> {userData.user.userName}.&lt;/p>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className="card-footer bg-white p-3">
+                                &lt;p className="fs-7">Your account has been reviewed as safe by Flickr staff. &lt;a href="/help" className="fs-7">What does this mean?&lt;/a>&lt;/p>
+                                &lt;p className="m-0 fs-7 fw-bold">Web addresses&lt;/p>
+                                &lt;p className="m-0 fs-7">&lt;a href="/" className="fs-7 disabled">Create your own memorable Flickr web address!&lt;/a> It's an easy way to share your Flickr profile and your photostream with your friends.&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="col-lg-6 my-lg-3 my-3">
+                        &lt;div className="card">
+                            &lt;div className="card-header bg-white p-3">
+                                &lt;p className="fs-5-6 fw-500 m-0">Membership status&lt;/p>
+                            &lt;/div>
+                            &lt;div className="card-body p-3">
+                                &lt;div className="row">
+                                    &lt;div className="col-md-2 col-3 d-flex justify-content-center align-items-center">
+                                        &lt;div id="member-sub-icon" className="border border-3 rounded-circle d-flex justify-content-center align-items-center">
+                                            &lt;p className="text-center m-0">1K&lt;/p>
+                                        &lt;/div>
+                                    &lt;/div>
+                                    &lt;div className="col-md-10 col-9">
+                                        &lt;p className="m-0 fs-7 fw-bold">You have a Flickr Free account.&lt;/p>
+                                        &lt;p className="m-0 fs-7">You get 1,000 of your favorite full-resolution photos and HD videos, shown with ads. &lt;a href="/" className="fs-7 disabled">Upgrade to Flickr Pro&lt;/a>&lt;/p>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div className="card mt-4">
+                            &lt;div className="card-header bg-white p-3">
+                                &lt;p className="fs-5-6 fw-500 m-0">Account&lt;/p>
+                            &lt;/div>
+                            &lt;div className="card-body p-3">
+                                &lt;div className="row">
+                                    &lt;div className="col-6">
+                                        &lt;p className="m-0 fs-7 fw-bold">Login email&lt;/p>
+                                        &lt;p id="user-email" className="m-0 fs-7">{userData.user.email}&lt;/p>
+                                        &lt;a href="/" className="fs-7 disabled">Request email change&lt;/a>
+                                    &lt;/div>
+                                    &lt;div className="col-6">
+                                        &lt;p className="m-0 fs-7 fw-bold">Password&lt;/p>
+                                        &lt;a href="/change-password" className="fs-7">Edit your password&lt;/a>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className="card-footer bg-white p-3">
+                                &lt;p className="m-0 fs-7">You can also &lt;a href="/help" className="fs-7">get help with your account&lt;/a>, or &lt;a href="/" className="fs-7 disabled">delete your Flickr account&lt;/a>.&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default UserSettings;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="Album.html">Album</a></li><li><a href="AlbumInternal.html">AlbumInternal</a></li><li><a href="AlbumPhotos.html">AlbumPhotos</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Comment.html">Comment</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="LandingSlider.html">LandingSlider</a></li><li><a href="Login.html">Login</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 22:39:36 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

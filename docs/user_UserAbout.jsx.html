@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: user/UserAbout.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: user/UserAbout.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import PropTypes from "prop-types"
+import _ from 'lodash';
+
+import axios from 'axios';
+
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+
+import Navbar from '../Trending/Navbar/Navbar';
+import UserCover from '../PhotoStream/UserCover/UserCover';
+
+import './UserAbout.css';
+
+import emptyShowCase from '../../images/empty-showcase.jpg';
+
+/**
+ * Component for User About (description,showcase,user info)
+ *
+ * @component
+ * @example
+ * const id = 60b7df35f8941e0012b98eec
+ * return (
+ *   &lt;User userInfo={id} />
+ * )
+ */
+function UserAbout(props) {
+    const [loggedUserData, setLoggedUserData] = useState(JSON.parse(localStorage.getItem("userData")));
+    const [queryUser] = useState(props.userInfo);
+    const [userDescriptionEdit, setUserDescriptionEdit] = useState(false);
+    const [userInfoEdit, setUserInfoEdit] = useState(false);
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [userToRender, setUserToRender] = useState(null);
+    const [userToRenderId, setUserToRenderId] = useState(null);
+    const [userPhotostream, setUserPhotostream] = useState({ "photos": [] });
+    // const [dataToSend, setDataToSend] = useState(null);
+
+    useEffect(() => {
+        if (loggedUserData === null || queryUser !== loggedUserData.user._id) {
+            axios.defaults.baseURL = "https://qasaqees.tech/api";
+            axios.get('/user/about/' + queryUser)
+                .then((response) => {
+                    setUserToRender({ ...response.data, "sameUser": false });
+                    setUserToRenderId(response.data.user._id);
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log("Error occured while getting photostream...");
+                });
+        } else {
+            setUserToRender({ ...loggedUserData, "sameUser": true });
+            setUserToRenderId(loggedUserData.user._id);
+        }
+    }, [loggedUserData, queryUser]);
+
+    console.log(userToRenderId);
+    const dataToSend = [
+        { title: "About", path: "/people/" + userToRenderId, selected: true },
+        { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
+        { title: "Albums", path: "/photos/" + userToRenderId + "/albums", selected: false },
+        { title: "Faves", path: "/photos/" + userToRenderId + "/favorites", selected: false }
+    ];
+    const dataToSendSameUser = [
+        { title: "About", path: "/people/" + userToRenderId, selected: true },
+        { title: "Photostream", path: "/photos/" + userToRenderId, selected: false },
+        { title: "Albums", path: "/photos/" + userToRenderId + "/albums", selected: false },
+        { title: "Faves", path: "/photos/" + userToRenderId + "/favorites", selected: false },
+        { title: "Camera Roll", path: "/cameraroll", selected: false }
+    ];
+    const position = "position-static";
+
+    /**
+     * Toggles user descriptions from read state to edit state or vice versa
+     * @return  {null}
+     */
+    const ToggleUserDescriptionEdit = () => {
+        if (userDescriptionEdit) {
+            if (document.getElementById("edit-user-description"))
+                document.getElementById("edit-user-description").classList.add("d-none");
+            if (document.getElementById("edit-description"))
+                document.getElementById("edit-description").classList.remove("d-none");
+            if (document.getElementById("about-yourself-text-btn"))
+                document.getElementById("about-yourself-text-btn").classList.remove("d-none");
+            setUserDescriptionEdit(false);
+        } else {
+            if (document.getElementById("edit-user-description"))
+                document.getElementById("edit-user-description").classList.remove("d-none");
+            if (document.getElementById("edit-description"))
+                document.getElementById("edit-description").classList.add("d-none");
+            if (document.getElementById("about-yourself-text-btn"))
+                document.getElementById("about-yourself-text-btn").classList.add("d-none");
+            setUserDescriptionEdit(true);
+        }
+    };
+
+    /**
+     * Toggles user info from read state to edit state or vice versa
+     * @return  {null}
+     */
+    const ToggleUserInfo = () => {
+        if (userInfoEdit) {
+            if (document.getElementById("edit-info"))
+                document.getElementById("edit-info").classList.remove("d-none");
+            if (document.getElementById("user-info-options"))
+                document.getElementById("user-info-options").classList.add("d-none");
+            if (document.getElementsByClassName("user-info-text"))
+                for (let i = 0; i &lt; document.getElementsByClassName("user-info-text").length; i++) {
+                    document.getElementsByClassName("user-info-text")[i].classList.remove("d-none");
+                    if (document.getElementsByClassName("user-info-text")[i].parentElement.getAttribute("exist") === "false")
+                        document.getElementsByClassName("user-info-text")[i].parentElement.classList.add("d-none");
+                }
+            if (document.getElementsByClassName("user-info-input"))
+                for (let j = 0; j &lt; document.getElementsByClassName("user-info-input").length; j++) {
+                    document.getElementsByClassName("user-info-input")[j].classList.add("d-none");
+                }
+            if (document.getElementsByClassName("user-info-title"))
+                for (let i = 0; i &lt; document.getElementsByClassName("user-info-title").length; i++) {
+                    if (document.getElementsByClassName("user-info-title")[i].parentElement.getAttribute("exist") === "false")
+                        document.getElementsByClassName("user-info-title")[i].parentElement.classList.add("d-none");
+                }
+            setUserInfoEdit(false);
+        } else {
+            if (document.getElementById("edit-info"))
+                document.getElementById("edit-info").classList.add("d-none");
+            if (document.getElementById("user-info-options"))
+                document.getElementById("user-info-options").classList.remove("d-none");
+
+            if (document.getElementsByClassName("user-info-text"))
+                for (let i = 0; i &lt; document.getElementsByClassName("user-info-text").length; i++) {
+                    document.getElementsByClassName("user-info-text")[i].classList.add("d-none");
+                    if (document.getElementsByClassName("user-info-text")[i].parentElement.classList.contains("d-none"))
+                        document.getElementsByClassName("user-info-text")[i].parentElement.classList.remove("d-none");
+                }
+            if (document.getElementsByClassName("user-info-input"))
+                for (let j = 0; j &lt; document.getElementsByClassName("user-info-input").length; j++) {
+                    document.getElementsByClassName("user-info-input")[j].classList.remove("d-none");
+                }
+
+            if (document.getElementsByClassName("user-info-title"))
+                for (let i = 0; i &lt; document.getElementsByClassName("user-info-title").length; i++) {
+                    if (document.getElementsByClassName("user-info-title")[i].parentElement.classList.contains("d-none"))
+                        document.getElementsByClassName("user-info-title")[i].parentElement.classList.remove("d-none");
+                }
+            setUserInfoEdit(true);
+        }
+    };
+
+    /**
+     * Toggles user showcase from read state to edit state or vice versa
+     * @return  {null}
+     */
+    const editUserShowCase = (e) => {
+        if (document.getElementById("showcase-edit-text").classList.contains("d-none")) {
+            //enable edit
+            if (document.getElementById("showcase-edit-text"))
+                document.getElementById("showcase-edit-text").classList.remove("d-none");
+            if (document.getElementById("showcase-title-text"))
+                document.getElementById("showcase-title-text").classList.add("d-none");
+            if (document.getElementById("showcase-edit-btn"))
+                document.getElementById("showcase-edit-btn").classList.add("d-none");
+            if (document.getElementById("secondary-showcase-photo"))
+                document.getElementById("secondary-showcase-photo").classList.add("d-none");
+        } else {
+            if (document.getElementById("showcase-edit-text"))
+                document.getElementById("showcase-edit-text").classList.add("d-none");
+            if (document.getElementById("showcase-title-text"))
+                document.getElementById("showcase-title-text").classList.remove("d-none");
+            if (document.getElementById("showcase-edit-btn"))
+                document.getElementById("showcase-edit-btn").classList.add("d-none");
+            if (document.getElementById("secondary-showcase-photo"))
+                document.getElementById("secondary-showcase-photo").classList.remove("d-none");
+        }
+    };
+
+    /**
+     * Adding/Removing user selected images from photostream to user showcase
+     * @return  {null}
+     */
+    const addImageSelected = (e) => {
+        let imageId = e.currentTarget.getAttribute("_id");
+        if (e.currentTarget.classList.contains("selected-image")) {
+            //Removing Image
+            e.currentTarget.classList.remove("selected-image");
+            setSelectedImages(selectedImages.filter(item => item !== imageId))
+        } else {
+            //Adding Image
+            e.currentTarget.classList.add("selected-image");
+            setSelectedImages(selectedImages => [
+                ...selectedImages,
+                imageId
+            ]);
+        }
+    };
+
+    /**
+     * Getting user photostream
+     * @return  {null}
+     */
+    const getPhotoStream = (e) => {
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.get('/user/photostream/' + userToRenderId, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+            }
+        })
+            .then((response) => {
+                for (let i = 0; i &lt; loggedUserData.user.showCase.photos.length; i++) {
+                    for (let j = 0; j &lt; response.data.photos.length; j++) {
+                        if (response.data.photos[j]._id === loggedUserData.user.showCase.photos[i]._id) {
+                            response.data.photos[j].selected = true;
+                            setSelectedImages(selectedImages => [
+                                ...selectedImages,
+                                response.data.photos[j]._id
+                            ]);
+                        } else {
+                            response.data.photos[j].selected = false;
+                        }
+                    }
+                }
+                setUserPhotostream(response.data);
+            })
+            .catch((error) => {
+                console.log("Error occured while getting photostream...");
+            });
+    };
+
+    /**
+     * Hitting BE and editing user info (Description or showcase title)
+     * @return  {null}
+     */
+    const simpleEditUserAbout = (e) => {
+        const userAbout = {
+            "description": document.getElementById("user-description-textarea").value,
+            "showCase": {
+                "title": document.getElementById("showcase-edit-title-input").value
+            },
+            "occupation": document.getElementById("occupation").value,
+            "homeTown": document.getElementById("home-town").value,
+            "currentCity": document.getElementById("current-city").value
+        }
+        if (e.currentTarget.parentElement.id === "edit-user-description") {
+            ToggleUserDescriptionEdit();
+        } else {
+            editUserShowCase();
+        }
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
+        axios.patch("/user/" + loggedUserData.user._id, userAbout, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => {
+                loggedUserData.user.description = response.data.description;
+                loggedUserData.user.showCase.title = response.data.showCase.title;
+                localStorage.setItem("userData", JSON.stringify(loggedUserData));
+                setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+            }).catch((error) => {
+                console.log(error.config);
+            });
+    };
+
+    /**
+     * Hitting BE and editing user data (Description or showcase title or user info or showcase photos)
+     * @return  {null}
+     */
+    const complexEditUserAbout = (e) => {
+        const userAbout = {
+            "description": document.getElementById("user-description-textarea").value,
+            "showCase": {
+                "title": document.getElementById("showcase-edit-title-input").value,
+                "photos": selectedImages
+            },
+            "occupation": document.getElementById("occupation").value,
+            "homeTown": document.getElementById("home-town").value,
+            "currentCity": document.getElementById("current-city").value
+        }
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
+        axios.patch("/user/" + loggedUserData.user._id, userAbout, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => {
+                debugger;
+                loggedUserData.user.description = response.data.description;
+                loggedUserData.user.showCase.title = response.data.showCase.title;
+                loggedUserData.user.showCase.photos = response.data.showCase.photos;
+                localStorage.setItem("userData", JSON.stringify(loggedUserData));
+                setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+            }).catch((error) => {
+                debugger;
+                console.log(error.config);
+            });
+    }
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const gridItems = [];
+    window.onload = function () {
+        if (document.querySelector("#user-about .grid")) {
+            const grid = document.querySelector("#user-about .grid");
+            const rowSize = parseInt(getComputedStyle(grid).getPropertyValue("grid-auto-rows"), 10);
+            const rowGap = parseInt(getComputedStyle(grid).getPropertyValue("grid-gap"), 10);
+
+            const positionGridItems = () => {
+                gridItems.forEach(({ item, content }) => {
+                    content.classList.remove("cover");
+                    const rowSpan = Math.ceil(
+                        (content.offsetHeight + rowGap) / (rowSize + rowGap)
+                    );
+                    item.style.setProperty("--row-span", rowSpan);
+                    content.classList.add("cover");
+                });
+            };
+
+            window.addEventListener("load", positionGridItems);
+            window.addEventListener("resize", _.debounce(positionGridItems, 100));
+        }
+    };
+
+    /**
+     * Redirecting visitor to view this photo onClick
+     * @return  {null}
+     */
+    const redirectToPhoto = (e) => {
+        window.location.href = "/photo/getdetails/" + e.currentTarget.getAttribute("_id");
+    }
+
+    /**
+     * Hitting BE and editing user data (Description or showcase title or user info or showcase photos)
+     * @return  {null}
+     */
+    const semiComplexEditUserAbout = (e) => {
+        const userAbout = {
+            "description": document.getElementById("user-description-textarea").value,
+            "showCase": {
+                "title": document.getElementById("showcase-edit-title-input").value
+            },
+            "occupation": document.getElementById("occupation").value,
+            "homeTown": document.getElementById("home-town").value,
+            "currentCity": document.getElementById("current-city").value
+        }
+        ToggleUserInfo();
+        axios.defaults.baseURL = "https://qasaqees.tech/api";
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("accessToken");
+        axios.patch("/user/editInfo", userAbout, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => {
+                debugger;
+                loggedUserData.user.occupation = userAbout.occupation;
+                loggedUserData.user.homeTown = userAbout.homeTown;
+                loggedUserData.user.currentCity = userAbout.currentCity;
+                localStorage.setItem("userData", JSON.stringify(loggedUserData));
+                setLoggedUserData(JSON.parse(localStorage.getItem("userData")));
+            }).catch((error) => {
+                debugger;
+                console.log(error.config);
+            });
+    }
+
+    return (
+        &lt;div id="user-about">
+            {userToRender != null ?
+                &lt;UserCover userData={userToRender.user} /> : null
+            }
+            &lt;div id="user-about-navbar">
+                {userToRenderId != null ?
+                    &lt;div>
+                        {userToRender.sameUser === true ?
+                            &lt;Navbar items={dataToSendSameUser} position={position} />
+                            : &lt;Navbar items={dataToSend} position={position} />
+                        }
+                    &lt;/div> : null
+                }
+            &lt;/div>
+            {userToRender != null ?
+                &lt;div>
+                    &lt;div className="container-fluid my-5">
+                        &lt;div className="row">
+                            &lt;div className="col-12">
+                                &lt;div className={"bg-white rounded-top border border-bottom-0 px-md-6 py-md-4 p-3" + ((userToRender.user.description === null || userToRender.user.description === "") &amp;&amp; userToRender.sameUser === false ? " d-none" : "")}>
+                                    &lt;div className="row">
+                                        &lt;div className="col-md-10 order-md-0 order-1">
+                                            {(userToRender.user.description === null || userToRender.user.description === "") &amp;&amp; userToRender.sameUser === true ?
+                                                &lt;button id="about-yourself-text-btn" className="bg-transparent border-0 p-0" onClick={ToggleUserDescriptionEdit}>
+                                                    Write a little about yourself
+                                                &lt;/button> :
+                                                &lt;p>{userToRender.user.description}&lt;/p>
+                                            }
+                                        &lt;/div>
+                                        &lt;div className="col-md-2 order-md-1 order-0">
+                                            {userToRender.sameUser === true ?
+                                                &lt;EditIcon id="edit-description" className="edit-m-ui-btn float-end d-block" onClick={ToggleUserDescriptionEdit} />
+                                                : null
+                                            }
+                                        &lt;/div>
+                                    &lt;/div>
+                                    {userToRender.sameUser === true ?
+                                        &lt;div id="edit-user-description" className="mb-5 d-none">
+                                            &lt;textarea id="user-description-textarea" className="w-100 border rounded" defaultValue={userToRender.user.description}>&lt;/textarea>
+                                            &lt;button className="btn-cancel fw-bold float-end border-0 rounded" onClick={ToggleUserDescriptionEdit}>Cancel&lt;/button>
+                                            &lt;button className="btn-save fw-bold float-end me-3 border-0 rounded" onClick={simpleEditUserAbout} >Save&lt;/button>
+                                        &lt;/div> : null
+                                    }
+                                &lt;/div>
+                                &lt;div className={"bg-white border border-bottom-0 px-md-6 py-md-4 p-3" + ((userToRender.user.showCase.photos === null || userToRender.user.showCase.photos.length === 0) &amp;&amp; userToRender.sameUser === false ? " d-none" : "")}>
+                                    &lt;div className="row">
+                                        &lt;div className="col-12">
+                                            &lt;span id="showcase-title-text" className="bg-transparent border-0 fw-bold">
+                                                {userToRender.user.showCase.title}
+                                            &lt;/span>
+                                            {userToRender.sameUser === true ?
+                                                &lt;div id="showcase-edit-text" className="row d-none mb-3 d-flex align-items-center">
+                                                    &lt;div className="col-md-4">
+                                                        &lt;input id="showcase-edit-title-input" type="text" className="form-control user-info-input" defaultValue={userToRender.user.showCase.title} />
+                                                    &lt;/div>
+                                                    &lt;div className="col-md-4 mt-md-0 mt-2">
+                                                        &lt;button className="btn-save fw-bold border-0 rounded" onClick={simpleEditUserAbout} >Save&lt;/button>
+                                                    &lt;/div>
+                                                    &lt;div className="col-md-4">
+                                                        {userToRender.sameUser === true ?
+                                                            &lt;button className="bg-transparent border-0 float-end p-0" data-bs-toggle="modal" data-bs-target="#showcase-modal" onClick={getPhotoStream}>
+                                                                &lt;AddIcon className="add-m-ui-btn" style={{ fontSize: 32 }} />
+                                                            &lt;/button> : null
+                                                        }
+                                                    &lt;/div>
+                                                &lt;/div> : null
+                                            }
+                                            {userToRender.sameUser === true ?
+                                                &lt;EditIcon id="showcase-edit-btn" className="edit-m-ui-btn ms-2" onClick={editUserShowCase} />
+                                                : null
+                                            }
+                                            {userToRender.sameUser === true ?
+                                                &lt;button id="secondary-showcase-photo" className="bg-transparent border-0 float-end p-0" data-bs-toggle="modal" data-bs-target="#showcase-modal" onClick={getPhotoStream}>
+                                                    &lt;AddIcon className="add-m-ui-btn" style={{ fontSize: 32 }} />
+                                                &lt;/button> : null
+                                            }
+                                        &lt;/div>
+                                        {userToRender.user.showCase.photos.length === 0 ?
+                                            &lt;div className="col-12">
+                                                &lt;div className="d-flex justify-content-center p-3">
+                                                    &lt;div className="position-relative">
+                                                        &lt;img src={emptyShowCase} className="w-100" alt="empty-showcase" />
+                                                        &lt;div className="position-absolute centered text-center">
+                                                            &lt;h5 className="m-0">This is your showcase.&lt;/h5>
+                                                            &lt;button className="bg-transparent border-0 fs-5 hyperlink-btn p-0" data-bs-toggle="modal" data-bs-target="#showcase-modal" onClick={getPhotoStream} >Get started&lt;/button>
+                                                        &lt;/div>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                            : null
+                                        }
+                                        &lt;div className="col-12">
+                                            &lt;div className="grid" >
+                                                {userToRender.user.showCase.photos.map(photo => {
+                                                    return (
+                                                        &lt;div className="grid__item position-relative lodash-wrapper" key={photo._id}>
+                                                            &lt;img className="image-lodash cursor-pointer" src={photo.url} alt="" _id={photo._id} onClick={redirectToPhoto} />
+                                                            &lt;div className="bottom-left">
+                                                                &lt;p className="selector-title m-0">{photo.title}&lt;/p>
+                                                                &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
+                                                            &lt;/div>
+                                                        &lt;/div>
+                                                    );
+                                                })
+                                                }
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/div>
+                                &lt;/div>
+                                &lt;div className="bg-white border rounded-bottom px-md-6 py-md-4 p-3">
+                                    &lt;div className="row p-md-0 pe-3">
+                                        {userToRender.sameUser === true ?
+                                            &lt;div className="col-12">
+                                                &lt;EditIcon id="edit-info" className="edit-m-ui-btn float-end" onClick={ToggleUserInfo} />
+                                            &lt;/div> : null
+                                        }
+                                        &lt;div className="col-md-2 col-4 d-flex align-items-center mb-3" exist={userToRender.user.createdAt === "" ? "false" : "true"}>
+                                            &lt;p className="text-muted m-0 text-nowrap user-info-title">Joined&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className="col-md-10 col-8 d-flex align-items-center mb-3" exist={userToRender.user.createdAt === "" ? "false" : "true"}>
+                                            &lt;p className="text-black user-info-text-static m-0">{monthNames[new Date(userToRender.user.createdAt).getMonth()]} {new Date(userToRender.user.createdAt).getFullYear()}&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.occupation === "" ? " d-none" : "")} exist={userToRender.user.occupation === "" ? "false" : "true"}>
+                                            &lt;p className="text-muted m-0 text-nowrap user-info-title">Occupation&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.occupation === "" ? " d-none" : "")} exist={userToRender.user.occupation === "" ? "false" : "true"}>
+                                            &lt;p className="text-black user-info-text m-0">{userToRender.user.occupation}&lt;/p>
+                                            &lt;input id="occupation" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.occupation} />
+                                        &lt;/div>
+                                        &lt;div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
+                                            &lt;p className="text-muted m-0 text-nowrap user-info-title">Hometown&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.homeTown === "" ? " d-none" : "")} exist={userToRender.user.homeTown === "" ? "false" : "true"}>
+                                            &lt;p className="text-black user-info-text m-0">{userToRender.user.homeTown}&lt;/p>
+                                            &lt;input id="home-town" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.homeTown} />
+                                        &lt;/div>
+                                        &lt;div className={"col-md-2 col-4 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
+                                            &lt;p className="text-muted m-0 text-nowrap user-info-title">Current city&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className={"col-md-10 col-8 d-flex align-items-center mb-3" + (userToRender.user.currentCity === "" ? " d-none" : "")} exist={userToRender.user.currentCity === "" ? "false" : "true"}>
+                                            &lt;p className="text-black user-info-text m-0">{userToRender.user.currentCity}&lt;/p>
+                                            &lt;input id="current-city" type="text" className="form-control user-info-input d-none" defaultValue={userToRender.user.currentCity} />
+                                        &lt;/div>
+                                        &lt;div className="col-md-2 col-4 d-flex align-items-center" exist={userToRender.user.email === "" ? "false" : "true"}>
+                                            &lt;p className="text-muted m-0 text-nowrap user-info-title">Email&lt;/p>
+                                        &lt;/div>
+                                        &lt;div className="col-md-10 col-8 d-flex align-items-center" exist={userToRender.user.email === "" ? "false" : "true"}>
+                                            &lt;a href={"mailto:" + userToRender.user.email} className="hyperlink-btn">{userToRender.user.email}&lt;/a>
+                                        &lt;/div>
+                                        {userToRender.sameUser === true ?
+                                            &lt;div id="user-info-options" className="col-12 mt-2 d-none">
+                                                &lt;button className="btn-cancel fw-bold float-end border-0 rounded" onClick={ToggleUserInfo} >Cancel&lt;/button>
+                                                &lt;button className="btn-save fw-bold float-end me-3 border-0 rounded" onClick={semiComplexEditUserAbout}>Save&lt;/button>
+                                            &lt;/div> : null
+                                        }
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    {userToRender.sameUser === true ?
+                        &lt;div className="modal fade p-0" id="showcase-modal" tabIndex="-1" aria-labelledby="showcaseModalLabel" aria-hidden="true">
+                            &lt;div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                &lt;div className="modal-content">
+                                    &lt;div className="modal-header">
+                                        &lt;h5 className="m-0">Photostream&lt;/h5>
+                                        &lt;button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">&lt;/button>
+                                    &lt;/div>
+                                    &lt;div className="modal-body">
+                                        &lt;div className="row" data-masonry='{"percentPosition": true }'>
+                                            {userPhotostream.photos.map(photo => {
+                                                return (
+                                                    &lt;div className="col-md-2 d-flex justify-content-center" key={photo._id}>
+                                                        &lt;div className="position-relative">
+                                                            &lt;img src={photo.url} className={"image-selector" + (photo.selected ? " selected-image" : "")} alt="" _id={photo._id} onClick={addImageSelected} />
+                                                            &lt;div className="bottom-left">
+                                                                &lt;p className="selector-title m-0">{photo.title}&lt;/p>
+                                                                &lt;p className="selector-creator m-0">by {photo.creator.firstName} {photo.creator.lastName}&lt;/p>
+                                                            &lt;/div>
+                                                        &lt;/div>
+                                                    &lt;/div>
+                                                );
+                                            })
+                                            }
+                                        &lt;/div>
+                                    &lt;/div>
+                                    &lt;div className="modal-footer">
+                                        &lt;button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showcase-modal" onClick={complexEditUserAbout}>Select photos&lt;/button>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div> : null
+                    }
+                &lt;/div> : null
+            }
+        &lt;/div >
+    );
+}
+
+UserAbout.propTypes = {
+    /**
+     * User's id
+     */
+    userInfo: PropTypes.string.isRequired
+}
+
+UserAbout.defaultProps = {
+    userInfo: "60b7df35f8941e0012b98eec"
+}
+
+export default UserAbout;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 04:04:45 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

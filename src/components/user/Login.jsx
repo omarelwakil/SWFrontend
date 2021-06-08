@@ -6,7 +6,15 @@ import FacebookLogin from 'react-facebook-login';
 
 
 import "./Login.css"
-
+/**
+ * Component for Login with email and password or facebook
+ *
+ * @component
+ * @example
+ * return(
+ *    <Login />
+ * )
+ */
 function Login() {
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     //State of each text box and its error
@@ -20,6 +28,11 @@ function Login() {
         window.location.href = "/account";
         return;
     }
+/**
+ * Recieves facebook response and send accessToken to BE
+ * @param   {object} response facebook response 
+ * @return  {void}        
+ */
     const responseFacebook = (response) => {
         console.log("facbook response: ");
         console.log(response);
@@ -63,6 +76,10 @@ function Login() {
       const componentClicked = (data) => {
         console.warn(data);
       }
+      /**
+ * send login credentials to BE  
+ * @return  {void}       
+ */
     function Submit(event) {
         event.preventDefault();
         if (!emailError && !passwordError) {
