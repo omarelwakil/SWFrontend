@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Explore</title>
+    <title>JSDoc: Source: components/Album/PhotoStream.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,142 +17,41 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Explore</h1>
+    <h1 class="page-title">Source: components/Album/PhotoStream.jsx</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Explore<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><p>Component for flickr explore.</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Explore"><span class="type-signature"></span>new Explore<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_static_Explore.js.html">components/static/Explore.js</a>, <a href="components_static_Explore.js.html#line15">line 15</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>return (  &lt;Explore />)</code></pre>
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+
+import './AlbumInternal.css';
+/**
+ * Component for showing each photo stream of the user.
+ *
+ * @component
+ * @example
+ * const photoId = "asd15451a63s4d4d5s4"
+ * const url = 'http://flicker.com/image.jpg'
+ * return (
+ *   &lt;PhotoStream id={photoId} url={url} />
+ * )
+ */
+function PhotoStream(probs){
+
+    return(
+        &lt;div class="col-lg-3 col-sm-12 album-photo-col">
+           &lt;img id={probs.id} class="img-thumbnail album-photoStream" src={probs.url} />
+        &lt;/div>
+    );
+}
+
+export default PhotoStream;</code></pre>
+        </article>
+    </section>
 
 
 

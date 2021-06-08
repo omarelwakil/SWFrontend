@@ -1,4 +1,32 @@
-import React, { useState, useEffect , location } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Album/AlbumInternal.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Album/AlbumInternal.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect , location } from 'react';
 //import Modal from "react-bootstrap/Modal";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -16,7 +44,7 @@ import PhotoStream from './PhotoStream';
  * const albumId="60baabf254a4dd00128e1c1f"
  * const userId="60baab7c54a4dd00128e1c1e"
  * return (
- *   <AlbumInternal albumId={albumId} userId={userId} />
+ *   &lt;AlbumInternal albumId={albumId} userId={userId} />
  * )
  */
 function AlbumInternal(probs) {//probs {"albumId":"123"}
@@ -139,7 +167,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
         function configureElementsCreated() {
             //find common images between album media and photo stream
             if(photoStream.length > 0){
-                for (let index = 0; index < media.length; index++) {
+                for (let index = 0; index &lt; media.length; index++) {
                     debugger;
                     console.log("Media[index]._id");
                     console.log(media[index]._id);
@@ -153,13 +181,13 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 }
             }
             //Album photo stream eventListeners
-            for (let index = 0; index < document.getElementsByClassName("album-photoStream").length; index++) {
+            for (let index = 0; index &lt; document.getElementsByClassName("album-photoStream").length; index++) {
                 document.getElementsByClassName("album-photoStream")[index].addEventListener("click", ClickOnPhotoSreamImg);
             }
           }
 /**
  * when user clicks on a photo shown in the modal it checks of the photo is selected or not and if so deselects the photo or make it selected and then add it to proper list (addPhotos[], removePhotos[]), finally remove selected photo from 'removePhotos[]' and remove deselected photo from 'addPhotos[]'   
- * @return  {void}        <description>
+ * @return  {void}        &lt;description>
  */
         function ClickOnPhotoSreamImg(event){
             if(event.target.classList.contains("photoStreamSelected")){
@@ -206,7 +234,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
             console.log("Photos sent to Api:");
             console.log(addPhotos[0]);
-            for (let index = 0; index < addPhotos.length; index++) {
+            for (let index = 0; index &lt; addPhotos.length; index++) {
                 axios.post('/album/addPhoto', addPhotos[index],{ headers: { "Content-Type": "application/json" } })
                     .then((response) => {
                         console.log(response.data.message);
@@ -226,7 +254,7 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             console.log("removePhotos sent to Api:");
             console.log(removePhotos);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            for (let index = 0; index < removePhotos.length; index++) {
+            for (let index = 0; index &lt; removePhotos.length; index++) {
                 axios.delete('/album/deletePhoto', removePhotos[index],{ headers: { "Content-Type": "application/json" } })
                     .then((response) => {
                         console.log(response.data.message);
@@ -250,40 +278,40 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
         //need to remove div with modal-backdrop class
     }
     return (
-        <div id="album-internal">
-            <div className="container-fluid">
-                <div className="row album-toolbar">
-                    <div className="col-9">
-                        <a href= {`/photos/${probs.userId}/albums`} className="album-back-link"><i className="fas fa-arrow-left album-back-icon"></i><span>Back to albums list</span></a>
-                    </div>
-                    <div className="col-3">
-                    </div>
-                </div>
-                <div id="album-internal-img" className="row bg-image album-image">
-                    <div className="col album-edit-col">
-                    <button type="button" className="btn btn-outline-dark album-edit-btn" onClick={LoadPhotoStream} data-bs-toggle="modal" data-bs-target="#albumModal">
-                        <i className="far fa-edit album-edit-icon"></i>
-                    </button>
-                    </div>
-                    <div className="row">
-                        <div className="col text-center">
-                            <h3 id="albumTitle" className="album-title" contentEditable="true">{titleText}</h3>
-                            <p id="albumDesc" className="album-description" contentEditable="true">
-				                {descriptionText}</p>
-                            <button id="edit-album-button" type="button" className="btn btn-dark" onClick = { Submit }>Done</button>
-                            <p id="imgNum" className="album-img-num">{media.length} photos</p>
-                            <i className="fas fa-share album-icons album-remove"></i>
-                            <i className="fas fa-book-open album-icons album-remove"></i>
-                            <i className="fas fa-download album-icons album-remove"></i>
-                            <p className="album-description">
-				                By:{userData.user.firstName}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="row gx-5">
-                <button id="loadAlbumBtn" type="button" class="btn btn-outline-primary btn-block" onClick={LoadAlbumMedia}>Load Album Media</button>    
+        &lt;div id="album-internal">
+            &lt;div className="container-fluid">
+                &lt;div className="row album-toolbar">
+                    &lt;div className="col-9">
+                        &lt;a href= {`/photos/${probs.userId}/albums`} className="album-back-link">&lt;i className="fas fa-arrow-left album-back-icon">&lt;/i>&lt;span>Back to albums list&lt;/span>&lt;/a>
+                    &lt;/div>
+                    &lt;div className="col-3">
+                    &lt;/div>
+                &lt;/div>
+                &lt;div id="album-internal-img" className="row bg-image album-image">
+                    &lt;div className="col album-edit-col">
+                    &lt;button type="button" className="btn btn-outline-dark album-edit-btn" onClick={LoadPhotoStream} data-bs-toggle="modal" data-bs-target="#albumModal">
+                        &lt;i className="far fa-edit album-edit-icon">&lt;/i>
+                    &lt;/button>
+                    &lt;/div>
+                    &lt;div className="row">
+                        &lt;div className="col text-center">
+                            &lt;h3 id="albumTitle" className="album-title" contentEditable="true">{titleText}&lt;/h3>
+                            &lt;p id="albumDesc" className="album-description" contentEditable="true">
+				                {descriptionText}&lt;/p>
+                            &lt;button id="edit-album-button" type="button" className="btn btn-dark" onClick = { Submit }>Done&lt;/button>
+                            &lt;p id="imgNum" className="album-img-num">{media.length} photos&lt;/p>
+                            &lt;i className="fas fa-share album-icons album-remove">&lt;/i>
+                            &lt;i className="fas fa-book-open album-icons album-remove">&lt;/i>
+                            &lt;i className="fas fa-download album-icons album-remove">&lt;/i>
+                            &lt;p className="album-description">
+				                By:{userData.user.firstName}&lt;/p>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="row gx-5">
+                &lt;button id="loadAlbumBtn" type="button" class="btn btn-outline-primary btn-block" onClick={LoadAlbumMedia}>Load Album Media&lt;/button>    
                 { media.map((photo) => (
-                    <AlbumPhotos
+                    &lt;AlbumPhotos
                         key={photo._id}
                         url={photo.url}
                         photoId={photo._id}
@@ -291,36 +319,58 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         userId={userData.user.id}
                     />
                 ))}
-                </div>
-            </div>
-            <div className="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                    <nav data-testid="navbartest" class="custom-navbar position-static"><div class="custom-container"><ul class="custom-navbar-ul"><li><a id="navbar-item-tag" href="#" class="selected">Photo Stream</a></li></ul></div></nav>
-                        <button onClick={CloseModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                    <div className="row gx-5">
+                &lt;/div>
+            &lt;/div>
+            &lt;div className="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                &lt;div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    &lt;div className="modal-content">
+                    &lt;div className="modal-header">
+                    &lt;nav data-testid="navbartest" class="custom-navbar position-static">&lt;div class="custom-container">&lt;ul class="custom-navbar-ul">&lt;li>&lt;a id="navbar-item-tag" href="#" class="selected">Photo Stream&lt;/a>&lt;/li>&lt;/ul>&lt;/div>&lt;/nav>
+                        &lt;button onClick={CloseModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        &lt;span aria-hidden="true">&amp;times;&lt;/span>
+                        &lt;/button>
+                    &lt;/div>
+                    &lt;div className="modal-body">
+                    &lt;div className="row gx-5">
                     { photoStream.map((photo) => (
-                    <PhotoStream
+                    &lt;PhotoStream
                         key={photo._id}
                         id={photo._id}
                         url={photo.url}
                     />
                     ))}
-                    </div>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-success" onClick={AddPhotosToAlbum}>Submit</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    &lt;/div>
+                    &lt;/div>
+                    &lt;div className="modal-footer">
+                        &lt;button type="button" className="btn btn-success" onClick={AddPhotosToAlbum}>Submit&lt;/button>
+                    &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
     );
 }
 
-export default AlbumInternal;
+export default AlbumInternal;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AboutIMG.html">AboutIMG</a></li><li><a href="AlbumInternal.html">AlbumInternal</a></li><li><a href="AlbumPhotos.html">AlbumPhotos</a></li><li><a href="ChangePassword.html">ChangePassword</a></li><li><a href="ChangePasswordPage.html">ChangePasswordPage</a></li><li><a href="Comment.html">Comment</a></li><li><a href="CommentOnMedia.html">CommentOnMedia</a></li><li><a href="Cookies.html">Cookies</a></li><li><a href="CookiesPage.html">CookiesPage</a></li><li><a href="Explore.html">Explore</a></li><li><a href="ExplorePage.html">ExplorePage</a></li><li><a href="Faves.html">Faves</a></li><li><a href="FloatingInput.html">FloatingInput</a></li><li><a href="FloatingInputPassoword.html">FloatingInputPassoword</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Guidelines.html">Guidelines</a></li><li><a href="GuidelinesPage.html">GuidelinesPage</a></li><li><a href="InnerTrend.html">InnerTrend</a></li><li><a href="LandingNavigationBar.html">LandingNavigationBar</a></li><li><a href="LandingSlider.html">LandingSlider</a></li><li><a href="Login.html">Login</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="Main.html">Main</a></li><li><a href="MemberBox.html">MemberBox</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PasswordMeter.html">PasswordMeter</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Privacy.html">Privacy</a></li><li><a href="PrivacyPage.html">PrivacyPage</a></li><li><a href="SearchDropDown.html">SearchDropDown</a></li><li><a href="SearchPeople.html">SearchPeople</a></li><li><a href="SearchPeoplePage.html">SearchPeoplePage</a></li><li><a href="SearchPhotos.html">SearchPhotos</a></li><li><a href="SearchPhotosPage.html">SearchPhotosPage</a></li><li><a href="SettingsPage.html">SettingsPage</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="Terms.html">Terms</a></li><li><a href="TermsPage.html">TermsPage</a></li><li><a href="UploadMedia.html">UploadMedia</a></li><li><a href="UploadPage.html">UploadPage</a></li><li><a href="UserAbout.html">UserAbout</a></li><li><a href="UserAboutPage.html">UserAboutPage</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserlessNavigationBar.html">UserlessNavigationBar</a></li><li><a href="UserSettings.html">UserSettings</a></li><li><a href="useStyles.html">useStyles</a></li><li><a href="ViewFollowers.html">ViewFollowers</a></li><li><a href="ViewFollowing.html">ViewFollowing</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 08 2021 09:17:09 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

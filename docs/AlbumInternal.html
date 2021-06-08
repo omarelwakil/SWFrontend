@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ViewFollowers</title>
+    <title>JSDoc: Class: AlbumInternal</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ViewFollowers</h1>
+    <h1 class="page-title">Class: AlbumInternal</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ViewFollowers<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>AlbumInternal<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="ViewFollowers"><span class="type-signature"></span>new ViewFollowers<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AlbumInternal"><span class="type-signature"></span>new AlbumInternal<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    <p>Component for User followers</p>
+    <p>Component for showing user album.</p>
 </div>
 
 
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_user_ViewFollowers.jsx.html">components/user/ViewFollowers.jsx</a>, <a href="components_user_ViewFollowers.jsx.html#line16">line 16</a>
+        <a href="components_Album_AlbumInternal.jsx.html">components/Album/AlbumInternal.jsx</a>, <a href="components_Album_AlbumInternal.jsx.html#line22">line 22</a>
     </li></ul></dd>
     
 
@@ -124,7 +124,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const userData = JSON.parse(localStorage.getItem("userData"))const userID = userData.user._idreturn (  &lt;ViewFollowers userId={id} /> )</code></pre>
+    <pre class="prettyprint"><code>const albumId="60baabf254a4dd00128e1c1f"const userId="60baab7c54a4dd00128e1c1e"return (  &lt;AlbumInternal albumId={albumId} userId={userId} />)</code></pre>
 
 
 
@@ -154,7 +154,7 @@
     
 
     
-    <h4 class="name" id="~getAllFollowers"><span class="type-signature">(inner) </span>getAllFollowers<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="~AddPhotosToAlbum"><span class="type-signature">(inner) </span>AddPhotosToAlbum<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -162,7 +162,7 @@
 
 
 <div class="description">
-    <p>Get the followers data of a user with a certain ID</p>
+    <p>send 'addPhotos[]' to BE and also for 'removePhotos[]'</p>
 </div>
 
 
@@ -206,7 +206,325 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_user_ViewFollowers.jsx.html">components/user/ViewFollowers.jsx</a>, <a href="components_user_ViewFollowers.jsx.html#line38">line 38</a>
+        <a href="components_Album_AlbumInternal.jsx.html">components/Album/AlbumInternal.jsx</a>, <a href="components_Album_AlbumInternal.jsx.html#line201">line 201</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~LoadAlbumMedia"><span class="type-signature">(inner) </span>LoadAlbumMedia<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>send request to BE to get User album media</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Album_AlbumInternal.jsx.html">components/Album/AlbumInternal.jsx</a>, <a href="components_Album_AlbumInternal.jsx.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~LoadPhotoStream"><span class="type-signature">(inner) </span>LoadPhotoStream<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>send request to BE to get user photo stream, then it calles inner function that finds common photos between album media and photo stream and make common photos selected and when user clicks on a photo shown in the modal it checks of the photo is selected or not and if so deselects the photo or make it selected and then add it to proper list (addPhotos[], removePhotos[]), finally remove selected photo from 'removePhotos[]' and remove deselected photo from 'addPhotos[]'</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Album_AlbumInternal.jsx.html">components/Album/AlbumInternal.jsx</a>, <a href="components_Album_AlbumInternal.jsx.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~Submit"><span class="type-signature">(inner) </span>Submit<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>send changes of album title and description to BE</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Album_AlbumInternal.jsx.html">components/Album/AlbumInternal.jsx</a>, <a href="components_Album_AlbumInternal.jsx.html#line85">line 85</a>
     </li></ul></dd>
     
 
