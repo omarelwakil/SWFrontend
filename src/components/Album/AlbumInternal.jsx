@@ -8,7 +8,17 @@ import './AlbumInternal.css';
 
 import AlbumPhotos from './AlbumPhotos';
 import PhotoStream from './PhotoStream';
-
+/**
+ * Component for showing user album.
+ *
+ * @component
+ * @example
+ * const albumId="60baabf254a4dd00128e1c1f"
+ * const userId="60baab7c54a4dd00128e1c1e"
+ * return (
+ *   <AlbumInternal albumId={albumId} userId={userId} />
+ * )
+ */
 function AlbumInternal(probs) {//probs {"albumId":"123"}
     const [accessToken] = useState(localStorage.getItem("accessToken"));
     const [userData] = useState(JSON.parse(localStorage.getItem("userData")));
@@ -46,6 +56,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 });
         LoadAlbumMedia();
       },[]);
+/**
+ * send request to BE to get User album media
+ * @return  {void}
+ */
       function LoadAlbumMedia(event) {
           if(event){event.preventDefault();}
             axios.get('/album/'+albumId)
@@ -64,6 +78,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 }
             });
         }
+        /**
+ * send changes of album title and description to BE
+ * @return  {void}
+ */
     function Submit(event) {//title and description 
             event.preventDefault();
             //get data 
@@ -90,6 +108,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                     }
                 });
             }
+/**
+ * send request to BE to get user photo stream, then it calles inner function that finds common photos between album media and photo stream and make common photos selected and when user clicks on a photo shown in the modal it checks of the photo is selected or not and if so deselects the photo or make it selected and then add it to proper list (addPhotos[], removePhotos[]), finally remove selected photo from 'removePhotos[]' and remove deselected photo from 'addPhotos[]'
+ * @return  {void}
+ */
     function LoadPhotoStream(event){
         event.preventDefault();
             console.log("data sent to /user/photostream/"+probs.userId);
@@ -110,6 +132,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                         console.log(error.response.data.message);
                     }
                 });
+/**
+ * finds common photos between album media and photo stream and make common photos selected
+ * @return  {void}
+ */
         function configureElementsCreated() {
             //find common images between album media and photo stream
             if(photoStream.length > 0){
@@ -131,6 +157,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
                 document.getElementsByClassName("album-photoStream")[index].addEventListener("click", ClickOnPhotoSreamImg);
             }
           }
+/**
+ * when user clicks on a photo shown in the modal it checks of the photo is selected or not and if so deselects the photo or make it selected and then add it to proper list (addPhotos[], removePhotos[]), finally remove selected photo from 'removePhotos[]' and remove deselected photo from 'addPhotos[]'   
+ * @return  {void}        <description>
+ */
         function ClickOnPhotoSreamImg(event){
             if(event.target.classList.contains("photoStreamSelected")){
                 //then deselect it and add it to remove list
@@ -164,6 +194,10 @@ function AlbumInternal(probs) {//probs {"albumId":"123"}
             }
         }
     }
+/**
+ * send 'addPhotos[]' to BE and also for 'removePhotos[]'
+ * @return  {void}
+ */
     function AddPhotosToAlbum(event) {
         event.preventDefault();
         //close Modal
