@@ -9,7 +9,15 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "./Login.css"
 import './ChangePassword.css'
-
+/**
+ * Component for requesting password change.
+ *
+ * @component
+ * @example
+ * return (
+ *   <ForgotPassword />
+ * )
+ */
 function ForgotPassword() {
     //if not used there will be a warinng: findDOMNode
     const nodeRef = React.useRef(null);
@@ -35,7 +43,10 @@ function ForgotPassword() {
         window.location.href = "/login";
     }*/
     
-
+/**
+ * Sends entered email to BE  
+ * @return  {void}        
+ */
     function handleChangePassword(event) {
         event.preventDefault();
         if (!emailError) {
@@ -63,6 +74,10 @@ function ForgotPassword() {
                 });
         }
     }
+    /**
+     * go back to enter email again at previos panal   
+     * @return  {void}        
+     */
     function handleArrowBack(event) {
         event.preventDefault();
         setsuccessfullSend(false);

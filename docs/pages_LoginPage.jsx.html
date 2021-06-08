@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/UserAboutPage.jsx</title>
+    <title>JSDoc: Source: pages/LoginPage.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/UserAboutPage.jsx</h1>
+    <h1 class="page-title">Source: pages/LoginPage.jsx</h1>
 
     
 
@@ -27,37 +27,34 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
-import { BrowserRouter, useParams } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import UserlessNavigationBar from '../components/user/UserlessNavigationBar';
-import UserAbout from '../components/user/UserAbout';
+import UserlessNaviagationBar from '../components/user/UserlessNavigationBar';
+import Login from '../components/user/Login';
 import Footer from '../components/static/Footer';
-
 /**
- * Component for rendering UserAboutPage
- * Path => /people/:id
+ * Component LoginPage for showing Login page 
  *
  * @component
  * @example
- * return (
- *   &lt;UserAboutPage />
+ * return(
+ *    &lt;LoginPage />
  * )
  */
-function UserAboutPage() {
-    const { id } = useParams();
-    return (
-        &lt;BrowserRouter>
-            &lt;div>
-                &lt;title>About | Flickr&lt;/title>
-                &lt;UserlessNavigationBar />
-                &lt;UserAbout userInfo={id} />
-                &lt;Footer />
-            &lt;/div>
+function LoginPage() {
+    return ( 
+    &lt;BrowserRouter>
+        &lt;div>
+        &lt;title > Flickr Login &lt;/title> 
+        &lt;UserlessNaviagationBar />
+        &lt;Login />
+        &lt;Footer />
+        &lt;/div> 
         &lt;/BrowserRouter>
     );
 }
 
-export default UserAboutPage;</code></pre>
+export default LoginPage;</code></pre>
         </article>
     </section>
 
