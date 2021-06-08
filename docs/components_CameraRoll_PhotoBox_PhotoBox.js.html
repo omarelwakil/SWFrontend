@@ -1,4 +1,32 @@
-import React from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/CameraRoll/PhotoBox/PhotoBox.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/CameraRoll/PhotoBox/PhotoBox.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import { useState } from 'react';
 import './PhotoBox.css';
 
@@ -14,7 +42,7 @@ import axios from 'axios';
  * @param {Key} key React special key prop
  * @param {Function} deleteHandler Function that deletes a specific photo 
  * @param {string} userToken The user's access token 
- * @returns <PhotoBox
+ * @returns &lt;PhotoBox
                     photo={photo}
                     key={photo._id}
                     deleteHandler={(e) => deleteHandler(e, photo._id)}
@@ -36,6 +64,7 @@ const PhotoBox = (props) => {
     const [showForms, setShowForms] = useState(false);
 
     const [showEdit, setShowEdit] = useState(false);
+
     /**
      * Shows an edit button
      */
@@ -50,7 +79,7 @@ const PhotoBox = (props) => {
     const editPhoto = () => setShowForms(!showForms);
 
     if (showEdit) {
-        edit = <button className="button" onClick={editPhoto}>Edit</button>
+        edit = &lt;button className="button" onClick={editPhoto}>Edit&lt;/button>
     }
 
     /**
@@ -60,6 +89,7 @@ const PhotoBox = (props) => {
     const handlePrivacy = (e) => {
         setPrivacy(e.target.value);
     }
+
     /**
      * Sets allowCommenting state with the user's chosen value (event target value)
      * @param {Event} e input field event object
@@ -67,6 +97,7 @@ const PhotoBox = (props) => {
     const handleAllowCommenting = (e) => {
         setAllowCommenting(e.target.value);
     }
+
     /**
      * Sets title state with the user's chosen value (event target value)
      * @param {Event} e input field event object
@@ -74,6 +105,7 @@ const PhotoBox = (props) => {
     const handleTitle = (e) => {
         setTitle(e.target.value);
     }
+
     /**
      * Sets description state with the user's chosen value (event target value)
      * @param {Event} e input field event object
@@ -81,6 +113,7 @@ const PhotoBox = (props) => {
     const handleDesc = (e) => {
         setDesc(e.target.value);
     }
+
     /**
      * Submits a form for editing a photo
      */
@@ -89,27 +122,6 @@ const PhotoBox = (props) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;
         newTags = newTags.split(' ');
-
-        // if(newTags!=''){
-        //     newTags = newTags.split(' ');
-        //     newTags.forEach(tag => {
-        //         let tagObj = {
-        //             tag: tag
-        //         }; 
-
-        //         axios.patch(`/photo/addTags/${photo._id}`,tagObj,{
-        //             headers: {
-        //               "Authorization": 'Bearer ' + userToken,
-        //               'Content-type': 'application/json'
-        //             },
-        //             params: {
-        //                 tag: tag
-        //             }
-        //         })
-        //         .then(res => setTags(res.data))
-        //         .catch(error => console.log(error));
-        //     });
-        // }
 
         let photoCopy = {
             "isPublic": (privacy === 'public') || (privacy === true) ? true : false,
@@ -139,52 +151,74 @@ const PhotoBox = (props) => {
     let forms = null;
     if (showForms) {
         forms = (
-            <form id="form" onSubmit={handleSubmit}>
-                <label>
+            &lt;form id="form" onSubmit={handleSubmit}>
+                &lt;label>
                     Title
-                    <input required type="text" onChange={handleTitle} value={title} />
-                </label>
-                <label>
+                    &lt;input required type="text" onChange={handleTitle} value={title} />
+                &lt;/label>
+                &lt;label>
                     Description
-                    <input type="text" onChange={handleDesc} value={Desc}></input>
-                </label>
-                <label>
+                    &lt;input required type="text" onChange={handleDesc} value={Desc}>&lt;/input>
+                &lt;/label>
+                &lt;label>
                     Privacy
-                    <select value={privacy} onChange={handlePrivacy}>
-                        <option value="public">Public</option>
-                        <option value="private">Private</option>
-                    </select>
-                </label>
-                <label>
+                    &lt;select value={privacy} onChange={handlePrivacy}>
+                        &lt;option value="public">Public&lt;/option>
+                        &lt;option value="private">Private&lt;/option>
+                    &lt;/select>
+                &lt;/label>
+                &lt;label>
                     Allow Commenting
-                    <select value={allowCommenting} onChange={handleAllowCommenting}>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </label>
-                <label>
+                    &lt;select value={allowCommenting} onChange={handleAllowCommenting}>
+                        &lt;option value="true">Yes&lt;/option>
+                        &lt;option value="false">No&lt;/option>
+                    &lt;/select>
+                &lt;/label>
+                &lt;label>
                     Add tags
-                    <input type="text" ref={el => inputTag = el} />
-                </label>
-                <div>
-                    <button className="form-btn" onClick={editPhoto}>Cancel</button>
-                    <input className="form-btn" type="submit" value="Done" />
-                </div>
-            </form>
+                    &lt;input type="text" ref={el => inputTag = el} />
+                &lt;/label>
+                &lt;div>
+                    &lt;button className="form-btn" onClick={editPhoto}>Cancel&lt;/button>
+                    &lt;input className="form-btn" type="submit" value="Done" />
+                &lt;/div>
+            &lt;/form>
         );
     }
     return (
-        <React.Fragment>
+        &lt;React.Fragment>
             {forms}
-            <div className="PhotoBox">
-                <img src={photo.url} onClick={showEditButton} alt="" />
-                <br></br>
+            &lt;div className="PhotoBox">
+                &lt;img src={photo.url} onClick={showEditButton} alt="" />
+                &lt;br>&lt;/br>
                 {edit}
-                <input className="delete-button button" type="button" value="Delete" onClick={props.deleteHandler} />
+                &lt;input className="delete-button button" type="button" value="Delete" onClick={props.deleteHandler} />
 
-            </div>
-        </React.Fragment>
+            &lt;/div>
+        &lt;/React.Fragment>
     );
 }
 
-export default PhotoBox;
+export default PhotoBox;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Album.html">Album</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="Main.html">Main</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 14:20:53 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

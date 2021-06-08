@@ -8,14 +8,35 @@ import Main from '../../components/CameraRoll/Main/Main';
 import './CameraRoll.css';
 
 import axios from 'axios';
-
+/**
+ * Component that renders page of CameraRoll for a specific user
+ * Takes no parameters
+ * Internal components:
+ *      UserlessNavigationBar
+ *      PhotoStream/UserCover
+ *      Navbar
+ *      Main --> content of camera roll (edit or upload photos)
+ *      Footer
+ * @component 
+ * @type Component
+ * 
+ * @returns (
+ *      <CameraRoll />
+ * )
+ */
 const CameraRoll = () => {
 
     let main = null;
 
     const [userPhotos, setUserPhotos] = useState(null);
-
+    /**
+     * Redirects to upload photos page
+     */
     const uploadPhotosPage = '/photos/upload';
+
+    /**
+     * Redirects to homepage
+     */
     const homePage = () => window.location.pathname = '/';
 
     const user = JSON.parse(localStorage.getItem('userData')).user;

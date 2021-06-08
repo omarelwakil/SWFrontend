@@ -9,6 +9,17 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
+/**
+ * Component that renders a cover section for a user (cover photo and details)
+ * Internal components:
+ *      UserImage
+ * @component 
+ * @type Component
+ * 
+ * @param {Object} userData Object that holds details of a specific user
+ * @returns <UserCover 
+ *                  userData={user} />
+ */
 const UserCover = (props) => {
 
     const [selectedImages, setSelectedImages] = useState(null);
@@ -117,7 +128,9 @@ const UserCover = (props) => {
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
-
+    /**
+     * Follows a user
+     */
     const followUser = () => {
 
         let userJson = {
@@ -138,7 +151,9 @@ const UserCover = (props) => {
 
 
     }
-
+    /**
+     * Unfollows a user
+     */
     const unFollowUser = () => {
         let userJson = {
             "userId": user._id

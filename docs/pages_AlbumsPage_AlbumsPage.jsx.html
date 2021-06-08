@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/AlbumsPage/AlbumsPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/AlbumsPage/AlbumsPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import './AlbumsPage.css';
+
+import React,{useState, useEffect} from 'react';
+import { BrowserRouter} from 'react-router-dom';
+import UserlessNavigationBar from '../../components/user/UserlessNavigationBar';
+import UserCover from '../../components/PhotoStream/UserCover/UserCover';
+import Footer from '../../components/static/Footer';
+import Navbar from '../../components/Trending/Navbar/Navbar';
+import Albums from '../../components/Albums/Albums';
+import axios from 'axios';
+
+/**
+ * Component that renders page of Albums for a specific user
+ * Takes a variable userId as a route paramter
+ * Internal components:
+ *      UserlessNavigationBar
+ *      PhotoStream/UserCover
+ *      Trending/Navbar
+ *      Albums
+ *      Footer
+ * @component 
+ * @type Component
+ * @returns (
+ *      &lt;AlbumsPage />
+ * )
+ */
+
+const AlbumsPage = (props) => {
+
+    console.log(props);
+
+    const baseUrl = 'https://api.qasaqees.tech';
+
+    /**
+     * Redirects to homepage
+     */
+    const homePage = () => window.location.pathname = '/';
+    
+    const albumCoverPhoto = "https://live.staticflickr.com/65535/51140121587_393ff56218_n.jpg";
+
+    
+    //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
+
+    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
+    const loggedInUserId = loggedInUser._id;
+    const userToken = localStorage.getItem('accessToken');
+
+    const userId = props.match.params.id;
+    
+    const [user, setUser] = useState(null);
+
+
+    let main=null, newAlbum = null, inputTitle, inputDesc, userCover=null, cameraRoll = null;
+
+    useEffect(()=>{
+        axios.defaults.baseURL = baseUrl;
+
+        axios.get(`/user/albums/${userId}`)
+        .then(response => response.data)
+        .then(data => setUserAlbums(data['albums']))
+        .catch(error => console.log('Couldnot fetch album albums.jsx'));
+
+        axios.get(`/user/about/${userId}`)
+        .then(response => response.data)
+        .then(data => setUser(data['user']))
+        .catch(error => console.log('Couldnot fetch user albums.jsx'));
+    },[userId]);
+
+    const [userAlbums, setUserAlbums] = useState(null);
+    const [showNewAlbum, setShowNewAlbum] = useState(false);
+
+    /**
+     * Shows a button to create a new album
+     */
+    const newAlbumHandler = () => setShowNewAlbum(!showNewAlbum);
+
+    /**
+     * Deletes a specific album
+     * @param {Event} e Delete album click event 
+     * @param {String} albumId Id of the album to be deleted 
+     */
+    const deleteAlbum = (e, albumId) => {
+        e.preventDefault();
+        const albums = [...userAlbums];
+
+        let albumIndex = albums.findIndex(album => album._id === albumId);
+
+        albums.splice(albumIndex, 1);
+
+        setUserAlbums(albums);
+
+        axios.delete(`/album/deleteAlbum/${albumId}`, {
+            headers: {
+              "Authorization": 'Bearer ' + userToken,
+              'Content-type': 'application/json'
+            }
+        })
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error));
+
+        e.stopPropagation();
+    }
+
+    /**
+     * Creates a new album
+     * @param {Event} e New album click event 
+     */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const newAlbumJson = {
+            "title":inputTitle.value,
+            "description":inputDesc.value
+        }
+
+        axios.post('/album/createAlbum',newAlbumJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                title: inputTitle.value,
+                description: inputDesc.value
+            }
+        })
+        .then(res => window.location.reload())
+        .catch(err => console.log(err));
+
+        newAlbumHandler();
+        
+    }
+
+    if(userAlbums){
+        main = (
+            &lt;Albums 
+                userAlbums={userAlbums} 
+                albumCover={albumCoverPhoto} 
+                deleteAlbum={deleteAlbum} 
+                newAlbumHandler={newAlbumHandler} 
+                userId={userId}
+                loggedInUserId={loggedInUserId}/>
+        )
+    } else {
+        main = (
+            &lt;div className="error-photos">
+                &lt;h1>Error! Sorry, no data was found! &lt;/h1>
+                &lt;div className="">&lt;button onClick={homePage} className="no-photos-button">Go to HomePage&lt;/button>&lt;/div>
+            &lt;/div>
+        )
+    }
+
+
+    if(showNewAlbum &amp;&amp; loggedInUserId === userId){
+        newAlbum = (
+            &lt;div className="new-album-div">
+                &lt;div className="new-album-dialog text-black-50">
+                    &lt;div className="new-album-text">
+                        &lt;p>Create a new Album&lt;/p>
+                        &lt;p className="close" onClick={newAlbumHandler}>x&lt;/p>
+                    &lt;/div>
+                    &lt;form onSubmit={handleSubmit}>
+                        &lt;input type="text" placeholder="Album title" className="album-title-input" ref={el => inputTitle = el} required/>
+                        &lt;input type="text" placeholder="Description (Album)" className="album-desc-input" ref={el => inputDesc = el} required/>
+                        &lt;input type="submit" value="Create" className="album-create"/>     
+                        &lt;button onClick={newAlbumHandler} className="album-cancel">Cancel&lt;/button>
+                    &lt;/form>
+                &lt;/div>
+            &lt;/div>
+        );
+    } else {
+        newAlbum = null;
+    }
+
+    let dataToSend;
+
+    if(loggedInUserId===userId){
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: false },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+            { title: "Camera Roll", path: "/cameraroll", selected: false },
+        ];
+    }else{
+        dataToSend = [
+            { title: "About", path: "/people/"+userId, selected: false },
+            { title: "Photostream", path: "/photos/" + userId, selected: false },
+            { title: "Albums", path: "/photos/"+userId+"/albums", selected: true },
+            { title: "Faves", path: "/photos/"+userId+"/favorites", selected: false },
+        ];
+    }
+
+
+
+    if(user){
+        userCover = &lt;UserCover userData={user}/>;
+    }
+
+
+    return(
+        &lt;BrowserRouter>
+            &lt;div className="AlbumsPage">
+                &lt;UserlessNavigationBar/>
+                {userCover}
+                &lt;Navbar items={dataToSend} />
+                {main}
+                {newAlbum}
+                &lt;Footer/>
+            &lt;/div>
+        &lt;/BrowserRouter>
+    );
+}
+
+export default AlbumsPage;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Album.html">Album</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="Main.html">Main</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 14:20:53 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

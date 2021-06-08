@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Photo/PhotoMain/PhotoMain.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Photo/PhotoMain/PhotoMain.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import './PhotoMain.css';
+import { useState } from 'react';
+import React from 'react';
+import CommentOnMedia from '../../media/CommentOnMedia';
+//Might need to divide to further components
+
+import axios from 'axios';
+
+/**
+ * Component that renders photo's section in PhotoPage
+ * Internal components:
+ *      media/CommentOnMedia
+ * @component 
+ * @type Component
+ * 
+ * @param {Object} photo Object that holds the details of a specific photo
+ * @param {Object} user Object that holds the details of the photo owner   
+ * @returns 
+ *          &lt;PhotoMain 
+ *                  photo={photo} 
+ *                  user={user}/>
+ */
+
+const PhotoMain = props => {
+
+    axios.defaults.baseURL = 'https://api.qasaqees.tech';
+
+    const loggedInUser = JSON.parse(localStorage.getItem('userData')).user;
+
+    const userToken = localStorage.getItem('accessToken');
+
+    //TODO: Returned user data from api --> useEffect&amp;axios
+    const user = props.user;
+    const [photo, setPhoto] = useState(props.photo);
+
+    const [showCommentButton, setShowCommentButton] = useState(false);
+    const [showCommentTools, setShowCommentTools] = useState(false);
+    const [showDescriptionInputs, setShowDescriptionInputs] = useState(false);
+    const [tags, setTags] = useState(photo.tags);
+
+
+    /**
+     * Sets photo state with the new edited photo (changed image name)
+     * @param {Event} event Input field event 
+     * @param {Object} photoObj Object that holds the details of a specific photo to be changed
+     */
+    const changeImageName = (event, photoObj) => {
+        const photo = { ...photoObj };
+
+        photo.title = event.target.value;
+
+        setPhoto(photo);
+    }
+
+    /**
+     * Sets photo state with the new edited photo (changed description)
+     * @param {Event} event Input field event 
+     * @param {Object} photoObj Object that holds the details of a specific photo to be changed
+     */
+    const changeDescription = (event, photoObj) => {
+        const photo = { ...photoObj };
+
+        photo.description = event.target.value;
+
+        setPhoto(photo);
+
+    }
+
+    let button = null, description = null;
+    let inputTag;
+
+    const showCommentButtonHandler = () => setShowCommentButton(!showCommentButton);
+    if (showCommentButton) {
+        button = (&lt;button className="button">Comment&lt;/button>);
+    }
+
+    const showTools = () => setShowCommentTools(!showCommentTools);
+
+
+    const showDescription = () => setShowDescriptionInputs(!showDescriptionInputs);
+    if (!showDescriptionInputs) {
+        let desc = null;
+
+        if (photo.description != null) {
+            desc = photo.description;
+        } else {
+            desc = 'Add description';
+        }
+
+        description = (
+            &lt;React.Fragment>
+                &lt;p>&lt;strong>{photo.title}&lt;/strong>&lt;/p>
+                &lt;p className="desc">{photo.description}&lt;/p>
+            &lt;/React.Fragment>
+        );
+    } else if (showDescriptionInputs &amp;&amp; loggedInUser._id === user._id) {
+
+        description = (
+            &lt;React.Fragment>
+                &lt;input className="image-name" onClick={(event) => event.stopPropagation()} type="text" value={photo.title} onChange={(event) => changeImageName(event, photo)} />
+                &lt;textarea className="desc-box" onClick={(event) => event.stopPropagation()} value={photo.description} onChange={(event) => changeDescription(event, photo)}>&lt;/textarea>
+                &lt;button className="button" onClick={showDescription}>Done&lt;/button>
+            &lt;/React.Fragment>
+        );
+    }
+
+
+    // const handleRemoveTag = (e, tag) => {
+    //     e.stopPropagation();
+
+    //     let tagsArr = [...tags];
+    //     let tagIndex = tagsArr.findIndex(x => x.name == tag.name);
+    //     tagsArr.splice(tagIndex, 1);
+    //     setTags(tagsArr);
+    //     let photoCopy = { ...photo };
+    //     photoCopy['tags'] = tagsArr;
+    //     axios.patch(`/photo/${photo._id}`, photoCopy, {
+    //         headers: {
+    //           "Authorization": 'Bearer ' + userToken,
+    //           'Content-type': 'application/json'
+    //         }})
+    //     .then(res => console.log(res.data))
+    //     .catch(error => console.log(error));
+    // }
+
+    /**
+     * Adds new tags to a specific photo
+     * @param {Event} e Input field event (tags) 
+     * @param {HTMLFormElement} inputTag Input field 
+     */
+    const addTags = (e, inputTag) => {
+        let tagsArr = [...tags];
+        let newTags = inputTag.value;
+        if (newTags != '') {
+            newTags = newTags.split(' ');
+            newTags.forEach(tag => {
+                let tagObj = {
+                    tag: tag
+                };
+
+                axios.patch(`/photo/addTags/${photo._id}`, tagObj, {
+                    headers: {
+                        "Authorization": 'Bearer ' + userToken,
+                        'Content-type': 'application/json'
+                    },
+                    params: {
+                        tag: tag
+                    }
+                })
+                    .then(res => window.location.reload())
+                    .catch(error => console.log(error));
+            });
+        }
+
+    }
+    return (
+        &lt;div className="PhotoMain">
+            &lt;div className="photo-desc-comments">
+                &lt;div className="photo-desc">
+                    &lt;div className="profile-photo">
+                        &lt;img src={user.profilePhotoUrl} alt="" />
+                    &lt;/div>
+                    &lt;div className="profile-name-desc">
+                        &lt;h5 className="profile-name">&lt;a href={"/photos/" + user._id}>{user.firstName + ' ' + user.lastName}&lt;/a>&lt;/h5>
+                        &lt;div className="profile-desc" >
+                            {description}
+                        &lt;/div>
+                        &lt;div className="line">&lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="photo-comments">
+                    &lt;CommentOnMedia photoId={photo._id}/>
+                    {/* &lt;div className="add-comment">
+                        &lt;div className="user-img">
+                            &lt;img src={loggedInUser.profilePhotoUrl} alt="" />
+                        &lt;/div>
+                        &lt;textarea id="commentTextbox" placeholder="Add a comment" onFocus={showCommentButtonHandler} onBlur={showCommentButtonHandler}>&lt;/textarea>
+                    &lt;/div>
+                    {button} */}
+                &lt;/div>
+            &lt;/div>
+            &lt;div className="line hidden">&lt;/div>
+            &lt;div className="photo-details">
+                &lt;div className="details">
+                    &lt;div className="details-reach">
+                        &lt;div>
+                            &lt;span>{photo.views}&lt;/span>
+                            &lt;p>views&lt;/p>
+                        &lt;/div>
+                        &lt;div>
+                            &lt;span>{photo.favouriteCount}&lt;/span>
+                            &lt;p>faves&lt;/p>
+                        &lt;/div>
+                        &lt;div>
+                            &lt;span>{photo.commentsNum}&lt;/span>
+                            &lt;p>comments&lt;/p>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="details-date">
+                        &lt;p>Taken on {photo.createdAt.substring(0, 10)}&lt;/p>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="line">&lt;/div>
+                &lt;div className="albums-tags-people">
+                    &lt;div>
+                        &lt;div>
+                            &lt;p>This photo is in 1 album&lt;/p>
+                        &lt;/div>
+                        &lt;div>
+                            &lt;a type="button">Add to album&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div>
+                        &lt;div className="photo-tags">
+                            &lt;div>&lt;a href="">Tags&lt;/a>&lt;/div>
+                            &lt;div>&lt;a className="" onClick={(e) => addTags(e, inputTag)}>Add tags&lt;/a>&lt;/div>
+                        &lt;/div>
+
+                    &lt;/div>
+                    &lt;div className="tags">
+                        &lt;input type="text" placeholder="add a tag" ref={el => inputTag = el} />
+                        {
+                            tags.map(tag => &lt;a href={"/photos/tags/" + tag.name} className="tag">{tag.name}&lt;/a>)
+                        }
+                    &lt;/div>
+                &lt;/div>
+                &lt;div>&lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default PhotoMain;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Album.html">Album</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="Main.html">Main</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 14:20:53 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

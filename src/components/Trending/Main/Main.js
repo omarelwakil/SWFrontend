@@ -3,13 +3,28 @@ import ImageBox from '../ImageBox/ImageBox'
 import { Link } from 'react-router-dom'
 
 
+/**
+ * Component that renders main content of TrendingPage
+ * Internal components:
+ *      ImageBox
+ * @component 
+ * @type Component
+ * 
+ * @param {Array} data Array of trending photos
+ * @param {string} url Current url   
+ * @param {Function} props.setCurrentUrl Function to change url   
+ * @returns 
+ *          <Main
+                data={trending}
+                url={currentUrl}
+                setCurrentUrl={setCurrentUrl} />
+ */
 const Main = (props) => {
 
     const mainUrl = "/photos/tags";
     //const allTrendingNowHref = "/photos/tags-day/";
     //const allTrendingWeekHref = "/photos/tags-week/";
     const data = props.data;
-
 
     let main = null;
 
@@ -25,15 +40,16 @@ const Main = (props) => {
                     <div className="trending-images">
                     {
                         data.map((image) => {
-                            return (
-                                <ImageBox 
-                                    key={image.photo._id} 
-                                    url={image.photo.url} 
-                                    text={image.name}
-                                    link={mainUrl+'/'+image.name}
-                                    height="186px"
-                                    />
-                            );
+                            if(image.photo){
+                               return <ImageBox 
+                                            key={image.photo._id+image.name} 
+                                            url={image.photo.url} 
+                                            text={image.name}
+                                            link={mainUrl+'/'+image.name}
+                                            height="186px"/>
+                            } else {
+                                return null;
+                            }
                         })
                     }
                     </div>

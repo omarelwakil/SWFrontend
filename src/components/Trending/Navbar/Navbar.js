@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import './Navbar.css'
+/**
+ * Component that renders secondary navbar of the user's photos section
+ * No internal components
+ * @component 
+ * @type Component
+ * @param {Object} items Object that holds multiple links of the navbar 
+ * @returns <Navbar 
+ *              items={dataToSend} />
+ */
 
 const Navbar = (props) => {
     const [items] = useState(props.items);

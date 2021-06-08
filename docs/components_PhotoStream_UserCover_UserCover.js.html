@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/PhotoStream/UserCover/UserCover.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/PhotoStream/UserCover/UserCover.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//TO USE: it takes one prop {userData}
+//if you want to use this component then if userJson is like {"user":{----}}
+//This component needs the inner user {-----}
+
+import './UserCover.css';
+import UserImage from '../UserImage/UserImage';
+import {useState} from 'react';
+
+import axios from 'axios';
+
+
+/**
+ * Component that renders a cover section for a user (cover photo and details)
+ * Internal components:
+ *      UserImage
+ * @component 
+ * @type Component
+ * 
+ * @param {Object} userData Object that holds details of a specific user
+ * @returns &lt;UserCover 
+ *                  userData={user} />
+ */
+const UserCover = (props) => {
+
+    const user = props.userData;
+
+    const loggedInUserId = JSON.parse(localStorage.getItem('userData')).user._id;
+    const userToken = localStorage.getItem('accessToken');
+
+    const [followed, setFollowed] = useState(false);
+
+    const coverStyling = {
+        background: `linear-gradient(180deg, 
+            transparent 0, rgba(0, 0, 0, 0.03) 8%,
+            rgba(0, 0, 0, 0.11) 21%, rgba(0, 0, 0, 0.61) 78%, 
+            rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.7)), 
+            url("${user.coverPhotoUrl}") no-repeat center`
+    }
+
+    /**
+     * Follows a user
+     */
+    const followUser = () => {
+
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/followUser',userJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+        .then(res => setFollowed(true))
+        .catch(err => console.log(err));
+
+        
+    }
+
+    /**
+     * Unfollows a user
+     */
+    const unFollowUser = () => {
+        let userJson = {
+            "userId": user._id
+        }
+
+        axios.post('/user/unfollowUser',userJson,{
+            headers: {
+                'Authorization':'Bearer ' + userToken,
+                'Content-type': 'application/json'
+            },
+            params: {
+                userId: user._id
+            }
+        })
+        .then(res => setFollowed(false))
+        .catch(err => console.log(err));
+
+    }
+
+    let followButton = null;
+    if(loggedInUserId!==user._id&amp;&amp;!followed){
+        followButton = &lt;button onClick={followUser} className="follow-button">Follow&lt;/button>
+    }else if(loggedInUserId!==user._id&amp;&amp;followed){
+        followButton = &lt;button onClick={unFollowUser} className="follow-button">Unfollow&lt;/button>
+    }
+
+
+    return (
+        &lt;div className="UserCover" style={coverStyling}>
+            &lt;div className="container">
+                &lt;div className="row">
+                    &lt;div className="col-2 user-photo">
+                        &lt;UserImage imgUrl={user.profilePhotoUrl} />
+                    &lt;/div>
+                    &lt;div className="col-10 user-data text-white">
+                        &lt;div className="row user-name">
+                            &lt;span>{user.firstName} {user.lastName} {followButton}&lt;/span>
+                            
+                        &lt;/div>
+                        &lt;div className="row">
+                            &lt;div className="col-lg-2 p-0">{user.userName}&lt;/div>
+                            &lt;div className="col-lg-8 row">
+                                &lt;div className="col-6">{user.numberOfFollowers} Followers . {user.numberOfFollowings} Following&lt;/div>
+                                &lt;div className="col-6 text-end hidden">{user.numberOfPhotos} photo&lt;/div>
+                            &lt;/div>
+                            &lt;div className="col-2 hidden">Joined {user.createdAt.slice(0, 4)}&lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default UserCover;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Album.html">Album</a></li><li><a href="Albums.html">Albums</a></li><li><a href="AlbumsPage.html">AlbumsPage</a></li><li><a href="Button.html">Button</a></li><li><a href="CameraRoll.html">CameraRoll</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="Main.html">Main</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="PhotoBox.html">PhotoBox</a></li><li><a href="PhotoDiv.html">PhotoDiv</a></li><li><a href="PhotoMain.html">PhotoMain</a></li><li><a href="PhotoPage.html">PhotoPage</a></li><li><a href="PhotoStream.html">PhotoStream</a></li><li><a href="Trending.html">Trending</a></li><li><a href="UserCover.html">UserCover</a></li><li><a href="UserImage.html">UserImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 07 2021 14:20:53 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,5 +1,15 @@
 import './Button.css';
-
+/**
+ * Component that renders an icon
+ * @component 
+ * @type Component
+ * 
+ * @param {Key} key React special key prop 
+ * @param {string} tool a keyword for font awesome icon classes (internal object)  
+ * @returns <Button 
+ *                  key={element} 
+ *                  tool={element}/>
+ */
 const Button = props => {
     
     const toolsIcons = {
