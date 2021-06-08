@@ -11,6 +11,17 @@ import PropTypes from "prop-types"
 import axios from 'axios';
 
 /**
+<<<<<<< HEAD
+ * Component that renders a cover section for a user (cover photo and details)
+ * Internal components:
+ *      UserImage
+ * @component 
+ * @type Component
+ * 
+ * @param {Object} userData Object that holds details of a specific user
+ * @returns <UserCover 
+ *                  userData={user} />
+=======
  * Component for showing details of the user.
  *
  * @component
@@ -19,6 +30,7 @@ import axios from 'axios';
  * return (
  *   <UserCover userData={userData.user} />
  * )
+>>>>>>> main
  */
 const UserCover = (props) => {
 
@@ -197,7 +209,9 @@ const UserCover = (props) => {
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
-
+    /**
+     * Follows a user
+     */
     const followUser = () => {
 
         let userJson = {
@@ -218,7 +232,9 @@ const UserCover = (props) => {
 
 
     }
-
+    /**
+     * Unfollows a user
+     */
     const unFollowUser = () => {
         let userJson = {
             "userId": user._id

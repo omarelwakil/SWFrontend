@@ -1,12 +1,31 @@
 import './PhotoBox.css'
 import Button from '../../Photo/Button/Button'
 import { useState } from 'react'
-
+/**
+ * Component that renders a photo box for each photo in PhotoStreamPage
+ * Internal components:
+ *      Photo/Button
+ * @component 
+ * @type Component
+ * 
+ * @param {Key} key React special key prop
+ * @param {object} photo Object that holds details of a specific photo 
+ * @param {string} height CSS height value 
+ * @param {string} width CSS width value 
+ * @returns <PhotoBox  
+                    key={photo._id}
+                    photo={photo} 
+                    height="240px" 
+                    width="240px"/>
+ */
 const PhotoBox = (props) => {
 
     const photo = props.photo;
 
     const [showPhotoTools, setShowPhotoTools] = useState(false);
+    /**
+     * Shows photo tools
+     */
     const handlePhotoTools = () => setShowPhotoTools(!showPhotoTools);
     let photoTools = null;
 

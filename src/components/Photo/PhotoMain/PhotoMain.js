@@ -5,7 +5,20 @@ import CommentOnMedia from '../../media/CommentOnMedia';
 //Might need to divide to further components
 
 import axios from 'axios';
-
+/**
+ * Component that renders photo's section in PhotoPage
+ * Internal components:
+ *      media/CommentOnMedia
+ * @component 
+ * @type Component
+ * 
+ * @param {Object} photo Object that holds the details of a specific photo
+ * @param {Object} user Object that holds the details of the photo owner   
+ * @returns 
+ *          <PhotoMain 
+ *                  photo={photo} 
+ *                  user={user}/>
+ */
 const PhotoMain = props => {
 
     axios.defaults.baseURL = 'https://api.qasaqees.tech';
@@ -23,7 +36,11 @@ const PhotoMain = props => {
     const [showDescriptionInputs, setShowDescriptionInputs] = useState(false);
     const [tags, setTags] = useState(photo.tags);
 
-
+    /**
+     * Sets photo state with the new edited photo (changed image name)
+     * @param {Event} event Input field event 
+     * @param {Object} photoObj Object that holds the details of a specific photo to be changed
+     */
     const changeImageName = (event, photoObj) => {
         const photo = { ...photoObj };
 
@@ -31,7 +48,11 @@ const PhotoMain = props => {
 
         setPhoto(photo);
     }
-
+    /**
+     * Sets photo state with the new edited photo (changed description)
+     * @param {Event} event Input field event 
+     * @param {Object} photoObj Object that holds the details of a specific photo to be changed
+     */
     const changeDescription = (event, photoObj) => {
         const photo = { ...photoObj };
 
@@ -80,24 +101,11 @@ const PhotoMain = props => {
     }
 
 
-    // const handleRemoveTag = (e, tag) => {
-    //     e.stopPropagation();
-
-    //     let tagsArr = [...tags];
-    //     let tagIndex = tagsArr.findIndex(x => x.name == tag.name);
-    //     tagsArr.splice(tagIndex, 1);
-    //     setTags(tagsArr);
-    //     let photoCopy = { ...photo };
-    //     photoCopy['tags'] = tagsArr;
-    //     axios.patch(`/photo/${photo._id}`, photoCopy, {
-    //         headers: {
-    //           "Authorization": 'Bearer ' + userToken,
-    //           'Content-type': 'application/json'
-    //         }})
-    //     .then(res => console.log(res.data))
-    //     .catch(error => console.log(error));
-    // }
-
+    /**
+     * Adds new tags to a specific photo
+     * @param {Event} e Input field event (tags) 
+     * @param {HTMLFormElement} inputTag Input field 
+     */
     const addTags = (e, inputTag) => {
         let tagsArr = [...tags];
         let newTags = inputTag.value;

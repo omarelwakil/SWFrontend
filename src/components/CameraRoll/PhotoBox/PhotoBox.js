@@ -4,7 +4,22 @@ import './PhotoBox.css';
 
 import axios from 'axios';
 
-
+/**
+ * Component that renders a photo box for each photo in CameraRollPage
+ * No internal components
+ * @component 
+ * @type Component
+ * 
+ * @param {object} photo Object that holds details of a specific photo 
+ * @param {Key} key React special key prop
+ * @param {Function} deleteHandler Function that deletes a specific photo 
+ * @param {string} userToken The user's access token 
+ * @returns <PhotoBox
+                    photo={photo}
+                    key={photo._id}
+                    deleteHandler={(e) => deleteHandler(e, photo._id)}
+                    userToken={userToken}
+ */
 const PhotoBox = (props) => {
 
     const userToken = props.userToken;
@@ -21,34 +36,54 @@ const PhotoBox = (props) => {
     const [showForms, setShowForms] = useState(false);
 
     const [showEdit, setShowEdit] = useState(false);
+    /**
+     * Shows an edit button
+     */
     const showEditButton = () => setShowEdit(!showEdit);
 
     let inputTag;
     let edit = null;
 
+    /**
+     * Shows a form for photo editing
+     */
     const editPhoto = () => setShowForms(!showForms);
 
     if (showEdit) {
         edit = <button className="button" onClick={editPhoto}>Edit</button>
     }
 
-
+    /**
+     * Sets privacy (isPublic) state with the user's chosen value (event target value)
+     * @param {Event} e input field event object
+     */
     const handlePrivacy = (e) => {
         setPrivacy(e.target.value);
     }
-
+    /**
+     * Sets allowCommenting state with the user's chosen value (event target value)
+     * @param {Event} e input field event object
+     */
     const handleAllowCommenting = (e) => {
         setAllowCommenting(e.target.value);
     }
-
+    /**
+     * Sets title state with the user's chosen value (event target value)
+     * @param {Event} e input field event object
+     */
     const handleTitle = (e) => {
         setTitle(e.target.value);
     }
-
+    /**
+     * Sets description state with the user's chosen value (event target value)
+     * @param {Event} e input field event object
+     */
     const handleDesc = (e) => {
         setDesc(e.target.value);
     }
-
+    /**
+     * Submits a form for editing a photo
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
         let tagsArr = [...tags];

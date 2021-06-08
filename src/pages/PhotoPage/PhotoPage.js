@@ -9,6 +9,21 @@ import Footer from '../../components/static/Footer';
 import './PhotoPage.css';
 
 import axios from 'axios';
+/**
+ * Component that renders page of a specific photo 
+ * Takes the photo's id as a route parameter
+ * Internal components:
+ *      UserlessNavigationBar
+ *      Navbar
+ *      PhotoDiv
+ *      PhotoMain
+ *      Footer
+ * @component 
+ * @type Component
+ * @returns (
+ *      <PhotoPage />
+ * )
+ */
 
 const PhotoPage = props => {
 
@@ -23,11 +38,17 @@ const PhotoPage = props => {
     const [user, setUser] = useState(null);
     //const loggedInUserId = photo.creator._id;
 
+    /**
+     * Redirects to homepage
+     */
     const homePage = () => window.location.pathname = '/';
 
     //MockURl: 'https://f6a8e4e3-57ed-4ad8-8204-d6958266d5c5.mock.pstmn.io'
     let main = null;
-
+    
+    /**
+     * Call back function in useEffect used to get details of a specific photo
+     */
     useEffect(() => {
         axios.defaults.baseURL = baseUrl;
         

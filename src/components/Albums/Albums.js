@@ -4,6 +4,29 @@ import React from 'react';
 import Album from './Album/Album';
 import Button from '../Photo/Button/Button';
 
+/**
+ * The main content of AlbumsPage
+ * Internal components:
+ *      Album
+ * @component 
+ * @type Component
+ * 
+ * @param {Array} UserAlbums Array of user albums
+ * @param {string} albumCover Cover photo url   
+ * @param {Function} deleteAlbum function to handle delete albums
+ * @param {Function} newAlbumHandler function to show new album form
+ * @param {string} userId the id of the user
+ * @param {string} loggedInUserId the id of the logged-in user
+ * @returns 
+ *         <Albums 
+ *               userAlbums={userAlbums} 
+ *               albumCover={albumCoverPhoto} 
+ *               deleteAlbum={deleteAlbum} 
+ *               newAlbumHandler={newAlbumHandler} 
+ *               userId={userId}
+ *               loggedInUserId={loggedInUserId}/>
+ */
+
 const Albums = (props) => {
     
     let main = null;

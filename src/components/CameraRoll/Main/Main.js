@@ -2,9 +2,28 @@ import { useState } from 'react';
 import PhotoBox from '../PhotoBox/PhotoBox';
 import './Main.css';
 import axios from 'axios';
-
+/**
+ * Component that renders main content of CameraRollPage
+ * Internal components:
+ *      PhotoBox
+ * @component
+ * @type Component
+ * 
+ * @param {Array} userPhotos Array of user photos
+ * @param {string} userId The user's id   
+ * @param {string} userToken The user's access token
+ * @param {string} uploadPhotosPage Url of upload photos page
+ * @returns 
+ *          <Main 
+ *              userPhotos={userPhotos.cameraRoll} 
+ *              userId={user._id} 
+ *              userToken={userToken} 
+ *              uploadPhotosPage={uploadPhotosPage} />
+ */
 const Main = (props) => {
-
+    /**
+     * Redirects to uploadPhoto page
+     */
     const uploadPhotosPage = () => window.location.pathname = props.uploadPhotosPage;
 
     const userToken = props.userToken;
@@ -13,6 +32,12 @@ const Main = (props) => {
 
     let main = null;
 
+    /**
+     * Deletes a photo
+     * @param {Event} e event 
+     * @param {string} photoId Id of the photo to be deleted 
+     * 
+     */
     const deleteHandler = (e, photoId) => {
         let photosArr = [...userPhotos];
 

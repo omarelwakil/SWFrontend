@@ -8,11 +8,27 @@ import Footer from '../../components/static/Footer';
 import Navbar from '../../components/Trending/Navbar/Navbar';
 import Albums from '../../components/Albums/Albums';
 import axios from 'axios';
-
+/**
+ * Component that renders page of Albums for a specific user
+ * Takes a variable userId as a route paramter
+ * Internal components:
+ *      UserlessNavigationBar
+ *      PhotoStream/UserCover
+ *      Trending/Navbar
+ *      Albums
+ *      Footer
+ * @component 
+ * @type Component
+ * @returns (
+ *      <AlbumsPage />
+ * )
+ */
 const AlbumsPage = (props) => {
 
     const baseUrl = 'https://api.qasaqees.tech';
-
+    /**
+     * Redirects to homepage
+     */
     const homePage = () => window.location.pathname = '/';
 
 
@@ -59,9 +75,15 @@ const AlbumsPage = (props) => {
     const [userAlbums, setUserAlbums] = useState(null);
     const [showNewAlbum, setShowNewAlbum] = useState(false);
     const [albumCoverPhotoUrl, setAlbumCoverPhotoUrl] = useState(null);
-
+    /**
+     * Shows a button to create a new album
+     */
     const newAlbumHandler = () => setShowNewAlbum(!showNewAlbum);
-
+    /**
+     * Deletes a specific album
+     * @param {Event} e Delete album click event 
+     * @param {String} albumId Id of the album to be deleted 
+     */
     const deleteAlbum = (e, albumId) => {
         e.preventDefault();
         const albums = [...userAlbums];
@@ -83,7 +105,10 @@ const AlbumsPage = (props) => {
 
         e.stopPropagation();
     }
-
+    /**
+     * Creates a new album
+     * @param {Event} e New album click event 
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
 

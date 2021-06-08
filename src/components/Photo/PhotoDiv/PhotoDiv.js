@@ -1,6 +1,21 @@
 import './PhotoDiv.css';
 import Button from '../Button/Button';
-
+/**
+ * Component that renders photo's section in PhotoPage
+ * Internal components:
+ *      Button
+ * @component
+ * @type Component
+ * 
+ * @param {string} url The url of a specific photo
+ * @param {string} photoId The photo's id   
+ * @param {string} userId The id of the photo owner
+ * @returns 
+ *          <PhotoDiv 
+ *                  url={photo.url} 
+ *                  photoId={photoId}
+ *                  userId={user._id} />
+ */
 const PhotoDiv = (props) => {
     const tools = ['edit', 'share', 'download', 'buy', 'full'];
 
@@ -8,7 +23,7 @@ const PhotoDiv = (props) => {
         <div className="PhotoDiv">
             <div className="back-link">
                 <a href={"/photos/" + props.userId}>
-                    <p><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;<span>Back to photostream</span></p>
+                    <p><i className="fas fa-arrow-left"></i>&nbsp;&nbsp;<span>Back to photostream</span></p>
                 </a>
                 <div className="full-screen-tool">
                     {/* One button for resizing */}

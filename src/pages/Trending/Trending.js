@@ -9,7 +9,21 @@ import Footer from '../../components/static/Footer';
 
 //Requests Package
 import axios from 'axios';
-
+/**
+ * Component that renders page of a trending photos
+ * Takes no parameters
+ * Internal components:
+ *      UserlessNavigationBar
+ *      Navbar
+ *      Main
+ *      Footer
+ * @component
+ * @type Component
+ * 
+ * @returns (
+ *      <Trending />
+ * )
+ */
 function Trending() {
 
   const baseUrl = 'https://api.qasaqees.tech';
@@ -36,7 +50,9 @@ function Trending() {
     { title: "Explore", path: "/explore", selected: false },
     { title: "Trending", path: "/photos/tags", selected: true }
   ];
-
+  /**
+   * Redirects to homepage
+   */
   const homePage = () => window.location.pathname = '/';
 
   let main = null; 
