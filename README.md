@@ -1,5 +1,5 @@
 # SWFrontend
-It is a flickr clone project. You can visit the real website at [https://www.flickr.com/](www.flickr.com).
+It is a flickr clone project. You can visit the real website at [www.flickr.com](https://www.flickr.com/).
 
 ## Installation
 
